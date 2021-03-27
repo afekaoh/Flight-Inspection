@@ -35,5 +35,10 @@ namespace Flight_Inspection
             proc.StartInfo.Arguments = "--generic=socket,in,10,127.0.0.1,5400,tcp,playback_small --fdm=null";
             proc.Start();
         }
+
+        private void b1_KeyUp(object sender, KeyEventArgs e)
+        {
+            b1.
+        }
     }
 }
