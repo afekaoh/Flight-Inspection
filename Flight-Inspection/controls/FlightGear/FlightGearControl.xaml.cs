@@ -30,8 +30,7 @@ namespace Flight_Inspection.controls
         public String ProcPath { get; set; }
         private readonly TimeSeries TS;
         private readonly Process FG;
-        Socket soc;
-        private readonly IPEndPoint remoteEP;
+        private readonly Thread t;
         public FlightGearControl()
         {
             InitializeComponent();
@@ -41,32 +40,42 @@ namespace Flight_Inspection.controls
             FG.StartInfo.FileName = ProcPath + "\\fgfs.exe";
             FG.StartInfo.WorkingDirectory = ProcPath;
             FG.StartInfo.Arguments = "--generic=socket,in,10,127.0.0.1,5400,tcp,playback_small --fdm=null";
-            IPHostEntry host = Dns.GetHostEntry("localhost");
-            IPAddress ipAddress = host.AddressList[1];
-            remoteEP = new IPEndPoint(ipAddress, 5400);
-            soc = new Socket(ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+            Thread t = new Thread(Send_Data);
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Start_FlightGear(object sender, RoutedEventArgs e)
         {
             FG.Start();
         }
 
-
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        private void Start_Simulation(object sender, RoutedEventArgs e)
         {
-            soc.Connect(remoteEP);
-            var rows = TS.Rows;
-            if (soc.Connected)
+            if (!t.IsAlive)
+                t.Start();
+        }
+
+        private void Send_Data()
+        {
+            IPHostEntry host = Dns.GetHostEntry("localhost");
+            IPAddress ipAddress = host.AddressList[1];
+            var remoteEP = new IPEndPoint(ipAddress, 5400);
+            using (var soc = new Socket(ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp))
             {
-                Console.WriteLine("yay");
-                using (NetworkStream networkStream = new NetworkStream(soc))
+                soc.Connect(remoteEP);
+                var rows = TS.Rows;
+                if (soc.Connected)
                 {
-                    rows.ForEach(r =>
+                    Console.WriteLine("yay");
+                    using (NetworkStream networkStream = new NetworkStream(soc))
                     {
-                        byte[] vs = Encoding.ASCII.GetBytes(r + "\n");
-                        networkStream.Write(vs, 0, vs.Length);
-                    });
+                        foreach (var buffer in from string r in rows
+                                               let buffer = Encoding.ASCII.GetBytes(r + "\n")
+                                               select buffer)
+                        {
+                            networkStream.Write(buffer, 0, buffer.Length);
+                            Thread.Sleep(100);
+                        }
+                    }
                 }
             }
         }
