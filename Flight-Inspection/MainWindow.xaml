@@ -8,6 +8,12 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <control:FlightGearControl/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <control:FlightGearControl Grid.Column="1"/>
+        <control:Graphs/>
     </Grid>
+    
 </Window>
