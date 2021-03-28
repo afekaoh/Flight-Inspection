@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Flight_Inspection.controls.Graphs;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,15 +25,13 @@ namespace Flight_Inspection.controls
         {
             public string Title { get; set; }
         }
+        controls.Graphs.VMGraphs vm;
         public Graphs()
         {
             InitializeComponent();
-            List<Names> ls = new List<Names>();
-            ls.Add(new Names() { Title = "A" });
-            ls.Add(new Names() { Title = "B" });
-            ls.Add(new Names() { Title = "C" });
-            ls.Add(new Names() { Title = "D" });
-            lbTodoList.ItemsSource = ls;
+            vm = new controls.Graphs.VMGraphs();
+            DataContext = vm;
+            lbTodoList.ItemsSource = vm.GetNames();
         }
 
         private void choosenOption(object sender, MouseButtonEventArgs e)
