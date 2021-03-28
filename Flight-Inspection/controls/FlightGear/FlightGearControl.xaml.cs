@@ -28,19 +28,21 @@ namespace Flight_Inspection.controls
     {
 
         public String ProcPath { get; set; }
+        private const string InputUri = "C:\\Users\\afeka\\OneDrive - Bar-Ilan University\\Code projects\\Advance-Programming-2\\Flight-Inspection\\Flight-Inspection\\controls\\FlightGear\\playback_small.xml";
+        private const string CsvFileName = "C:\\Users\\afeka\\OneDrive - Bar-Ilan University\\Code projects\\Advance-Programming-2\\Flight-Inspection\\Flight-Inspection\\controls\\FlightGear\\reg_flight.csv";
         private readonly TimeSeries TS;
         private readonly Process FG;
         private readonly Thread t;
         public FlightGearControl()
         {
             InitializeComponent();
-            this.TS = new TimeSeries("C:\\Users\\afeka\\OneDrive - Bar-Ilan University\\Code projects\\Advance-Programming-2\\Flight-Inspection\\Flight-Inspection\\controls\\FlightGear\\reg_flight.csv");
-            this.ProcPath = ProcPath = "C:\\Program Files\\FlightGear 2020.3.6\\bin";
+            this.TS = new TimeSeries(CsvFileName, InputUri);
+            this.ProcPath = "C:\\Program Files\\FlightGear 2020.3.6\\bin";
             FG = new Process();
             FG.StartInfo.FileName = ProcPath + "\\fgfs.exe";
             FG.StartInfo.WorkingDirectory = ProcPath;
             FG.StartInfo.Arguments = "--generic=socket,in,10,127.0.0.1,5400,tcp,playback_small --fdm=null";
-            Thread t = new Thread(Send_Data);
+            t = new Thread(Send_Data);
         }
 
         private void Start_FlightGear(object sender, RoutedEventArgs e)
@@ -65,19 +67,46 @@ namespace Flight_Inspection.controls
                 var rows = TS.Rows;
                 if (soc.Connected)
                 {
-                    Console.WriteLine("yay");
-                    using (NetworkStream networkStream = new NetworkStream(soc))
+
+                    foreach (var buffer in from string r in rows
+                                           let buffer = Encoding.ASCII.GetBytes(r + "\n")
+                                           select buffer)
                     {
-                        foreach (var buffer in from string r in rows
-                                               let buffer = Encoding.ASCII.GetBytes(r + "\n")
-                                               select buffer)
-                        {
-                            networkStream.Write(buffer, 0, buffer.Length);
-                            Thread.Sleep(100);
-                        }
+                        soc.Send(buffer);
+                        Thread.Sleep(100);
                     }
+
                 }
             }
         }
+
+        ~FlightGearControl()
+        {
+            if (t.IsAlive)
+            {
+                t.Abort();
+            }
+            if (IsProccesRunning(FG))
+            {
+                FG.CloseMainWindow();
+                FG.Close();
+            }
+        }
+
+        private static bool IsProccesRunning(Process proc)
+        {
+
+            try
+            {
+                Process.GetProcessById(proc.Id);
+            }
+            // the procces hasn't started yet
+            catch (InvalidOperationException) { return false; }
+            // the procces hasn't been initialized 
+            catch (Exception e) when (e is ArgumentException || e is ArgumentNullException) { return false; }
+            return true;
+        }
     }
+
 }
+
