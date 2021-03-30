@@ -1,4 +1,4 @@
-﻿using Flight_Inspection.controls.Graphs;
+﻿using Flight_Inspection.controls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,17 +19,17 @@ namespace Flight_Inspection.controls
     /// <summary>
     /// Interaction logic for Graphs.xaml
     /// </summary>
-    public partial class Graphs : UserControl
+    public partial class FlightCharts : UserControl
     {
         public class Names
         {
             public string Title { get; set; }
         }
-        controls.Graphs.VMGraphs vm;
-        public Graphs()
+        VMCharts vm;
+        public FlightCharts()
         {
             InitializeComponent();
-            vm = new controls.Graphs.VMGraphs();
+            vm = new VMCharts();
             DataContext = vm;
             lbTodoList.ItemsSource = vm.GetNames();
         }

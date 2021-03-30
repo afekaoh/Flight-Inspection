@@ -13,7 +13,7 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <control:FlightGearControl Grid.Column="1"/>
-        <control:Graphs/>
+        <control:FlightCharts/>
     </Grid>
     
 </Window>

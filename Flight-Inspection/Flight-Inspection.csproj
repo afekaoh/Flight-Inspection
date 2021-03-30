@@ -59,7 +59,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="controls\Graphs\Graphs.xaml">
+    <Page Include="controls\Charts1\FlightCharts.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -74,10 +74,10 @@
     <Compile Include="controls\FlightGearControl.xaml.cs">
       <DependentUpon>FlightGearControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="controls\Graphs\Graphs.xaml.cs">
-      <DependentUpon>Graphs.xaml</DependentUpon>
+    <Compile Include="controls\Charts1\FlightCharts.xaml.cs">
+      <DependentUpon>FlightCharts.xaml</DependentUpon>
     </Compile>
-    <Compile Include="controls\Graphs\VMGraphs.cs" />
+    <Compile Include="controls\Charts1\VMCharts.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
