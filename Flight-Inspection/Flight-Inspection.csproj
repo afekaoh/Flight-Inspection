@@ -107,6 +107,9 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Resources.Extensions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL" />
+    <Reference Include="System.Windows" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -125,7 +128,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="controls\FlightGear\FlightGearControl.xaml">
+    <Page Include="controls\FlightGear\FlightGearView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -137,9 +140,13 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="controls\FlightGear\TimeSeries.cs" />
-    <Compile Include="controls\FlightGear\FlightGearControl.xaml.cs">
-      <DependentUpon>FlightGearControl.xaml</DependentUpon>
+    <Compile Include="controls\FlightGear\FlightGearModel.cs" />
+    <Compile Include="controls\FlightGear\FlightGearViewModel.cs" />
+    <Compile Include="controls\FlightGear\Save.cs" />
+    <Compile Include="controls\TimeSeries.cs" />
+    <Compile Include="controls\FlightGear\FlightGearView.xaml.cs">
+      <DependentUpon>FlightGearView.xaml</DependentUpon>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -164,7 +171,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="controls\FlightGear\reg_flight.csv" />
+    <None Include="controls\FlightGear\FG_Data\reg_flight.csv" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -175,7 +182,8 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="controls\FlightGear\playback_small.xml" />
+    <Resource Include="controls\FlightGear\FG_Data\playback_small.xml" />
+    <Resource Include="controls\FlightGear\FG_Data\save.xml" />
     <Content Include="plugins\AP1_DLL.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
