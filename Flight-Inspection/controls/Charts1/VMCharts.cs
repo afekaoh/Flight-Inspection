@@ -9,25 +9,22 @@ namespace Flight_Inspection.controls
 {
     class VMCharts : INotifyPropertyChanged
     {
+        private ChartsModel charts;
+
         public event PropertyChangedEventHandler PropertyChanged;
-        public class Name {
-            public string VM_Property
-            {
-                get; set;
-            }
-        }
-        public VMCharts() {
-            
+
+        public VMCharts()
+        {
+            charts = new ChartsModel();
         }
 
-        public List<Name> GetNames()
+        public List<Property> GetNames()
         {
-            List<Name> ls = new List<Name>();
-            ls.Add(new Name() { VM_Property = "A" });
-            ls.Add(new Name() { VM_Property = "B" });
-            ls.Add(new Name() { VM_Property = "C" });
-            ls.Add(new Name() { VM_Property = "D" });
-            return ls;
+            return charts.GetProperties();
+        }
+        public List<float> getData(string property)
+        {
+            return charts.getData(property);
         }
     }
 }
