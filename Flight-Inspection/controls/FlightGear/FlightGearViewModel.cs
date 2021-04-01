@@ -35,6 +35,10 @@ namespace Flight_Inspection.controls.FlightGear
             xMLPath.saved = savedEvent;
             procPath.saved = savedEvent;
             this.save = new Save();
+            var d = save.openData();
+            CsvFileName.Content = d.CSV;
+            XMLPath.Content = d.XML;
+            ProcPath.Content = d.PATH;
         }
 
         void savedEvent(object sender, EventArgs e)
@@ -129,7 +133,7 @@ namespace Flight_Inspection.controls.FlightGear
                 set
                 {
                     content = value;
-                    if (value.EndsWith(checkVar))
+                    if (!(value is null) && value.EndsWith(checkVar))
                         Checked = true;
                     onSave(this);
                     OnPropertyChanged();

@@ -183,7 +183,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="controls\FlightGear\FG_Data\playback_small.xml" />
-    <Resource Include="controls\FlightGear\FG_Data\save.xml" />
     <Content Include="plugins\AP1_DLL.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

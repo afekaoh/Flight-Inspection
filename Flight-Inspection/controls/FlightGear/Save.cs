@@ -12,7 +12,6 @@ namespace Flight_Inspection.controls.FlightGear
     {
         private DataSet data;
         private DataTable table;
-
         public Save()
         {
             if (File.Exists("..\\..\\controls\\FlightGear\\FG_DATA\\save.xml"))
@@ -23,8 +22,14 @@ namespace Flight_Inspection.controls.FlightGear
             }
             else
             {
-                data = new DataSet();
-                table = new DataTable();
+                data = new DataSet
+                {
+                    DataSetName = "Settings"
+                };
+                table = new DataTable
+                {
+                    TableName = "Path Locations"
+                };
                 data.Tables.Add(table);
                 var col1 = new DataColumn
                 {
@@ -60,15 +65,27 @@ namespace Flight_Inspection.controls.FlightGear
             data.WriteXml("..\\..\\controls\\FlightGear\\FG_DATA\\save.xml");
         }
 
-        public void openData()
+        public SettingPacket openData()
         {
-            var t = data.Tables[0];
-            var r = t.Rows[0];
-            var a = r.ItemArray;
-            foreach (var item in a)
+            return new SettingPacket
             {
-                Console.WriteLine(item);
-            }
+                CSV = table.Rows[0]["CSV"] as string,
+                XML = table.Rows[0]["XML"] as string,
+                PATH = table.Rows[0]["PATH"] as string
+            };
+
+        }
+        public class SettingPacket
+        {
+            private string csv;
+            private string xml;
+            private string path;
+
+            public string CSV { get => csv; set => csv = value; }
+            public string XML { get => xml; set => xml = value; }
+            public string PATH { get => path; set => path = value; }
         }
     }
 }
+
+
