@@ -28,24 +28,30 @@ namespace Flight_Inspection.controls.FlightGear
                         };
                         ls.ForEach(si => si.saved = savedEvent);*/
 
-            this.csvFileName = new SettingItem("CSV", ".csv");
-            this.xMLPath = new SettingItem("XML", ".xml");
-            this.procPath = new SettingItem("PATH", "");
-            csvFileName.saved = savedEvent;
-            xMLPath.saved = savedEvent;
-            procPath.saved = savedEvent;
-            this.save = new Save();
-            var d = save.openData();
-            CsvFileName.Content = d.CSV;
-            XMLPath.Content = d.XML;
-            ProcPath.Content = d.PATH;
+            this.csvFileName = new SettingItem("CSV", ".csv", this);
+            this.xMLPath = new SettingItem("XML", ".xml", this);
+            this.procPath = new SettingItem("PATH", "", this);
+            csvFileName.saved += savedEvent;
+            xMLPath.saved += savedEvent;
+            procPath.saved += savedEvent;
+            this.save = new Save(SaveInitialization);
+            /*            var d = save.OpenData();
+                        CsvFileName.Content = d.CSV;
+                        XMLPath.Content = d.XML;
+                        ProcPath.Content = d.PATH;*/
+        }
+
+        void SaveInitialization(object sender, EventArgs e)
+        {
+            CsvFileName.Content = (e as OnInitializationEventArgs).CSV;
+            XMLPath.Content = (e as OnInitializationEventArgs).XML;
+            ProcPath.Content = (e as OnInitializationEventArgs).PATH;
         }
 
         void savedEvent(object sender, EventArgs e)
         {
             var si = sender as SettingItem;
             AddData(si.Name, si.Content);
-
         }
         public void setReady()
         {
@@ -59,10 +65,10 @@ namespace Flight_Inspection.controls.FlightGear
             save.AddData(name, data);
         }
 
-        public void showData()
-        {
-            save.openData();
-        }
+        /*       public void showData()
+               {
+                   save.OpenData();
+               }*/
 
         public void SaveData()
         {
@@ -119,12 +125,15 @@ namespace Flight_Inspection.controls.FlightGear
             private string checkVar;
             private string name;
             private bool isChecked;
-            public EventHandler saved;
+            public event EventHandler saved;
 
-            public SettingItem(string name, string checkVar)
+            FlightGearViewModel o;
+
+            public SettingItem(string name, string checkVar, FlightGearViewModel o)
             {
                 this.checkVar = checkVar;
                 this.Name = name;
+                this.o = o;
             }
 
             public string Content
@@ -134,8 +143,15 @@ namespace Flight_Inspection.controls.FlightGear
                 {
                     content = value;
                     if (!(value is null) && value.EndsWith(checkVar))
+                    {
                         Checked = true;
-                    onSave(this);
+                        OnSavedEventArgs e = new OnSavedEventArgs
+                        {
+                            ToSave = !(o.save is null)
+                        };
+
+                        onSave(this, e);
+                    }
                     OnPropertyChanged();
                 }
             }
@@ -146,16 +162,16 @@ namespace Flight_Inspection.controls.FlightGear
                 set
                 {
                     isChecked = value;
-
                     OnPropertyChanged();
                 }
             }
 
             public string Name { get => name; set => name = value; }
 
-            public virtual void onSave(object sender, EventArgs e = null)
+            public virtual void onSave(object sender, OnSavedEventArgs e)
             {
-                saved?.Invoke(this, e);
+                if (e.ToSave)
+                    saved?.Invoke(this, e);
             }
 
             public event PropertyChangedEventHandler PropertyChanged;
@@ -172,5 +188,10 @@ namespace Flight_Inspection.controls.FlightGear
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
+    }
+
+    public class OnSavedEventArgs : EventArgs
+    {
+        public bool ToSave { get; set; }
     }
 }

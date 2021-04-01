@@ -10,10 +10,12 @@ namespace Flight_Inspection.controls.FlightGear
 {
     class Save
     {
-        private DataSet data;
-        private DataTable table;
-        public Save()
+        private readonly DataSet data;
+        private readonly DataTable table;
+        public event EventHandler Initialization;
+        public Save(EventHandler saveInitialization)
         {
+            Initialization += saveInitialization;
             if (File.Exists("..\\..\\controls\\FlightGear\\FG_DATA\\save.xml"))
             {
                 data = new DataSet();
@@ -53,6 +55,14 @@ namespace Flight_Inspection.controls.FlightGear
                 row["PATH"] = null;
                 table.Rows.Add(row);
             }
+            OnInitializationEventArgs e = new OnInitializationEventArgs
+            {
+                CSV = table.Rows[0]["CSV"] as string,
+                XML = table.Rows[0]["XML"] as string,
+                PATH = table.Rows[0]["PATH"] as string
+            };
+
+            OnInitialization(e);
         }
 
         public void AddData(string name, string data)
@@ -65,7 +75,7 @@ namespace Flight_Inspection.controls.FlightGear
             data.WriteXml("..\\..\\controls\\FlightGear\\FG_DATA\\save.xml");
         }
 
-        public SettingPacket openData()
+/*        public SettingPacket OpenData()
         {
             return new SettingPacket
             {
@@ -74,8 +84,8 @@ namespace Flight_Inspection.controls.FlightGear
                 PATH = table.Rows[0]["PATH"] as string
             };
 
-        }
-        public class SettingPacket
+        }*/
+/*        public class SettingPacket
         {
             private string csv;
             private string xml;
@@ -84,7 +94,20 @@ namespace Flight_Inspection.controls.FlightGear
             public string CSV { get => csv; set => csv = value; }
             public string XML { get => xml; set => xml = value; }
             public string PATH { get => path; set => path = value; }
+        }*/
+
+        public void OnInitialization(OnInitializationEventArgs e)
+        {
+            Initialization?.Invoke(this, e);
         }
+    }
+
+    class OnInitializationEventArgs : EventArgs
+    {
+        public string CSV { get; set; }
+        public string XML { get; set; }
+        public string PATH { get; set; }
+
     }
 }
 
