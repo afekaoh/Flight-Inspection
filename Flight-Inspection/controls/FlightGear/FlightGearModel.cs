@@ -15,7 +15,6 @@ namespace Flight_Inspection.controls.FlightGear
         private readonly TimeSeries TS;
         private readonly Process FG;
         private readonly Thread t;
-        private bool run;
 
         public FlightGearModel(String CsvFileName, String InputUri, String ProcPath)
         {
@@ -26,6 +25,7 @@ namespace Flight_Inspection.controls.FlightGear
             FG.StartInfo.Arguments = "--generic=socket,in,10,127.0.0.1,5400,tcp,playback_small --fdm=null";
             t = new Thread(Send_Data);
         }
+
 
         public void StartFG()
         {
@@ -44,6 +44,7 @@ namespace Flight_Inspection.controls.FlightGear
             IPHostEntry host = Dns.GetHostEntry("localhost");
             IPAddress ipAddress = host.AddressList[1];
             var remoteEP = new IPEndPoint(ipAddress, 5400);
+            var stopwatch = new Stopwatch();
             using (var soc = new Socket(ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp))
             {
                 soc.Connect(remoteEP);
@@ -55,18 +56,11 @@ namespace Flight_Inspection.controls.FlightGear
                                            let buffer = Encoding.ASCII.GetBytes(r + "\n")
                                            select buffer)
                     {
-                        if (!run)
-                            break;
-
-                        try
-                        {
-                            soc.Send(buffer);
-                            Thread.Sleep(100);
-                        }
-                        catch
-                        {
-
-                        }
+                        stopwatch.Start();
+                        soc.Send(buffer);
+                        stopwatch.Stop();
+                        int sleepTime = (int)Math.Max(0, 100 - stopwatch.ElapsedMilliseconds);
+                        Thread.Sleep(sleepTime);
                     }
 
                     /*for (; speed < rows.Count; speed++)
