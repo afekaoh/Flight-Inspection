@@ -5,14 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Flight_Inspection"
         xmlns:control="clr-namespace:Flight_Inspection.controls"
+        xmlns:DVC="clr-namespace:System.Windows.Forms.DataVisualization.Charting;assembly=System.Windows.Forms.DataVisualization"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
+            <!--<ColumnDefinition Width="*"/>-->
         </Grid.ColumnDefinitions>
         <!--<control:FlightGearControl Grid.Column="1"/>-->
+        
         <control:FlightCharts/>
     </Grid>
     
