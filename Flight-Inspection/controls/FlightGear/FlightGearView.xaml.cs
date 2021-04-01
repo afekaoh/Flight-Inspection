@@ -85,10 +85,6 @@ namespace Flight_Inspection.controls
             fg.SaveData();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            fg.showData();
-        }
     }
 }
 
