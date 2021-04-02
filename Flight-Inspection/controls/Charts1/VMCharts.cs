@@ -22,9 +22,19 @@ namespace Flight_Inspection.controls
         {
             return charts.GetProperties();
         }
-        public List<float> getData(string property)
+        private List<float> getData(string property)
         {
             return charts.getData(property);
+        }
+
+        public Dictionary<int, float> getDataContent(string content)
+        {
+            return charts.getDataContent(content);
+
+        }
+        public List<(float, float)> getDataContent(string content, string second)
+        {
+            return charts.getDataContent(content, second);
         }
     }
 }

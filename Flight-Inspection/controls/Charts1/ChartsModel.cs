@@ -33,5 +33,27 @@ namespace Flight_Inspection.controls
             }
             return lp;
         }
+        public Dictionary<int, float> getDataContent(string content)
+        {
+            List<float> vs = getData(content);
+            Dictionary<int, float> value = new Dictionary<int, float>();
+            for (int i = 150; i < 300; i++)
+            {
+                value.Add(i, vs[i]);
+            }
+            return value;
+        }
+        public List<(float, float)> getDataContent(string content, string second)
+        {
+            List<float> vs = getData(content);
+            List<float> sec = getData(second);
+            List<(float, float)> value = new List<(float, float)>();
+            int size = Math.Min(vs.Count, sec.Count); ;
+            for (int i = 0; i < size; i++)
+            {
+                value.Add((vs[i], sec[i]));
+            }
+            return value;
+        }
     }
 }
