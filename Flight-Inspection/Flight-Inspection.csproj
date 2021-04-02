@@ -107,6 +107,10 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
+    <Reference Include="System.Windows.Forms.DataVisualization.Design" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -119,6 +123,7 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -126,6 +131,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Page Include="controls\FlightGear\FlightGearControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="controls\Charts1\FlightCharts.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -137,10 +146,16 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="controls\Charts1\ChartsModel.cs" />
+    <Compile Include="controls\Charts1\IChartsModel.cs" />
     <Compile Include="controls\FlightGear\TimeSeries.cs" />
     <Compile Include="controls\FlightGear\FlightGearControl.xaml.cs">
       <DependentUpon>FlightGearControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="controls\Charts1\FlightCharts.xaml.cs">
+      <DependentUpon>FlightCharts.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="controls\Charts1\VMCharts.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
