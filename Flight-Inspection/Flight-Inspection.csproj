@@ -160,6 +160,7 @@
     <Compile Include="controls\FlightGear\FlightGearView.xaml.cs">
       <DependentUpon>FlightGearView.xaml</DependentUpon>
       <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="controls\Charts1\ChartsModel.cs" />
     <Compile Include="controls\Charts1\IChartsModel.cs" />
     <Compile Include="controls\FlightGear\FlightGearControl.xaml.cs">
