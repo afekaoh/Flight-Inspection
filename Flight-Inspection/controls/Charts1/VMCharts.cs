@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Flight_Inspection.controls.FlightGear;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -35,6 +36,11 @@ namespace Flight_Inspection.controls
         public List<(float, float)> getDataContent(string content, string second)
         {
             return charts.getDataContent(content, second);
+        }
+
+        internal void setTimeSeries(TimeSeries ts)
+        {
+            charts.TimeSeries = ts;
         }
     }
 }

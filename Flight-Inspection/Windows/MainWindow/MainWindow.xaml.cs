@@ -1,4 +1,6 @@
 ﻿using Flight_Inspection.controls;
+using Flight_Inspection.controls.FlightGear;
+using Flight_Inspection.Pages.Settings;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -24,12 +26,22 @@ namespace Flight_Inspection
     {
         SettingsView settings;
         FlightGearView FlightGear;
+        TimeSeries ts;
         public MainWindow()
         {
             InitializeComponent();
             settings = new SettingsView();
-            FlightGear = new FlightGearView(settings.getSettings());
+            settings.OnReady += Settings_OnReady;
+            FlightGear = new FlightGearView();
             FlightGear.NewWindow += OnNewWindow;
+            settings.updateSettings();
+        }
+
+        private void Settings_OnReady(object sender, EventArgs e)
+        {
+            var ea = e as OnReadyEventArgs;
+            ts = new TimeSeries(ea.CSV.Content, ea.XML.Content);
+            FlightGear.updateSettings(ts, ea.PATH.Content);
         }
 
         private void Setting_Click(object sender, RoutedEventArgs e)
@@ -39,16 +51,14 @@ namespace Flight_Inspection
 
         private void FlightGear_Click(object sender, RoutedEventArgs e)
         {
-            FlightGear.setSettings(settings.getSettings());
             frame.Navigate(FlightGear);
-
         }
         public void OnNewWindow(object sender, EventArgs e)
         {
             FlightData flight = new FlightData();
+            flight.TS = ts;
             flight.Closed += Flight_Closed;
             flight.Show();
-
             this.Hide();
         }
 

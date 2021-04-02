@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Flight_Inspection.controls;
+using Flight_Inspection.controls.FlightGear;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +22,23 @@ namespace Flight_Inspection
     /// </summary>
     public partial class FlightData : Window
     {
+        private FlightCharts fc;
+        private TimeSeries ts;
         public FlightData()
         {
             InitializeComponent();
+            fc = new FlightCharts();
+            frame1.Navigate(fc);
+        }
+
+        internal TimeSeries TS
+        {
+            get { return ts; }
+            set
+            {
+                ts = value;
+                fc.setTimeSeries(TS);
+            }
         }
     }
 }

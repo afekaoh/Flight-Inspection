@@ -15,19 +15,20 @@ namespace Flight_Inspection.controls
         public event PropertyChangedEventHandler PropertyChanged;
         private TimeSeries timeSeries;
 
+        public TimeSeries TimeSeries { get => timeSeries; set => timeSeries = value; }
+
         public ChartsModel()
         {
-            timeSeries = new TimeSeries(SettingsViewModel.settingPacket.CSV.Content, SettingsViewModel.settingPacket.XML.Content);
         }
 
         public List<float> getData(string property)
         {
-            return timeSeries.getFeatureData(property);
+            return TimeSeries.getFeatureData(property);
         }
 
         public List<Property> GetProperties()
         {
-            List<string> ls = timeSeries.getFeatureNames();
+            List<string> ls = TimeSeries.getFeatureNames();
             List<Property> lp = new List<Property>();
             foreach (string s in ls)
             {

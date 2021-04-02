@@ -15,7 +15,6 @@ namespace Flight_Inspection.Settings
         private string checkVar;
         private string name;
         private bool isChecked;
-        public event EventHandler saved;
 
         public SettingItem(string name, string checkVar)
         {
@@ -28,13 +27,12 @@ namespace Flight_Inspection.Settings
             get { return content; }
             set
             {
-                content = value;
                 if (!(value is null) && value.EndsWith(checkVar))
                 {
+                    content = value;
                     Checked = true;
-                    onSave(this, null);
+                    OnPropertyChanged();
                 }
-                OnPropertyChanged();
             }
         }
 
@@ -50,10 +48,7 @@ namespace Flight_Inspection.Settings
 
         public string Name { get => name; set => name = value; }
 
-        public virtual void onSave(object sender, EventArgs e)
-        {
-            saved?.Invoke(this, e);
-        }
+
 
         public event PropertyChangedEventHandler PropertyChanged;
 

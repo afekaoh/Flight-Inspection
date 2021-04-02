@@ -7,6 +7,9 @@
         mc:Ignorable="d"
         Title="FlightData" Height="450" Width="800">
     <Grid>
-        <control:FlightCharts/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Frame x:Name="frame1"></Frame>
     </Grid>
 </Window>

@@ -13,13 +13,15 @@ namespace Flight_Inspection.controls.FlightGear
     {
         public event PropertyChangedEventHandler PropertyChanged;
         private FlightGearModel flightGearModel;
+        private TimeSeries ts;
         private bool ready;
 
-        public FlightGearViewModel(SettingPacket settings)
+        public TimeSeries Ts { get => ts; set => ts = value; }
+
+        public FlightGearViewModel()
         {
-            this.ready = !(settings is null) && settings.ready;
-            if (ready)
-                this.flightGearModel = new FlightGearModel(settings.CSV.Content, settings.XML.Content, settings.PATH.Content);
+            this.ready = false;
+            this.flightGearModel = new FlightGearModel();
         }
 
 
@@ -44,14 +46,10 @@ namespace Flight_Inspection.controls.FlightGear
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
 
-        internal void setSettings(SettingPacket settingPacket)
+        internal void setSettings(TimeSeries ts, string procPath)
         {
-            if (!ready)
-            {
-                this.ready = !(settingPacket is null) && settingPacket.ready;
-                if (ready)
-                    this.flightGearModel = new FlightGearModel(settingPacket.CSV.Content, settingPacket.XML.Content, settingPacket.PATH.Content);
-            }
+            flightGearModel.setSettings(ts, procPath);
+            this.ready = true;
         }
     }
 }
