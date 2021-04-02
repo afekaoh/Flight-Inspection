@@ -12,12 +12,5 @@
     <Grid>
         <Button x:Name="Start_FG" Content="open FG" HorizontalAlignment="Left" Margin="63,34,0,0" VerticalAlignment="Top" Width="75" Click="Start_FG_Click"/>
         <Button x:Name="Start_Simulation" Content="Start Simulation" HorizontalAlignment="Left" Margin="216,34,0,0" VerticalAlignment="Top" Width="75" Click="Start_Simulation_Click"/>
-        <Button x:Name="CSV" Content="CSV" HorizontalAlignment="Left" Margin="81,157,0,0" VerticalAlignment="Top" Width="75" Click="CSV_Click"/>
-        <CheckBox x:Name="CSV_Check" Content="CSV OK"  HorizontalAlignment="Left" Margin="257,167,0,0" VerticalAlignment="Top" IsChecked="{Binding CsvFileName.Checked}" IsEnabled="False" Checked="Check_Checked"/>
-        <Button x:Name="XML" Content="XML" HorizontalAlignment="Left" Margin="81,241,0,0" VerticalAlignment="Top" Width="75" Click="XML_Click"/>
-        <CheckBox x:Name="XML_Check" Content="XML OK"  HorizontalAlignment="Left" Margin="257,241,0,0" VerticalAlignment="Top" IsChecked="{Binding XMLPath.Checked}" IsEnabled="False" Checked="Check_Checked"/>
-        <Button x:Name="Path" Content="Path" HorizontalAlignment="Left" Margin="81,196,0,0" VerticalAlignment="Top" Width="75" Click="Path_Click"/>
-        <CheckBox x:Name="Path_Check" Content="Path OK"  HorizontalAlignment="Left" Margin="257,200,0,0" VerticalAlignment="Top" IsChecked="{Binding ProcPath.Checked}" IsEnabled="False" Checked="Check_Checked"/>
-        <Button x:Name="save" Content="save" HorizontalAlignment="Left" Margin="116,317,0,0" VerticalAlignment="Top" Width="75" Click="save_Click"/>
     </Grid>
 </UserControl>

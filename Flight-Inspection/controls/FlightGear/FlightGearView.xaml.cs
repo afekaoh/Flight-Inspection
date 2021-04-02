@@ -18,6 +18,7 @@ using Flight_Inspection.controls.FlightGear;
 using System.Net.Sockets;
 using System.Net;
 using System.Threading;
+using Flight_Inspection.Pages.Settings;
 
 namespace Flight_Inspection.controls
 {
@@ -26,13 +27,12 @@ namespace Flight_Inspection.controls
     /// </summary>
     public partial class FlightGearView : UserControl
     {
-        private FlightGearViewModel fg;
-        public FlightGearView()
+        private readonly FlightGearViewModel fg;
+        public FlightGearView(SettingPacket settings = null)
         {
             InitializeComponent();
-            DataContext = new FlightGearViewModel();
+            DataContext = new FlightGearViewModel(settings);
             fg = DataContext as FlightGearViewModel;
-
         }
 
         private void Start_FG_Click(object sender, RoutedEventArgs e)
@@ -40,49 +40,14 @@ namespace Flight_Inspection.controls
             fg.StartFG();
         }
 
-        private void CSV_Click(object sender, RoutedEventArgs e)
+        internal void setSettings(SettingPacket settingPacket)
         {
-            System.Windows.Forms.FileDialog fbd = new System.Windows.Forms.OpenFileDialog();
-
-            if (fbd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                fg.CsvFileName.Content = fbd.InitialDirectory + fbd.FileName;
-            }
-        }
-
-        private void XML_Click(object sender, RoutedEventArgs e)
-        {
-            System.Windows.Forms.FileDialog fbd = new System.Windows.Forms.OpenFileDialog();
-
-            if (fbd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                fg.XMLPath.Content = fbd.InitialDirectory + fbd.FileName;
-            }
-        }
-        private void Path_Click(object sender, RoutedEventArgs e)
-        {
-            System.Windows.Forms.FolderBrowserDialog fbd = new System.Windows.Forms.FolderBrowserDialog();
-
-            if (fbd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                fg.ProcPath.Content = fbd.SelectedPath;
-            }
-        }
-
-        private void Check_Checked(object sender, RoutedEventArgs e)
-        {
-            fg.setReady();
+            fg.setSettings(settingPacket);
         }
 
         private void Start_Simulation_Click(object sender, RoutedEventArgs e)
         {
             fg.StartPlay();
-
-        }
-
-        private void save_Click(object sender, RoutedEventArgs e)
-        {
-            fg.SaveData();
         }
 
     }

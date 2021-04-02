@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Flight_Inspection.controls.FlightGear
+namespace Flight_Inspection.Settings
 {
     class Save
     {
@@ -61,7 +61,6 @@ namespace Flight_Inspection.controls.FlightGear
                 XML = table.Rows[0]["XML"] as string,
                 PATH = table.Rows[0]["PATH"] as string
             };
-
             OnInitialization(e);
         }
 
@@ -75,26 +74,26 @@ namespace Flight_Inspection.controls.FlightGear
             data.WriteXml("..\\..\\controls\\FlightGear\\FG_DATA\\save.xml");
         }
 
-/*        public SettingPacket OpenData()
-        {
-            return new SettingPacket
-            {
-                CSV = table.Rows[0]["CSV"] as string,
-                XML = table.Rows[0]["XML"] as string,
-                PATH = table.Rows[0]["PATH"] as string
-            };
+        /*        public SettingPacket OpenData()
+                {
+                    return new SettingPacket
+                    {
+                        CSV = table.Rows[0]["CSV"] as string,
+                        XML = table.Rows[0]["XML"] as string,
+                        PATH = table.Rows[0]["PATH"] as string
+                    };
 
-        }*/
-/*        public class SettingPacket
-        {
-            private string csv;
-            private string xml;
-            private string path;
+                }*/
+        /*        public class SettingPacket
+                {
+                    private string csv;
+                    private string xml;
+                    private string path;
 
-            public string CSV { get => csv; set => csv = value; }
-            public string XML { get => xml; set => xml = value; }
-            public string PATH { get => path; set => path = value; }
-        }*/
+                    public string CSV { get => csv; set => csv = value; }
+                    public string XML { get => xml; set => xml = value; }
+                    public string PATH { get => path; set => path = value; }
+                }*/
 
         public void OnInitialization(OnInitializationEventArgs e)
         {
@@ -107,6 +106,21 @@ namespace Flight_Inspection.controls.FlightGear
         public string CSV { get; set; }
         public string XML { get; set; }
         public string PATH { get; set; }
+
+        public string GetArg(string name)
+        {
+            switch (name)
+            {
+                case "CSV":
+                    return CSV;
+                case "XML":
+                    return XML;
+                case "PATH":
+                    return PATH;
+                default:
+                    return null;
+            }
+        }
 
     }
 }

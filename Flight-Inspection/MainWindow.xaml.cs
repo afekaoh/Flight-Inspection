@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Flight_Inspection.controls;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -21,9 +22,25 @@ namespace Flight_Inspection
     /// </summary>
     public partial class MainWindow : Window
     {
+        SettingsView settings;
+        FlightGearView FlightGear;
         public MainWindow()
         {
             InitializeComponent();
+            settings = new SettingsView();
+            FlightGear = new FlightGearView(settings.getSettings());
+        }
+
+        private void Setting_Click(object sender, RoutedEventArgs e)
+        {
+            frame.Navigate(settings);
+        }
+
+        private void FlightGear_Click(object sender, RoutedEventArgs e)
+        {
+            FlightGear.setSettings(settings.getSettings());
+            frame.Navigate(FlightGear);
+
         }
     }
 }

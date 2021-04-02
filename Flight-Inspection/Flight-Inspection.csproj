@@ -128,6 +128,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Pages\Settings\SettingItem.cs" />
+    <Compile Include="Pages\Settings\SettingPacket.cs" />
+    <Compile Include="Pages\Settings\SettingsView.xaml.cs">
+      <DependentUpon>SettingsView.xaml</DependentUpon>
+    </Compile>
     <Page Include="controls\FlightGear\FlightGearView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -142,7 +147,7 @@
     </Compile>
     <Compile Include="controls\FlightGear\FlightGearModel.cs" />
     <Compile Include="controls\FlightGear\FlightGearViewModel.cs" />
-    <Compile Include="controls\FlightGear\Save.cs" />
+    <Compile Include="Pages\Settings\Save.cs" />
     <Compile Include="controls\TimeSeries.cs" />
     <Compile Include="controls\FlightGear\FlightGearView.xaml.cs">
       <DependentUpon>FlightGearView.xaml</DependentUpon>
@@ -152,8 +157,13 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Pages\Settings\SettingsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Pages\Settings\SettingsViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
