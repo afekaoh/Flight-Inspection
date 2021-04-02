@@ -163,9 +163,6 @@
     </Compile>
     <Compile Include="controls\Charts1\ChartsModel.cs" />
     <Compile Include="controls\Charts1\IChartsModel.cs" />
-    <Compile Include="controls\FlightGear\FlightGearControl.xaml.cs">
-      <DependentUpon>FlightGearControl.xaml</DependentUpon>
-    </Compile>
     <Compile Include="controls\Charts1\FlightCharts.xaml.cs">
       <DependentUpon>FlightCharts.xaml</DependentUpon>
     </Compile>
