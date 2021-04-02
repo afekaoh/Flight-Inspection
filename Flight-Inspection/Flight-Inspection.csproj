@@ -132,6 +132,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="FlightData.xaml.cs">
+      <DependentUpon>FlightData.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\Settings\SettingItem.cs" />
     <Compile Include="Pages\Settings\SettingPacket.cs" />
     <Compile Include="Pages\Settings\SettingsView.xaml.cs">
@@ -142,6 +145,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="controls\Charts1\FlightCharts.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FlightData.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

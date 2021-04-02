@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Flight_Inspection.Pages.Settings
 {
-
-    class SettingsViewModel
+    public class SettingsViewModel
     {
+        public static SettingPacket settingPacket { get; set; }
         private List<SettingItem> settingItems;
         private Save save;
 
@@ -23,7 +23,7 @@ namespace Flight_Inspection.Pages.Settings
                 {new SettingItem("XML", ".xml")},
                 {new SettingItem("PATH", "") }
             };
-
+            settingPacket = new SettingPacket();
             SettingItems.ForEach(t => t.saved += SavedEvent);
             save = new Save(SaveInitialization);
         }
@@ -67,13 +67,11 @@ namespace Flight_Inspection.Pages.Settings
 
         internal SettingPacket GetSettings()
         {
-            return new SettingPacket
-            {
-                CSV = getSettingItem("CSV"),
-                XML = getSettingItem("XML"),
-                PATH = getSettingItem("PATH"),
-                ready = Ready()
-            };
+            settingPacket.CSV = getSettingItem("CSV");
+            settingPacket.XML = getSettingItem("XML");
+            settingPacket.PATH = getSettingItem("PATH");
+            settingPacket.ready = Ready();
+            return settingPacket;
         }
     }
 

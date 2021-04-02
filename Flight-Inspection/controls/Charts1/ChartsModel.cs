@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Flight_Inspection.controls.FlightGear;
+using Flight_Inspection.Pages.Settings;
+using Flight_Inspection.Settings;
 
 namespace Flight_Inspection.controls
 {
@@ -15,7 +17,7 @@ namespace Flight_Inspection.controls
 
         public ChartsModel()
         {
-            timeSeries = new TimeSeries("C:\\Users\\avri2\\source\\repos\\Flight-Inspection_\\Flight-Inspection\\controls\\FlightGear\\reg_flight.csv", "C:\\Users\\avri2\\source\\repos\\Flight-Inspection_\\Flight-Inspection\\controls\\FlightGear\\playback_small.xml");
+            timeSeries = new TimeSeries(SettingsViewModel.settingPacket.CSV.Content, SettingsViewModel.settingPacket.XML.Content);
         }
 
         public List<float> getData(string property)
@@ -27,7 +29,7 @@ namespace Flight_Inspection.controls
         {
             List<string> ls = timeSeries.getFeatureNames();
             List<Property> lp = new List<Property>();
-            foreach(string s in ls)
+            foreach (string s in ls)
             {
                 lp.Add(new Property() { Name = s });
             }

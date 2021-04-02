@@ -29,6 +29,7 @@ namespace Flight_Inspection
             InitializeComponent();
             settings = new SettingsView();
             FlightGear = new FlightGearView(settings.getSettings());
+            FlightGear.NewWindow += OnNewWindow;
         }
 
         private void Setting_Click(object sender, RoutedEventArgs e)
@@ -41,6 +42,19 @@ namespace Flight_Inspection
             FlightGear.setSettings(settings.getSettings());
             frame.Navigate(FlightGear);
 
+        }
+        public void OnNewWindow(object sender, EventArgs e)
+        {
+            FlightData flight = new FlightData();
+            flight.Closed += Flight_Closed;
+            flight.Show();
+
+            this.Hide();
+        }
+
+        private void Flight_Closed(object sender, EventArgs e)
+        {
+            this.Show();
         }
     }
 }

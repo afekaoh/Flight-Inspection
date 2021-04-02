@@ -28,6 +28,7 @@ namespace Flight_Inspection.controls
     public partial class FlightGearView : UserControl
     {
         private readonly FlightGearViewModel fg;
+        public event EventHandler NewWindow;
         public FlightGearView(SettingPacket settings = null)
         {
             InitializeComponent();
@@ -47,8 +48,10 @@ namespace Flight_Inspection.controls
 
         private void Start_Simulation_Click(object sender, RoutedEventArgs e)
         {
-            fg.StartPlay();
+            //fg.StartPlay();
+            NewWindow?.Invoke(this, e);
         }
+
 
     }
 }
