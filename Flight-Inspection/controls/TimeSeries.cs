@@ -9,7 +9,7 @@ using System.Xml;
 
 namespace Flight_Inspection.controls.FlightGear
 {
-    class TimeSeries
+    public class TimeSeries
     {
         private Dictionary<string, List<float>> TableByFeaturs;
         public List<String> Rows { get; set; }

@@ -1,6 +1,7 @@
 ﻿using Flight_Inspection.Pages.Settings;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,10 +23,12 @@ namespace Flight_Inspection
     public partial class SettingsView : Page
     {
         SettingsViewModel settings;
+        public event EventHandler OnReady;
         public SettingsView()
         {
-            this.DataContext = new SettingsViewModel();
-            settings = DataContext as SettingsViewModel;
+            settings = new SettingsViewModel();
+            this.DataContext = settings;
+            settings.PropertyChanged += onReadyChanged;
             InitializeComponent();
         }
 
@@ -51,17 +54,30 @@ namespace Flight_Inspection
                     (fbd as System.Windows.Forms.FileDialog).InitialDirectory + (fbd as System.Windows.Forms.FileDialog).FileName;
                 settings.getSettingItem(name).Content = s;
             }
-
         }
 
-        internal SettingPacket getSettings()
+        internal void updateSettings()
         {
-            return settings.GetSettings();
+            settings.UpdateSettings();
+        }
+
+        public void onReadyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            var settingsViewModel = (sender as SettingsViewModel);
+            if (e.PropertyName == "Ready" && settingsViewModel.Ready)
+            {
+                OnReadyEvent(this, e as OnReadyEventArgs);
+            }
         }
 
         private void Save_Click(object sender, RoutedEventArgs e)
         {
             settings.SaveData();
+        }
+
+        public void OnReadyEvent(object sender, OnReadyEventArgs e)
+        {
+            OnReady?.Invoke(this, e);
         }
     }
 }

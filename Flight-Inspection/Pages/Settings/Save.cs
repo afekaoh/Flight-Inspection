@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Flight_Inspection.Pages.Settings;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
@@ -12,10 +13,8 @@ namespace Flight_Inspection.Settings
     {
         private readonly DataSet data;
         private readonly DataTable table;
-        public event EventHandler Initialization;
-        public Save(EventHandler saveInitialization)
+        public Save()
         {
-            Initialization += saveInitialization;
             if (File.Exists("..\\..\\controls\\FlightGear\\FG_DATA\\save.xml"))
             {
                 data = new DataSet();
@@ -55,13 +54,13 @@ namespace Flight_Inspection.Settings
                 row["PATH"] = null;
                 table.Rows.Add(row);
             }
-            OnInitializationEventArgs e = new OnInitializationEventArgs
-            {
-                CSV = table.Rows[0]["CSV"] as string,
-                XML = table.Rows[0]["XML"] as string,
-                PATH = table.Rows[0]["PATH"] as string
-            };
-            OnInitialization(e);
+            /*            OnInitializationEventArgs e = new OnInitializationEventArgs
+                        {
+                            CSV = table.Rows[0]["CSV"] as string,
+                            XML = table.Rows[0]["XML"] as string,
+                            PATH = table.Rows[0]["PATH"] as string
+                        };
+                        OnInitialization(e);*/
         }
 
         public void AddData(string name, string data)
@@ -74,34 +73,18 @@ namespace Flight_Inspection.Settings
             data.WriteXml("..\\..\\controls\\FlightGear\\FG_DATA\\save.xml");
         }
 
-        /*        public SettingPacket OpenData()
-                {
-                    return new SettingPacket
-                    {
-                        CSV = table.Rows[0]["CSV"] as string,
-                        XML = table.Rows[0]["XML"] as string,
-                        PATH = table.Rows[0]["PATH"] as string
-                    };
-
-                }*/
-        /*        public class SettingPacket
-                {
-                    private string csv;
-                    private string xml;
-                    private string path;
-
-                    public string CSV { get => csv; set => csv = value; }
-                    public string XML { get => xml; set => xml = value; }
-                    public string PATH { get => path; set => path = value; }
-                }*/
-
-        public void OnInitialization(OnInitializationEventArgs e)
+        public DataPacket getSettings()
         {
-            Initialization?.Invoke(this, e);
+            return new DataPacket
+            {
+                CSV = table.Rows[0]["CSV"] as string,
+                XML = table.Rows[0]["XML"] as string,
+                PATH = table.Rows[0]["PATH"] as string
+            };
         }
     }
 
-    class OnInitializationEventArgs : EventArgs
+    public class DataPacket
     {
         public string CSV { get; set; }
         public string XML { get; set; }

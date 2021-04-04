@@ -13,17 +13,13 @@ namespace Flight_Inspection.controls.FlightGear
 {
     class FlightGearModel
     {
-        private readonly TimeSeries TS;
+        private TimeSeries TS;
         private readonly Process FG;
         private readonly Thread t;
 
-        public FlightGearModel(String CsvFileName, String InputUri, String ProcPath)
+        public FlightGearModel()
         {
-            this.TS = new TimeSeries(CsvFileName, InputUri);
             FG = new Process();
-            FG.StartInfo.FileName = ProcPath + "\\fgfs.exe";
-            FG.StartInfo.WorkingDirectory = ProcPath;
-            FG.StartInfo.Arguments = "--generic=socket,in,10,127.0.0.1,5400,tcp,playback_small --fdm=null";
             t = new Thread(Send_Data);
         }
 
@@ -72,6 +68,14 @@ namespace Flight_Inspection.controls.FlightGear
                     }*/
                 }
             }
+        }
+
+        internal void setSettings(TimeSeries ts, string procPath)
+        {
+            this.TS = ts;
+            FG.StartInfo.FileName = procPath + "\\fgfs.exe";
+            FG.StartInfo.WorkingDirectory = procPath;
+            FG.StartInfo.Arguments = "--generic=socket,in,10,127.0.0.1,5400,tcp,playback_small --fdm=null";
         }
 
         ~FlightGearModel()

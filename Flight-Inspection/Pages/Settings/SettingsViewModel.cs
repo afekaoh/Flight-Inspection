@@ -1,17 +1,33 @@
 ﻿using Flight_Inspection.Settings;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Flight_Inspection.Pages.Settings
 {
-
-    class SettingsViewModel
+    public class SettingsViewModel : INotifyPropertyChanged
     {
         private List<SettingItem> settingItems;
+        public event PropertyChangedEventHandler PropertyChanged;
+        private bool ready;
+        public bool Ready
+        {
+            get
+            {
+                return ready;
+            }
+            private set
+            {
+                ready = value;
+                OnPropertyChanged();
+            }
+        }
         private Save save;
+
 
         public List<SettingItem> SettingItems { get => settingItems; set => settingItems = value; }
 
@@ -23,9 +39,8 @@ namespace Flight_Inspection.Pages.Settings
                 {new SettingItem("XML", ".xml")},
                 {new SettingItem("PATH", "") }
             };
-
-            SettingItems.ForEach(t => t.saved += SavedEvent);
-            save = new Save(SaveInitialization);
+            SettingItems.ForEach(t => t.PropertyChanged += SavedEvent);
+            save = new Save();
         }
 
         public SettingItem getSettingItem(string name)
@@ -33,26 +48,15 @@ namespace Flight_Inspection.Pages.Settings
             return SettingItems.Find(t => t.Name == name);
         }
 
-        void SaveInitialization(object sender, EventArgs e)
+        void SavedEvent(object sender, PropertyChangedEventArgs e)
         {
-            foreach (var item in SettingItems)
-            {
-                item.Content = (e as OnInitializationEventArgs).GetArg(item.Name);
-            }
-        }
-
-        void SavedEvent(object sender, EventArgs e)
-        {
-            if (!(save is null))
+            if (e.PropertyName == "Content")
             {
                 var si = sender as SettingItem;
                 AddData(si.Name, si.Content);
-            }
-        }
 
-        public bool Ready()
-        {
-            return SettingItems.All(t => t.Checked);
+                Ready = SettingItems.All(t => t.Checked);
+            }
         }
 
         public void AddData(string name, string data)
@@ -65,21 +69,21 @@ namespace Flight_Inspection.Pages.Settings
             save.SaveData();
         }
 
-        internal SettingPacket GetSettings()
+        internal OnReadyEventArgs GetSettings(string name)
         {
-            return new SettingPacket
-            {
-                CSV = getSettingItem("CSV"),
-                XML = getSettingItem("XML"),
-                PATH = getSettingItem("PATH"),
-                ready = Ready()
-            };
+            return new OnReadyEventArgs(name, getSettingItem("CSV"), getSettingItem("XML"), getSettingItem("PATH"), Ready);
+        }
+
+        public void UpdateSettings()
+        {
+            var s = save.getSettings();
+            settingItems.ForEach(t => t.Content = s.GetArg(t.Name));
+        }
+
+        protected void OnPropertyChanged([CallerMemberName] string name = null)
+        {
+            OnReadyEventArgs e = GetSettings(name);
+            PropertyChanged?.Invoke(this, e);
         }
     }
-
-    public class OnSavedEventArgs : EventArgs
-    {
-        public bool ToSave { get; set; }
-    }
-
 }

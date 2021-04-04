@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Flight_Inspection.controls.FlightGear;
+using Flight_Inspection.Pages.Settings;
+using Flight_Inspection.Settings;
 
 namespace Flight_Inspection.controls
 {
@@ -13,21 +15,22 @@ namespace Flight_Inspection.controls
         public event PropertyChangedEventHandler PropertyChanged;
         private TimeSeries timeSeries;
 
+        public TimeSeries TimeSeries { get => timeSeries; set => timeSeries = value; }
+
         public ChartsModel()
         {
-            timeSeries = new TimeSeries("C:\\Users\\avri2\\source\\repos\\Flight-Inspection_\\Flight-Inspection\\controls\\FlightGear\\reg_flight.csv", "C:\\Users\\avri2\\source\\repos\\Flight-Inspection_\\Flight-Inspection\\controls\\FlightGear\\playback_small.xml");
         }
 
         public List<float> getData(string property)
         {
-            return timeSeries.getFeatureData(property);
+            return TimeSeries.getFeatureData(property);
         }
 
         public List<Property> GetProperties()
         {
-            List<string> ls = timeSeries.getFeatureNames();
+            List<string> ls = TimeSeries.getFeatureNames();
             List<Property> lp = new List<Property>();
-            foreach(string s in ls)
+            foreach (string s in ls)
             {
                 lp.Add(new Property() { Name = s });
             }

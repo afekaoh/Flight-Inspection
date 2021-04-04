@@ -28,10 +28,11 @@ namespace Flight_Inspection.controls
     public partial class FlightGearView : UserControl
     {
         private readonly FlightGearViewModel fg;
-        public FlightGearView(SettingPacket settings = null)
+        public event EventHandler NewWindow;
+        public FlightGearView()
         {
             InitializeComponent();
-            DataContext = new FlightGearViewModel(settings);
+            DataContext = new FlightGearViewModel();
             fg = DataContext as FlightGearViewModel;
         }
 
@@ -40,16 +41,16 @@ namespace Flight_Inspection.controls
             fg.StartFG();
         }
 
-        internal void setSettings(SettingPacket settingPacket)
+        internal void updateSettings(TimeSeries ts, string procPath)
         {
-            fg.setSettings(settingPacket);
+            fg.setSettings(ts, procPath);
         }
 
         private void Start_Simulation_Click(object sender, RoutedEventArgs e)
         {
+            NewWindow?.Invoke(this, e);
             fg.StartPlay();
         }
-
     }
 }
 
