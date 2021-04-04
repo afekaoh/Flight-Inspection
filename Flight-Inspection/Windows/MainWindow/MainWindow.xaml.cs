@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -27,8 +28,17 @@ namespace Flight_Inspection
         SettingsView settings;
         FlightGearView FlightGear;
         TimeSeries ts;
+        /*
+         * 
+                [DllImport("C:\\Users\\afeka\\OneDrive - Bar-Ilan University\\Code projects\\Advance-Programming-2\\Flight-Inspection\\Flight-Inspection\\Windows\\MainWindow\\anomaly_detection_util.dll", CallingConvention = CallingConvention.Cdecl)]
+                public static extern float pearson([MarshalAs(UnmanagedType.LPArray)] float[] x, [MarshalAs(UnmanagedType.LPArray)] float[] y, int sizeX, int sizeY);
+                    float[] x = { 1, 2, 5, 7, 9, 10 };
+                    float[] y = { 5, 6, 8, 10, 12, 14 };
+                    Console.WriteLine(pearson(x, y, x.Length, y.Length));
+         */
         public MainWindow()
         {
+
             InitializeComponent();
             settings = new SettingsView();
             settings.OnReady += Settings_OnReady;
