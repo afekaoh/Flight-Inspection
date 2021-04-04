@@ -235,6 +235,7 @@
   <ItemGroup>
     <Content Include="plugins\anomaly_detection_util.dll" />
     <Resource Include="controls\FlightGear\FG_Data\playback_small.xml" />
+    <Resource Include="controls\FlightGear\FG_Data\save.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
