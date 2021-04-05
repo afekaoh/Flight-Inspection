@@ -152,6 +152,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="controls\Video\VideoPanelModel.cs" />
+    <Compile Include="controls\Video\VideoPanelView.xaml.cs">
+      <DependentUpon>VideoPanelView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="controls\Video\VideoPanelViewModel.cs" />
     <Compile Include="Pages\Settings\OnReadyEventArgs.cs" />
     <Compile Include="Windows\FligthData\FlightData.xaml.cs">
       <DependentUpon>FlightData.xaml</DependentUpon>
@@ -165,6 +170,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="controls\Charts1\FlightCharts.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="controls\Video\VideoPanelView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
