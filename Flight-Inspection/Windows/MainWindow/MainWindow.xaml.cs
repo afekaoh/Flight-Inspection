@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -38,6 +39,20 @@ namespace Flight_Inspection
          */
         public MainWindow()
         {
+
+            this.DataContext = new MainWindowViewModel();
+            mainWindowViewModel = DataContext as MainWindowViewModel;
+            this.pages = new List<IViewPages>();
+            pages.Add(new SettingsView());
+            pages.Add(new FlightGearView());
+            pages.ForEach(p =>
+            {
+                p.OnReady += Settings_OnReady;
+                p.NewWindow += OnNewWindow;
+                p.Closed += Flight_Closed;
+                mainWindowViewModel.AddViewModel(p.GetViewModel());
+            });
+            this.Initialized += OnInitializedMain;
 
             InitializeComponent();
             settings = new SettingsView();

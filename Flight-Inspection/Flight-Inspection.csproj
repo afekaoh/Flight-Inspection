@@ -160,7 +160,9 @@
     <Compile Include="Pages\Settings\SettingsView.xaml.cs">
       <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>
-    <Page Include="controls\FlightGear\FlightGearView.xaml">
+    <Compile Include="Pages\IViewPages.cs" />
+    <Compile Include="Windows\MainWindow\MainWindowViewModel.cs" />
+    <Page Include="Pages\FlightGear\FlightGearView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

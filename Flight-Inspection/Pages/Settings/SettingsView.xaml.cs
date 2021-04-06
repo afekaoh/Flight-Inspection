@@ -29,6 +29,7 @@ namespace Flight_Inspection
             settings = new SettingsViewModel();
             this.DataContext = settings;
             settings.PropertyChanged += onReadyChanged;
+            this.Name = "Settings";
             InitializeComponent();
         }
 
