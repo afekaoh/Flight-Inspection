@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 
-namespace Flight_Inspection.controls.FlightGear
+namespace Flight_Inspection.controls
 {
     public class TimeSeries
     {

@@ -4,7 +4,6 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Flight_Inspection.controls.FlightGear;
 using Flight_Inspection.Pages.Settings;
 using Flight_Inspection.Settings;
 
