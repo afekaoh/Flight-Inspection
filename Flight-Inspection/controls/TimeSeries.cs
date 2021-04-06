@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
+using System.Text;
+using System.Threading.Tasks;
 using System.Xml;
 
-namespace Flight_Inspection.controls
+namespace Flight_Inspection.controls.FlightGear
 {
     public class TimeSeries
     {

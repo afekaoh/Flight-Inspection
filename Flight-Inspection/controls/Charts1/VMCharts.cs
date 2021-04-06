@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Flight_Inspection.controls.FlightGear;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -16,13 +17,14 @@ namespace Flight_Inspection.controls
         public VMCharts()
         {
             charts = new ChartsModel();
+            
         }
 
         public List<Property> GetNames()
         {
             return charts.GetProperties();
         }
-        private List<float> getData(string property)
+        private Property getData(string property)
         {
             return charts.getData(property);
         }
@@ -34,7 +36,7 @@ namespace Flight_Inspection.controls
         }
         public List<(float, float)> getDataContent(string content, string second)
         {
-            return charts.getDataContent(content, second);
+            return charts.getDataContentCor(content);
         }
 
         internal void setTimeSeries(TimeSeries ts)

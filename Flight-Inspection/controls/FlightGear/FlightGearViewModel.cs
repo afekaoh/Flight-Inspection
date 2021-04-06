@@ -1,5 +1,4 @@
-﻿using Flight_Inspection.Pages.FlightGear;
-using Flight_Inspection.Pages.Settings;
+﻿using Flight_Inspection.Pages.Settings;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -7,12 +6,12 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
-using Flight_Inspection.controls;
 
-namespace Flight_Inspection.Pages.FlightGear
+namespace Flight_Inspection.controls.FlightGear
 {
-    class FlightGearViewModel : IPagesViewModel
+    class FlightGearViewModel : INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
         private FlightGearModel flightGearModel;
         private TimeSeries ts;
         private bool ready;
@@ -41,15 +40,16 @@ namespace Flight_Inspection.Pages.FlightGear
 
         }
 
-        public override void SetSettings(SettingsArgs settingsArgs)
+
+        protected void OnPropertyChanged([CallerMemberName] string name = null)
         {
-            flightGearModel.setSettings(settingsArgs.ts, settingsArgs.procPath);
-            this.Ts = settingsArgs.ts;
-            this.ready = true;
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
 
-        public override void UpdateSettings()
+        internal void setSettings(TimeSeries ts, string procPath)
         {
+            flightGearModel.setSettings(ts, procPath);
+            this.ready = true;
         }
     }
 }

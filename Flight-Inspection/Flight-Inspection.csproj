@@ -152,10 +152,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="controls\IControlViewModel.cs" />
-    <Compile Include="IViewModel.cs" />
-    <Compile Include="Pages\IPagesViewModel.cs" />
-    <Compile Include="controls\SettingsArgs.cs" />
     <Compile Include="Pages\Settings\OnReadyEventArgs.cs" />
     <Compile Include="Windows\FligthData\FlightData.xaml.cs">
       <DependentUpon>FlightData.xaml</DependentUpon>
@@ -164,9 +160,7 @@
     <Compile Include="Pages\Settings\SettingsView.xaml.cs">
       <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\IViewPages.cs" />
-    <Compile Include="Windows\MainWindow\MainWindowViewModel.cs" />
-    <Page Include="Pages\FlightGear\FlightGearView.xaml">
+    <Page Include="controls\FlightGear\FlightGearView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -186,11 +180,11 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Pages\FlightGear\FlightGearModel.cs" />
-    <Compile Include="Pages\FlightGear\FlightGearViewModel.cs" />
+    <Compile Include="controls\FlightGear\FlightGearModel.cs" />
+    <Compile Include="controls\FlightGear\FlightGearViewModel.cs" />
     <Compile Include="Pages\Settings\Save.cs" />
     <Compile Include="controls\TimeSeries.cs" />
-    <Compile Include="Pages\FlightGear\FlightGearView.xaml.cs">
+    <Compile Include="controls\FlightGear\FlightGearView.xaml.cs">
       <DependentUpon>FlightGearView.xaml</DependentUpon>
       <SubType>UserControl</SubType>
     </Compile>
@@ -200,7 +194,6 @@
       <DependentUpon>FlightCharts.xaml</DependentUpon>
     </Compile>
     <Compile Include="controls\Charts1\VMCharts.cs" />
-    <Compile Include="Windows\FligthData\FlightDataViewModel.cs" />
     <Compile Include="Windows\MainWindow\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -229,7 +222,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="Pages\Settings\FG_Data\reg_flight.csv" />
+    <None Include="controls\FlightGear\FG_Data\reg_flight.csv" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -241,7 +234,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="plugins\anomaly_detection_util.dll" />
-    <Resource Include="Pages\Settings\FG_Data\playback_small.xml" />
+    <Resource Include="controls\FlightGear\FG_Data\playback_small.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,5 +1,5 @@
 ﻿using Flight_Inspection.controls;
-using Flight_Inspection.Windows.FligthData;
+using Flight_Inspection.controls.FlightGear;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,28 +23,21 @@ namespace Flight_Inspection
     public partial class FlightData : Window
     {
         private FlightCharts fc;
-        readonly FlightDataViewModel flight;
+        private TimeSeries ts;
         public FlightData()
         {
-            this.DataContext = new FlightDataViewModel();
-            flight = DataContext as FlightDataViewModel;
-            flight.PropertyChanged += OnReady;
             InitializeComponent();
             fc = new FlightCharts();
             frame1.Navigate(fc);
         }
 
-        public void OnReady(object sender, EventArgs e)
-        {
-            fc.setTimeSeries(TS);
-        }
-
         internal TimeSeries TS
         {
-            get { return flight.Ts; }
+            get { return ts; }
             set
             {
-                flight.Ts = value;
+                ts = value;
+                fc.setTimeSeries(TS);
             }
         }
     }
