@@ -1,5 +1,4 @@
-﻿using Flight_Inspection.controls;
-using Flight_Inspection.Settings;
+﻿using Flight_Inspection.Settings;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -10,9 +9,10 @@ using System.Threading.Tasks;
 
 namespace Flight_Inspection.Pages.Settings
 {
-    public class SettingsViewModel : IPagesViewModel
+    public class SettingsViewModel : INotifyPropertyChanged
     {
         private List<SettingItem> settingItems;
+        public event PropertyChangedEventHandler PropertyChanged;
         private bool ready;
         public bool Ready
         {
@@ -74,20 +74,16 @@ namespace Flight_Inspection.Pages.Settings
             return new OnReadyEventArgs(name, getSettingItem("CSV"), getSettingItem("XML"), getSettingItem("PATH"), Ready);
         }
 
-        public override void UpdateSettings()
+        public void UpdateSettings()
         {
-            var s = save.GetSettings();
+            var s = save.getSettings();
             settingItems.ForEach(t => t.Content = s.GetArg(t.Name));
         }
 
-        public override void OnPropertyChanged([CallerMemberName] string name = null, PropertyChangedEventArgs ea = null)
+        protected void OnPropertyChanged([CallerMemberName] string name = null)
         {
             OnReadyEventArgs e = GetSettings(name);
-            base.OnPropertyChanged(name, e);
-        }
-
-        public override void SetSettings(SettingsArgs settingsArgs)
-        {
+            PropertyChanged?.Invoke(this, e);
         }
     }
 }

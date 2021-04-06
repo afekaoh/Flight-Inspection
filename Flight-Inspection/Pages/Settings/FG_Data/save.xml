@@ -1,8 +1,0 @@
-<?xml version="1.0" standalone="yes"?>
-<Settings>
-  <Path_x0020_Locations>
-    <CSV>C:\Users\afeka\OneDrive - Bar-Ilan University\Code projects\Advance-Programming-2\Flight-Inspection\Flight-Inspection\Pages\Settings\FG_Data\reg_flight.csv</CSV>
-    <XML>C:\Users\afeka\OneDrive - Bar-Ilan University\Code projects\Advance-Programming-2\Flight-Inspection\Flight-Inspection\Pages\Settings\FG_Data\playback_small.xml</XML>
-    <PATH>C:\Program Files\FlightGear 2020.3.6\bin</PATH>
-  </Path_x0020_Locations>
-</Settings>

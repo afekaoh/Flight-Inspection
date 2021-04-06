@@ -17,8 +17,8 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <ListBox Name="lbTodoList" HorizontalContentAlignment="Stretch" Width="150" Grid.RowSpan="3"  Margin="5,5,5,5">
-            <ListBox.ItemTemplate>
+        <ListBox Name="lbTodoList" HorizontalContentAlignment="Stretch" MouseDoubleClick="choosenOption" KeyUp="lbTodoList_KeyDown" Width="150" Grid.RowSpan="3"  Margin="5,5,5,5"  >
+            <ListBox.ItemTemplate >
                 <DataTemplate >
                     <ContentControl Content="{Binding Name}"  />
                 </DataTemplate>
