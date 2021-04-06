@@ -5,7 +5,6 @@ using System.Windows.Input;
 using System.Drawing;
 using System.Windows.Media;
 using System;
-using Flight_Inspection.controls.FlightGear;
 
 namespace Flight_Inspection.controls
 {
