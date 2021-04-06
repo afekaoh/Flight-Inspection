@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:flightgear="clr-namespace:Flight_Inspection.Pages.FlightGear"
+             xmlns:local="clr-namespace:Flight_Inspection.controls" 
+             xmlns:flightgear="clr-namespace:Flight_Inspection.controls.FlightGear"
              d:DataContext="{d:DesignInstance Type=flightgear:FlightGearViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
@@ -12,4 +13,4 @@
         <Button x:Name="Start_FG" Content="open FG" HorizontalAlignment="Left" Margin="63,34,0,0" VerticalAlignment="Top" Width="75" Click="Start_FG_Click"/>
         <Button x:Name="Start_Simulation" Content="Start Simulation" HorizontalAlignment="Left" Margin="216,34,0,0" VerticalAlignment="Top" Width="75" Click="Start_Simulation_Click"/>
     </Grid>
-</Page>
+</UserControl>

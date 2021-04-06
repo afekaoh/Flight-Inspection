@@ -361,5 +361,3 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
-
-Flight-Inspection/Flight-Inspection/controls/FlightGear/FG_Data/save.xml

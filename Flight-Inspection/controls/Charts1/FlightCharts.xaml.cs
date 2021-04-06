@@ -5,6 +5,7 @@ using System.Windows.Input;
 using System.Drawing;
 using System.Windows.Media;
 using System;
+using Flight_Inspection.controls.FlightGear;
 
 namespace Flight_Inspection.controls
 {
@@ -38,7 +39,6 @@ namespace Flight_Inspection.controls
             List<Property> ls = vm.GetNames();
             string next = ls[rand.Next(0, ls.Count)].Name;
             chart1.DataSource = vm.getDataContent(content);
-            chart1.Text = content;
             chart1.Series["series"].XValueMember = "Key";
             chart1.Series["series"].YValueMembers = "Value";
             chart1.DataBind();
