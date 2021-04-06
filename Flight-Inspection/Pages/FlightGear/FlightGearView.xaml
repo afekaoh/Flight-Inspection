@@ -1,4 +1,4 @@
-﻿<Page x:Name="FG_Control" x:Class="Flight_Inspection.Pages.FlightGear.FlightGearView"
+﻿<Page x:Name="FlightGear" x:Class="Flight_Inspection.Pages.FlightGear.FlightGearView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 

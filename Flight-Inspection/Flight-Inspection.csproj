@@ -165,6 +165,7 @@
       <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\IViewPages.cs" />
+    <Compile Include="controls\IControlView.cs" />
     <Compile Include="Windows\MainWindow\MainWindowViewModel.cs" />
     <Page Include="Pages\FlightGear\FlightGearView.xaml">
       <SubType>Designer</SubType>
