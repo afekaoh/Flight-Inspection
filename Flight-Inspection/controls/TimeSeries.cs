@@ -4,9 +4,9 @@ using System.IO;
 using System.Linq;
 using System.Xml;
 
-namespace Flight_Inspection.controls.FlightGear
+namespace Flight_Inspection.controls
 {
-    class TimeSeries
+    public class TimeSeries
     {
         private Dictionary<string, List<float>> TableByFeaturs;
         public List<String> Rows { get; set; }

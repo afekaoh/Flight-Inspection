@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Flight_Inspection.controls"
              mc:Ignorable="d" 
+             xmlns:winformchart="clr-namespace:System.Windows.Forms.DataVisualization.Charting;assembly=System.Windows.Forms.DataVisualization"
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <Grid.ColumnDefinitions>
@@ -19,13 +20,53 @@
         <ListBox Name="lbTodoList" HorizontalContentAlignment="Stretch" Width="150" Grid.RowSpan="3"  Margin="5,5,5,5">
             <ListBox.ItemTemplate>
                 <DataTemplate >
-                    <ContentControl Content="{Binding Name}" MouseDoubleClick="choosenOption" />
+                    <ContentControl Content="{Binding Name}"  />
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <Canvas Grid.Column="1" Height="150" Margin="5,5,5,5" Name="graph1" Background="BlueViolet"/>
-        <Canvas Grid.Column="2" Name="graph2" Margin="5,5,5,5" Height="150" Background ="Aqua"/>
-        <Canvas Grid.ColumnSpan="2" Name="graph3" Grid.Column="1" Grid.Row="1" Margin="5,5,5,5" Background="Beige" />
+        <!--<Canvas Grid.Column="1" Height="150" Margin="5,5,5,5" Name="chart1" Background="BlueViolet">
+        </Canvas>-->
+        <StackPanel Grid.Column="1" Height="150" Margin="5,5,5,5">
+            <WindowsFormsHost Height="150" Margin="5,5,5,5" >
+                <winformchart:Chart x:Name="chart1" Dock="None" >
+                    <winformchart:Chart.Series>
+                        <winformchart:Series Name="series" ChartType="Line" Font="Ariel"/>
+                    </winformchart:Chart.Series>
+                    <winformchart:Chart.ChartAreas>
+                        <winformchart:ChartArea Name="chartArea"  />
+                    </winformchart:Chart.ChartAreas>
+                </winformchart:Chart>
+   
+            </WindowsFormsHost>
+        </StackPanel>
+
+        <StackPanel Grid.Column="2" Height="150" Margin="5,5,5,5">
+            <WindowsFormsHost Height="150" Margin="5,5,5,5" >
+                <winformchart:Chart x:Name="chart2" Dock="None" >
+                    <winformchart:Chart.Series>
+                        <winformchart:Series Name="seriesSecond" ChartType="Line" Font="Ariel" LabelForeColor="DarkGray"/>
+                    </winformchart:Chart.Series>
+                    <winformchart:Chart.ChartAreas>
+                        <winformchart:ChartArea Name="chartAreaSecond"  />
+                    </winformchart:Chart.ChartAreas>
+                </winformchart:Chart>
+
+            </WindowsFormsHost>
+        </StackPanel>
+
+        <StackPanel Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Height="150" Margin="5,5,5,5">
+            <WindowsFormsHost Height="150" Margin="5,5,5,5" >
+                <winformchart:Chart x:Name="chart3" Dock="None" >
+                    <winformchart:Chart.Series>
+                        <winformchart:Series Name="seriesThird" ChartType="Point" Font="Ariel" LabelForeColor="DarkGray"/>
+                    </winformchart:Chart.Series>
+                    <winformchart:Chart.ChartAreas>
+                        <winformchart:ChartArea Name="chartAreaThird"  />
+                    </winformchart:Chart.ChartAreas>
+                </winformchart:Chart>
+
+            </WindowsFormsHost>
+        </StackPanel>
 
     </Grid>
 </UserControl>

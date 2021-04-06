@@ -1,6 +1,10 @@
 ﻿using System.Collections.Generic;
+using System.Windows.Forms.DataVisualization.Charting;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Drawing;
+using System.Windows.Media;
+using System;
 
 namespace Flight_Inspection.controls
 {
@@ -15,7 +19,17 @@ namespace Flight_Inspection.controls
             InitializeComponent();
             vm = new VMCharts();
             DataContext = vm;
+        }
+        public void setTimeSeries(TimeSeries ts)
+        {
+            vm.setTimeSeries(ts);
             lbTodoList.ItemsSource = vm.GetNames();
+            chart1.ChartAreas["chartArea"].AxisX.MajorGrid.LineWidth = 0;
+            chart1.ChartAreas["chartArea"].AxisY.MajorGrid.LineWidth = 0;
+            chart3.ChartAreas["chartAreaThird"].AxisY.MajorGrid.LineWidth = 0;
+            chart3.ChartAreas["chartAreaThird"].AxisX.MajorGrid.LineWidth = 0;
+            chart2.ChartAreas["chartAreaSecond"].AxisY.MajorGrid.LineWidth = 0;
+            chart2.ChartAreas["chartAreaSecond"].AxisX.MajorGrid.LineWidth = 0;
         }
 
         private void choosenOption(object sender, MouseButtonEventArgs e)

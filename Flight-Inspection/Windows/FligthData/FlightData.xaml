@@ -1,13 +1,15 @@
-﻿<Window x:Class="Flight_Inspection.MainWindow"
+﻿<Window x:Class="Flight_Inspection.FlightData"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Flight_Inspection"
-        xmlns:control="clr-namespace:Flight_Inspection.controls"
+        xmlns:local="clr-namespace:Flight_Inspection" 
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="FlightData" Height="450" Width="800">
     <Grid>
-        <control:FlightGearControl/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Frame x:Name="frame1"></Frame>
     </Grid>
 </Window>
