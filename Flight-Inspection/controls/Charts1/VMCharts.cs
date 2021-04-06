@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Flight_Inspection.controls.FlightGear;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -7,27 +8,38 @@ using System.Threading.Tasks;
 
 namespace Flight_Inspection.controls
 {
-    class VMCharts : INotifyPropertyChanged
+    class VMCharts : IControlViewModel
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-        public class Name {
-            public string VM_Property
-            {
-                get; set;
-            }
-        }
-        public VMCharts() {
+        private ChartsModel charts;
+
+        public VMCharts()
+        {
+            charts = new ChartsModel();
             
         }
 
-        public List<Name> GetNames()
+        public List<Property> GetNames()
         {
-            List<Name> ls = new List<Name>();
-            ls.Add(new Name() { VM_Property = "A" });
-            ls.Add(new Name() { VM_Property = "B" });
-            ls.Add(new Name() { VM_Property = "C" });
-            ls.Add(new Name() { VM_Property = "D" });
-            return ls;
+            return charts.GetProperties();
+        }
+        private Property getData(string property)
+        {
+            return charts.getData(property);
+        }
+
+        public Dictionary<int, float> getDataContent(string content)
+        {
+            return charts.getDataContent(content);
+
+        }
+        public List<(float, float)> getDataContent(string content, string second)
+        {
+            return charts.getDataContentCor(content);
+        }
+
+        public override void SetSettings(SettingsArgs settingsArgs)
+        {
+            charts.TimeSeries = settingsArgs.ts;
         }
     }
 }

@@ -1,0 +1,8 @@
+<?xml version="1.0" standalone="yes"?>
+<Settings>
+  <Path_x0020_Locations>
+    <CSV>C:\Users\avri2\source\repos\Flight-Inspection_\Flight-Inspection\controls\FlightGear\FG_Data\reg_flight.csv</CSV>
+    <XML>C:\Users\avri2\source\repos\Flight-Inspection_\Flight-Inspection\controls\FlightGear\FG_Data\playback_small.xml</XML>
+    <PATH>C:\Program Files\FlightGear 2020.3.6\bin</PATH>
+  </Path_x0020_Locations>
+</Settings>
