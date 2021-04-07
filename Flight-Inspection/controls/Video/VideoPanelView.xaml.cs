@@ -18,14 +18,19 @@ namespace Flight_Inspection.controls.Video
     /// <summary>
     /// Interaction logic for VideoPanelView.xaml
     /// </summary>
-    public partial class VideoPanelView : UserControl
+    public partial class VideoPanelView : UserControl, IControlView
     {
         VideoPanelViewModel videoPanelViewModel;
         public VideoPanelView()
         {
             InitializeComponent();
-            videoPanelViewModel = new VideoPanelViewModel(new VideoPanelModel());
+            videoPanelViewModel = new VideoPanelViewModel();
             DataContext = videoPanelViewModel;
+        }
+
+        public IControlViewModel GetViewModel()
+        {
+            return videoPanelViewModel;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
