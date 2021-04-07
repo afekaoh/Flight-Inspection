@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace Flight_Inspection
 {
+    // a father Interface for all the ViewModel 
     interface IViewModel : INotifyPropertyChanged
     {
         void SetSettings(SettingsArgs settingsArgs);
