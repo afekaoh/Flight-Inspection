@@ -10,7 +10,13 @@ namespace Flight_Inspection.controls.Graphs
     class VMCharts : IControlViewModel
     {
         private ChartsModel charts;
+        public event EventHandler Ready;
 
+
+        public void OnReady()
+        {
+            Ready?.Invoke(this, EventArgs.Empty);
+        }
 
         public VMCharts()
         {
@@ -40,6 +46,7 @@ namespace Flight_Inspection.controls.Graphs
         public override void SetSettings(SettingsArgs settingsArgs)
         {
             charts.TimeSeries = settingsArgs.ts;
+            OnReady();
         }
     }
 }

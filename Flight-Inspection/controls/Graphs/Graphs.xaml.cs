@@ -19,6 +19,7 @@ namespace Flight_Inspection.controls
             InitializeComponent();
             vm = new controls.Graphs.VMGraphs();
             DataContext = vm;
+            vm.Ready += OnReady;
         }
 
         public IControlViewModel GetViewModel()
@@ -26,7 +27,7 @@ namespace Flight_Inspection.controls
             return vm;
         }
 
-        public void setTimeSeries(TimeSeries ts)
+        public void OnReady(object sender, EventArgs e)
         {
             lbTodoList.ItemsSource = vm.GetNames();
             chart1.ChartAreas["chartArea"].AxisX.MajorGrid.LineWidth = 0;
