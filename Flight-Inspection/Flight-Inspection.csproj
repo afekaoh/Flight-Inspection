@@ -152,11 +152,21 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="controls\Joystick\JoystickModel.cs" />
     <Compile Include="controls\IControlView.cs" />
     <Compile Include="controls\IControlViewModel.cs" />
+    <Compile Include="controls\Joystick\JoystickView.xaml.cs">
+      <DependentUpon>JoystickView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="controls\Joystick\JoystickViewModel.cs" />
     <Compile Include="IViewModel.cs" />
     <Compile Include="Pages\IPagesViewModel.cs" />
     <Compile Include="controls\SettingsArgs.cs" />
+    <Compile Include="controls\Video\VideoPanelModel.cs" />
+    <Compile Include="controls\Video\VideoPanelView.xaml.cs">
+      <DependentUpon>VideoPanelView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="controls\Video\VideoPanelViewModel.cs" />
     <Compile Include="Pages\Settings\OnReadyEventArgs.cs" />
     <Compile Include="Windows\FligthData\FlightData.xaml.cs">
       <DependentUpon>FlightData.xaml</DependentUpon>
@@ -167,11 +177,19 @@
     </Compile>
     <Compile Include="Pages\IViewPages.cs" />
     <Compile Include="Windows\MainWindow\MainWindowViewModel.cs" />
+    <Page Include="controls\Joystick\JoystickView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\FlightGear\FlightGearView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="controls\Charts\FlightCharts.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="controls\Video\VideoPanelView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

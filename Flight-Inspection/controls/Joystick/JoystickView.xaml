@@ -6,20 +6,7 @@
              xmlns:local="clr-namespace:Flight_Inspection.controls.Joystick"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Background="White">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="100" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-            <RowDefinition Height="100" />
-        </Grid.RowDefinitions>
-        <Canvas Background="Gray" Grid.Column="1" >
-            <TextBox Height="23" Canvas.Left="259" TextWrapping="Wrap" Text="TextBox" Canvas.Top="108" Width="120" />
-            <TextBox Height="23" Canvas.Left="259" TextWrapping="Wrap" Text="TextBox" Canvas.Top="150" Width="120"/>
-            <TextBox Height="23" Canvas.Left="259" TextWrapping="Wrap" Text="TextBox" Canvas.Top="205" Width="120"/>
-            <TextBox Height="23" Canvas.Left="259" TextWrapping="Wrap" Text="TextBox" Canvas.Top="254" Width="120"/>
+    <Grid>
 
         </Canvas>
     </Grid>
