@@ -34,6 +34,7 @@ namespace Flight_Inspection
             InitializeComponent();
             views = new List<IControlView>();
             views.Add(new FlightCharts());
+            
             views.ForEach(v => flight.AddViewModel(v.GetViewModel()));
             Charts.Navigate(views.Find(v => v.Name == "Charts"));
         }
