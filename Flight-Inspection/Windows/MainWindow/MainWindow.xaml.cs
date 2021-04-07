@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -44,8 +45,8 @@ namespace Flight_Inspection
                 p.OnReady += Settings_OnReady;
                 p.NewWindow += OnNewWindow;
                 p.Closed += Flight_Closed;
+                mainWindowViewModel.AddViewModel(p.GetViewModel());
             });
-            pages.ForEach(p => mainWindowViewModel.AddViewModel(p.GetViewModel()));
             this.Initialized += OnInitializedMain;
 
             InitializeComponent();

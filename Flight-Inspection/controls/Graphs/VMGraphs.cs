@@ -5,24 +5,30 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Flight_Inspection.controls
+namespace Flight_Inspection.controls.Graphs
 {
-    class VMCharts : INotifyPropertyChanged
+    class VMCharts : IControlViewModel
     {
         private ChartsModel charts;
+        public event EventHandler Ready;
 
-        public event PropertyChangedEventHandler PropertyChanged;
+
+        public void OnReady()
+        {
+            Ready?.Invoke(this, EventArgs.Empty);
+        }
 
         public VMCharts()
         {
             charts = new ChartsModel();
+
         }
 
         public List<Property> GetNames()
         {
             return charts.GetProperties();
         }
-        private List<float> getData(string property)
+        private Property getData(string property)
         {
             return charts.getData(property);
         }
@@ -34,12 +40,13 @@ namespace Flight_Inspection.controls
         }
         public List<(float, float)> getDataContent(string content, string second)
         {
-            return charts.getDataContent(content, second);
+            return charts.getDataContentCor(content);
         }
 
-        internal void setTimeSeries(TimeSeries ts)
+        public override void SetSettings(SettingsArgs settingsArgs)
         {
-            charts.TimeSeries = ts;
+            charts.TimeSeries = settingsArgs.ts;
+            OnReady();
         }
     }
 }

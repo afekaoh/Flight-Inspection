@@ -22,21 +22,24 @@ namespace Flight_Inspection
     /// </summary>
     public partial class FlightData : Window
     {
-        private FlightCharts fc;
         readonly FlightDataViewModel flight;
+        readonly List<IControlView> views;
+
         public FlightData()
         {
             this.DataContext = new FlightDataViewModel();
             flight = DataContext as FlightDataViewModel;
             flight.PropertyChanged += OnReady;
             InitializeComponent();
-            fc = new FlightCharts();
-            frame1.Navigate(fc);
+            views = new List<IControlView>();
+            views.Add(new FlightCharts());
+            views.ForEach(v => flight.AddViewModel(v.GetViewModel()));
+            Charts.Navigate(views.Find(v => v.Name == "Charts"));
         }
 
         public void OnReady(object sender, EventArgs e)
         {
-            fc.setTimeSeries(TS);
+            flight.UpdateSettings(new SettingsArgs { ts = TS });
         }
 
         internal TimeSeries TS

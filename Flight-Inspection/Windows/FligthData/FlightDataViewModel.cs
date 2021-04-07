@@ -12,7 +12,13 @@ namespace Flight_Inspection.Windows.FligthData
     public class FlightDataViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
+        private List<IControlViewModel> viewModels;
         private TimeSeries ts;
+
+        public FlightDataViewModel()
+        {
+            this.viewModels = new List<IControlViewModel>();
+        }
 
         public TimeSeries Ts
         {
@@ -24,9 +30,19 @@ namespace Flight_Inspection.Windows.FligthData
             }
         }
 
+        public void AddViewModel(IControlViewModel viewModel)
+        {
+            viewModels.Add(viewModel);
+        }
+
         protected void OnPropertyChanged([CallerMemberName] string name = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        }
+
+        internal void UpdateSettings(SettingsArgs settingsArgs)
+        {
+            viewModels.ForEach(vm => vm.SetSettings(settingsArgs));
         }
     }
 }

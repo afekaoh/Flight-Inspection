@@ -153,6 +153,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="controls\Joystick\JoystickModel.cs" />
+    <Compile Include="controls\IControlView.cs" />
     <Compile Include="controls\IControlViewModel.cs" />
     <Compile Include="controls\Joystick\JoystickView.xaml.cs">
       <DependentUpon>JoystickView.xaml</DependentUpon>
@@ -179,7 +180,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="controls\Charts1\FlightCharts.xaml">
+    <Page Include="controls\Charts\FlightCharts.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -203,12 +204,12 @@
       <DependentUpon>FlightGearView.xaml</DependentUpon>
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="controls\Charts1\ChartsModel.cs" />
-    <Compile Include="controls\Charts1\IChartsModel.cs" />
-    <Compile Include="controls\Charts1\FlightCharts.xaml.cs">
+    <Compile Include="controls\Charts\ChartsModel.cs" />
+    <Compile Include="controls\Charts\IChartsModel.cs" />
+    <Compile Include="controls\Charts\FlightCharts.xaml.cs">
       <DependentUpon>FlightCharts.xaml</DependentUpon>
     </Compile>
-    <Compile Include="controls\Charts1\VMCharts.cs" />
+    <Compile Include="controls\Charts\VMCharts.cs" />
     <Compile Include="Windows\FligthData\FlightDataViewModel.cs" />
     <Compile Include="Windows\MainWindow\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

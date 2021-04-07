@@ -11,7 +11,7 @@ namespace Flight_Inspection.controls
     /// <summary>
     /// Interaction logic for Graphs.xaml
     /// </summary>
-    public partial class FlightCharts : UserControl
+    public partial class FlightCharts : UserControl, IControlView
     {
         VMCharts vm;
         public FlightCharts()
@@ -19,10 +19,16 @@ namespace Flight_Inspection.controls
             InitializeComponent();
             vm = new VMCharts();
             DataContext = vm;
+            vm.Ready += OnReady;
         }
-        public void setTimeSeries(TimeSeries ts)
+
+        public IControlViewModel GetViewModel()
         {
-            vm.setTimeSeries(ts);
+            return vm;
+        }
+
+        public void OnReady(object sender, EventArgs e)
+        {
             lbTodoList.ItemsSource = vm.GetNames();
             chart1.ChartAreas["chartArea"].AxisX.MajorGrid.LineWidth = 0;
             chart1.ChartAreas["chartArea"].AxisY.MajorGrid.LineWidth = 0;
@@ -39,7 +45,6 @@ namespace Flight_Inspection.controls
             List<Property> ls = vm.GetNames();
             string next = ls[rand.Next(0, ls.Count)].Name;
             chart1.DataSource = vm.getDataContent(content);
-            chart1.Text = content;
             chart1.Series["series"].XValueMember = "Key";
             chart1.Series["series"].YValueMembers = "Value";
             chart1.DataBind();

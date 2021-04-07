@@ -9,9 +9,8 @@ namespace Flight_Inspection
         event EventHandler<OnReadyEventArgs> OnReady;
         event EventHandler NewWindow;
         event EventHandler Closed;
+        IPagesViewModel GetViewModel();
 
         string Name { get; set; }
-
-        IPagesViewModel GetViewModel();
     }
 }
