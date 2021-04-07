@@ -30,7 +30,7 @@ namespace Flight_Inspection.controls
                 PropertyChanged(this, new PropertyChangedEventArgs(v));
             }
         }
-
+                   
         [DllImport("C:\\Users\\avri2\\source\\repos\\Flight-Inspection_\\Flight-Inspection\\plugins\\anomaly_detection_util.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern float pearson([MarshalAs(UnmanagedType.LPArray)] float[] x, [MarshalAs(UnmanagedType.LPArray)] float[] y, int sizeX, int sizeY);
 
@@ -41,8 +41,10 @@ namespace Flight_Inspection.controls
 
         private void updateProperties(object sender, PropertyChangedEventArgs e)
         {
-               List<string> ls = TimeSeries.getFeatureNames();
-               int sizeTable = TimeSeries.getFeatureData(ls[0]).Count;
+            if (e.PropertyName != "TimeSeries")
+                return;
+            List<string> ls = TimeSeries.getFeatureNames();
+            int sizeTable = TimeSeries.getFeatureData(ls[0]).Count;
             for (int i = 0; i<ls.Count; i++)
             {
                 float maxVal = 0;

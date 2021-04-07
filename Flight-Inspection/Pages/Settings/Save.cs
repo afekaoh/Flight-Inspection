@@ -70,7 +70,7 @@ namespace Flight_Inspection.Settings
 
         public void SaveData()
         {
-            data.WriteXml("..\\..\\controls\\FlightGear\\FG_DATA\\save.xml");
+            data.WriteXml("..\\..\\..\\controls\\FlightGear\\FG_DATA\\save.xml");
         }
 
         public DataPacket getSettings()
