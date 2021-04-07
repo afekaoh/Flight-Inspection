@@ -15,6 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Flight_Inspection.controls.Video;
+using Flight_Inspection.controls.Joystick;
 
 namespace Flight_Inspection
 {
@@ -23,8 +24,9 @@ namespace Flight_Inspection
     /// </summary>
     public partial class FlightData : Window
     {
-        readonly FlightDataViewModel flight;
-        readonly List<IControlView> views;
+        private readonly FlightDataViewModel flight;
+        private readonly List<IControlView> views;
+        private readonly List<Frame> frames;
 
         public FlightData()
         {
@@ -32,16 +34,26 @@ namespace Flight_Inspection
             flight = DataContext as FlightDataViewModel;
             flight.PropertyChanged += OnReady;
             InitializeComponent();
-            views = new List<IControlView>();
-            views.Add(new FlightCharts());
-            
+            views = new List<IControlView>
+            {
+                new FlightCharts(),
+                new VideoPanelView(),
+                new JoystickView()
+            };
             views.ForEach(v => flight.AddViewModel(v.GetViewModel()));
-            Charts.Navigate(views.Find(v => v.Name == "Charts"));
+            frames = new List<Frame>
+            {
+                Charts,
+                VideoPanel,
+                Joystick,
+                MoreInfo
+            };
         }
 
         public void OnReady(object sender, EventArgs e)
         {
             flight.UpdateSettings(new SettingsArgs { ts = TS });
+            frames.ForEach(f => f.Navigate(views.Find(v => v.Name == f.Name)));
         }
 
         internal TimeSeries TS

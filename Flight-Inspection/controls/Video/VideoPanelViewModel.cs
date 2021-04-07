@@ -7,17 +7,16 @@ using System.Threading.Tasks;
 
 namespace Flight_Inspection.controls.Video
 {
-    class VideoPanelViewModel : INotifyPropertyChanged
+    class VideoPanelViewModel : IControlViewModel
     {
-        public event PropertyChangedEventHandler PropertyChanged;
 
         private int maxSlider;
         private VideoPanelModel model;
 
 
-        public VideoPanelViewModel(VideoPanelModel model)
+        public VideoPanelViewModel()
         {
-            this.model = model;
+            this.model = new VideoPanelModel();
             model.PropertyChanged += delegate (Object sender, PropertyChangedEventArgs e)
             {
                 INotifyPropertyChanged(e.PropertyName);
@@ -26,14 +25,19 @@ namespace Flight_Inspection.controls.Video
 
         public int MaxSlider
         {
-            get {
-                return maxSlider; 
+            get
+            {
+                return maxSlider;
             }
-       }
+            set
+            {
+                maxSlider = value;
+            }
+        }
 
         private void INotifyPropertyChanged(string v)
         {
-            if(v == "MaxSlider")
+            if (v == "MaxSlider")
             {
                 maxSlider = model.MaxSlider;
             }
@@ -44,11 +48,18 @@ namespace Flight_Inspection.controls.Video
             model.MaxSlider = u;
         }
 
+        public override void SetSettings(SettingsArgs settingsArgs)
+        {
+
+        }
+
         private int currentTime;
 
         public int CurrentTime
         {
-            get { return currentTime;
+            get
+            {
+                return currentTime;
             }
             set { currentTime = value; }
         }
