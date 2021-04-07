@@ -37,6 +37,18 @@ namespace Flight_Inspection.controls
         [DllImport("anomaly_detection_util.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern float pearson([MarshalAs(UnmanagedType.LPArray)] float[] x, [MarshalAs(UnmanagedType.LPArray)] float[] y, int sizeX, int sizeY);
 
+        [DllImport("anomaly_detection_util.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern IntPtr linear_reg([MarshalAs(UnmanagedType.LPArray)] float[] x, [MarshalAs(UnmanagedType.LPArray)] float[] y, int size);
+
+        [DllImport("anomaly_detection_util.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void freeLine2(IntPtr l);
+
+        [StructLayout(LayoutKind.Sequential)]
+        unsafe struct Line2
+        {
+            public float a, b;
+        }
+
         public ChartsModel()
         {
             PropertyChanged += updateProperties;
@@ -46,7 +58,7 @@ namespace Flight_Inspection.controls
         {
             List<string> ls = timeSeries.getFeatureNames();
             int sizeTable = TimeSeries.getFeatureData(ls[0]).Count;
-            for (int i = 0; i<ls.Count; i++)
+            for (int i = 0; i < ls.Count; i++)
             {
                 float maxVal = 0;
                 string maxCor = "";
@@ -60,6 +72,15 @@ namespace Flight_Inspection.controls
                     {
                         maxVal = val;
                         maxCor = ls[j];
+                    }
+                }
+                if (maxCor != "")
+                {
+                    unsafe
+                    {
+                        Line2* l = (Line2*)linear_reg(data, TimeSeries.getFeatureData(maxCor).ToArray(), data.Length);
+                        Console.WriteLine($"{l->a} {l->b}");
+                        freeLine2((IntPtr)l);
                     }
                 }
                 properties.Add(new Property() { Name = ls[i], Attach = maxCor, Data = data.ToList() });
