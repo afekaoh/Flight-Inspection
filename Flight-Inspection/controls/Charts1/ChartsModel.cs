@@ -46,7 +46,7 @@ namespace Flight_Inspection.controls
         {
             List<string> ls = timeSeries.getFeatureNames();
             int sizeTable = TimeSeries.getFeatureData(ls[0]).Count;
-            for (int i = 0; i < ls.Count; i++)
+            for (int i = 0; i<ls.Count; i++)
             {
                 float maxVal = 0;
                 string maxCor = "";
