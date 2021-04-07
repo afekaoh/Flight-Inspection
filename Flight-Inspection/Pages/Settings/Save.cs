@@ -29,6 +29,7 @@ namespace Flight_Inspection.Settings
                 {
                     TableName = "Path Locations"
                 };
+                table.Rows.Add(table.NewRow());
                 data.Tables.Add(table);
 
             }
@@ -60,7 +61,7 @@ namespace Flight_Inspection.Settings
 
         public void SaveData()
         {
-            data.WriteXml("..\\..\\Pages\\Settings\\FG_DATA\\save.xml");
+            data.WriteXml("..\\..\\..\\Pages\\Settings\\FG_DATA\\save.xml");
         }
 
         public DataPacket GetSettings()
