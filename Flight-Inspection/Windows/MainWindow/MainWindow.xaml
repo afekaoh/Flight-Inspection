@@ -4,7 +4,6 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Flight_Inspection"
-        xmlns:control="clr-namespace:Flight_Inspection.controls"
         xmlns:DVC="clr-namespace:System.Windows.Forms.DataVisualization.Charting;assembly=System.Windows.Forms.DataVisualization"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
@@ -13,15 +12,14 @@
             <RowDefinition Height="20" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-           <Grid.ColumnDefinitions>
+        <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <!--<ColumnDefinition Width="*"/>-->
         </Grid.ColumnDefinitions>
         <!--<control:FlightGearControl Grid.Column="1"/>-->
         <!--<control:FlightCharts/>-->
         <Frame x:Name="frame" NavigationUIVisibility="Hidden" Grid.Row="1"/>
-        <Button Content="Settings" Grid.Row="0" HorizontalAlignment="Right" Margin="610,0,0,0" VerticalAlignment="Top" Width="75" Click="Setting_Click"/>
-        <Button Content="FlightGear" Grid.Row="0" HorizontalAlignment="Right" Margin="0,0,80.2,0" VerticalAlignment="Top" Width="75" Click="FlightGear_Click"/>
+        <Button x:Name="Settings" Content="Settings" Grid.Row="0" HorizontalAlignment="Right" Margin="610,0,0,0" VerticalAlignment="Top" Width="75" Click="Move_Page"/>
+        <Button x:Name="FlightGear" Content="FlightGear" Grid.Row="0" HorizontalAlignment="Right" Margin="0,0,80.2,0" VerticalAlignment="Top" Width="75" Click="Move_Page"/>
     </Grid>
-    
 </Window>
