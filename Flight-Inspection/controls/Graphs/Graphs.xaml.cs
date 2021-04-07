@@ -18,7 +18,7 @@ namespace Flight_Inspection.controls
         public FlightCharts()
         {
             InitializeComponent();
-            vm = new VMCharts();
+            vm = new controls.Graphs.VMGraphs();
             DataContext = vm;
         }
         public void setTimeSeries(TimeSeries ts)

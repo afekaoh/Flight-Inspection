@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Flight_Inspection.controls
+namespace Flight_Inspection.controls.Graphs
 {
     class VMCharts : IControlViewModel
     {
