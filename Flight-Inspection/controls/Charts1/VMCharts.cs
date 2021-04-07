@@ -7,11 +7,9 @@ using System.Threading.Tasks;
 
 namespace Flight_Inspection.controls
 {
-    class VMCharts : INotifyPropertyChanged
+    class VMCharts : IControlViewModel
     {
         private ChartsModel charts;
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         public VMCharts()
         {
@@ -37,9 +35,9 @@ namespace Flight_Inspection.controls
             return charts.getDataContent(content, second);
         }
 
-        internal void setTimeSeries(TimeSeries ts)
+        public override void SetSettings(SettingsArgs settingsArgs)
         {
-            charts.TimeSeries = ts;
+            charts.TimeSeries = settingsArgs.ts;
         }
     }
 }

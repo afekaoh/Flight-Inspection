@@ -11,7 +11,7 @@ namespace Flight_Inspection.controls
     /// <summary>
     /// Interaction logic for Graphs.xaml
     /// </summary>
-    public partial class FlightCharts : UserControl
+    public partial class FlightCharts : UserControl, IControlView
     {
         VMCharts vm;
         public FlightCharts()
@@ -22,7 +22,6 @@ namespace Flight_Inspection.controls
         }
         public void setTimeSeries(TimeSeries ts)
         {
-            vm.setTimeSeries(ts);
             lbTodoList.ItemsSource = vm.GetNames();
             chart1.ChartAreas["chartArea"].AxisX.MajorGrid.LineWidth = 0;
             chart1.ChartAreas["chartArea"].AxisY.MajorGrid.LineWidth = 0;
@@ -38,7 +37,9 @@ namespace Flight_Inspection.controls
             List<float> vs = vm.getData(content);
 
         }
-
-
+        public IControlViewModel GetViewModel()
+        {
+            return vm;
+        }
     }
 }

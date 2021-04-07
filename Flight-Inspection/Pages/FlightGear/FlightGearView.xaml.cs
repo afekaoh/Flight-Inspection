@@ -35,12 +35,19 @@ namespace Flight_Inspection.Pages.FlightGear
         {
             this.DataContext = new FlightGearViewModel();
             flightGearViewModel = DataContext as FlightGearViewModel;
+            this.Name = "FlightGear";
             InitializeComponent();
         }
 
         public event EventHandler NewWindow;
         public event EventHandler Closed;
         public event EventHandler<OnReadyEventArgs> OnReady;
+
+
+        protected virtual void OnOnReady(object sender, OnReadyEventArgs e)
+        {
+            OnReady?.Invoke(sender, e);
+        }
 
         private void Start_FG_Click(object sender, RoutedEventArgs e)
         {
@@ -53,7 +60,7 @@ namespace Flight_Inspection.Pages.FlightGear
         }
         private void Start_Simulation_Click(object sender, RoutedEventArgs e)
         {
-            flightGearViewModel.StartPlay();
+/*            flightGearViewModel.StartPlay();*/
             if (Ready)
             {
                 flight = new FlightData() { TS = flightGearViewModel.Ts };
@@ -75,4 +82,3 @@ namespace Flight_Inspection.Pages.FlightGear
         public bool Ready { get { return !(flightGearViewModel.Ts is null); } }
     }
 }
-
