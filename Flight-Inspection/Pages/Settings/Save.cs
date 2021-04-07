@@ -14,10 +14,10 @@ namespace Flight_Inspection.Settings
         private DataSet data;
         public Save()
         {
-            if (File.Exists("..\\..\\Pages\\Settings\\FG_DATA\\save.xml"))
+            if (File.Exists("save.xml"))
             {
                 data = new DataSet();
-                data.ReadXml("..\\..\\Pages\\Settings\\FG_DATA\\save.xml");
+                data.ReadXml("save.xml");
             }
             else
             {
@@ -31,7 +31,6 @@ namespace Flight_Inspection.Settings
                 };
                 table.Rows.Add(table.NewRow());
                 data.Tables.Add(table);
-
             }
         }
 
@@ -61,7 +60,7 @@ namespace Flight_Inspection.Settings
 
         public void SaveData()
         {
-            data.WriteXml("..\\..\\..\\Pages\\Settings\\FG_DATA\\save.xml");
+            data.WriteXml("save.xml");
         }
 
         public DataPacket GetSettings()

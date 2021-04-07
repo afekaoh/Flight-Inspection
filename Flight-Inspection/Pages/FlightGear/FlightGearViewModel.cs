@@ -15,8 +15,14 @@ namespace Flight_Inspection.Pages.FlightGear
     {
         private FlightGearModel flightGearModel;
         private TimeSeries ts;
+        public event EventHandler Start;
         private bool ready;
 
+
+        public void OnStart()
+        {
+            Start?.Invoke(this, EventArgs.Empty);
+        }
         public TimeSeries Ts { get => ts; set => ts = value; }
 
         public FlightGearViewModel()
@@ -34,11 +40,13 @@ namespace Flight_Inspection.Pages.FlightGear
 
         }
 
-        public void StartPlay()
+        public void StartPlay(System.Windows.RoutedEventArgs e)
         {
             if (ready)
-                flightGearModel.StartPlay();
-
+            {
+                /*flightGearModel.StartPlay();*/
+                OnStart();
+            }
         }
 
         public override void SetSettings(SettingsArgs settingsArgs)
