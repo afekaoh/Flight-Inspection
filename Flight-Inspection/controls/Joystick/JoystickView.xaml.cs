@@ -18,11 +18,18 @@ namespace Flight_Inspection.controls.Joystick
     /// <summary>
     /// Interaction logic for JoystickView.xaml
     /// </summary>
-    public partial class JoystickView : UserControl
+    public partial class JoystickView : UserControl, IControlView
     {
+        JoystickViewModel JoystickViewModel;
         public JoystickView()
         {
+            this.JoystickViewModel = new JoystickViewModel();
             InitializeComponent();
+        }
+
+        public IControlViewModel GetViewModel()
+        {
+            return this.JoystickViewModel;
         }
     }
 }
