@@ -5,7 +5,6 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
-using Flight_Inspection.controls.FlightGear;
 using Flight_Inspection.Pages.Settings;
 using Flight_Inspection.Settings;
 
@@ -18,7 +17,11 @@ namespace Flight_Inspection.controls
         private TimeSeries timeSeries;
         private List<Property> properties = new List<Property>();
 
-        public TimeSeries TimeSeries { get => timeSeries; set { timeSeries = value;
+        public TimeSeries TimeSeries
+        {
+            get => timeSeries; set
+            {
+                timeSeries = value;
                 INotifyPropertyChanged("TimeSeries");
             }
         }
@@ -50,12 +53,12 @@ namespace Flight_Inspection.controls
                 float maxVal = 0;
                 string maxCor = "";
                 float[] data = TimeSeries.getFeatureData(ls[i]).ToArray();
-                for (int j = i + 1; j<ls.Count; j++)
+                for (int j = i + 1; j < ls.Count; j++)
                 {
                     float val = pearson(data,
                     TimeSeries.getFeatureData(ls[j]).ToArray(), sizeTable, sizeTable);
                     val = Math.Abs(val);
-                    if (maxVal<val)
+                    if (maxVal < val)
                     {
                         maxVal = val;
                         maxCor = ls[j];

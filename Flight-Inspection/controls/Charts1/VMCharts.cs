@@ -1,5 +1,4 @@
-﻿using Flight_Inspection.controls.FlightGear;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -8,16 +7,15 @@ using System.Threading.Tasks;
 
 namespace Flight_Inspection.controls
 {
-    class VMCharts : INotifyPropertyChanged
+    class VMCharts : IControlViewModel
     {
         private ChartsModel charts;
 
-        public event PropertyChangedEventHandler PropertyChanged;
 
         public VMCharts()
         {
             charts = new ChartsModel();
-            
+
         }
 
         public List<Property> GetNames()
@@ -39,9 +37,9 @@ namespace Flight_Inspection.controls
             return charts.getDataContentCor(content);
         }
 
-        internal void setTimeSeries(TimeSeries ts)
+        public override void SetSettings(SettingsArgs settingsArgs)
         {
-            charts.TimeSeries = ts;
+            charts.TimeSeries = settingsArgs.ts;
         }
     }
 }

@@ -5,14 +5,13 @@ using System.Windows.Input;
 using System.Drawing;
 using System.Windows.Media;
 using System;
-using Flight_Inspection.controls.FlightGear;
 
 namespace Flight_Inspection.controls
 {
     /// <summary>
     /// Interaction logic for Graphs.xaml
     /// </summary>
-    public partial class FlightCharts : UserControl
+    public partial class FlightCharts : UserControl, IControlView
     {
         VMCharts vm;
         public FlightCharts()
@@ -21,9 +20,14 @@ namespace Flight_Inspection.controls
             vm = new VMCharts();
             DataContext = vm;
         }
+
+        public IControlViewModel GetViewModel()
+        {
+            return vm;
+        }
+
         public void setTimeSeries(TimeSeries ts)
         {
-            vm.setTimeSeries(ts);
             lbTodoList.ItemsSource = vm.GetNames();
             chart1.ChartAreas["chartArea"].AxisX.MajorGrid.LineWidth = 0;
             chart1.ChartAreas["chartArea"].AxisY.MajorGrid.LineWidth = 0;

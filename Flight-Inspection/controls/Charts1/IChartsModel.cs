@@ -14,13 +14,16 @@ namespace Flight_Inspection.controls
         private List<float> data;
         public string Name { get => name; set => name = value; }
         public string Attach { get => attach; set => attach = value; }
-        public List<float> Data { get => data; set {
+        public List<float> Data
+        {
+            get => data; set
+            {
                 if (data == null)
                 {
                     data = value;
                 }
-            
-            } 
+
+            }
         }
     }
     interface IChartsModel : INotifyPropertyChanged

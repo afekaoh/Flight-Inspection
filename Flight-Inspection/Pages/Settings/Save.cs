@@ -11,15 +11,13 @@ namespace Flight_Inspection.Settings
 {
     class Save
     {
-        private readonly DataSet data;
-        private readonly DataTable table;
+        private DataSet data;
         public Save()
         {
-            if (File.Exists("..\\..\\controls\\FlightGear\\FG_DATA\\save.xml"))
+            if (File.Exists("..\\..\\Pages\\Settings\\FG_DATA\\save.xml"))
             {
                 data = new DataSet();
-                data.ReadXml("..\\..\\controls\\FlightGear\\FG_DATA\\save.xml");
-                table = data.Tables[0];
+                data.ReadXml("..\\..\\Pages\\Settings\\FG_DATA\\save.xml");
             }
             else
             {
@@ -27,60 +25,61 @@ namespace Flight_Inspection.Settings
                 {
                     DataSetName = "Settings"
                 };
-                table = new DataTable
+                var table = new DataTable
                 {
                     TableName = "Path Locations"
                 };
                 data.Tables.Add(table);
-                var col1 = new DataColumn
-                {
-                    ColumnName = "CSV"
-                };
-                var col2 = new DataColumn
-                {
-                    ColumnName = "XML"
-                };
-                var col3 = new DataColumn
-                {
-                    ColumnName = "PATH"
-                };
 
-                table.Columns.Add(col1);
-                table.Columns.Add(col2);
-                table.Columns.Add(col3);
-                var row = table.NewRow();
-                row["CSV"] = null;
-                row["XML"] = null;
-                row["PATH"] = null;
-                table.Rows.Add(row);
             }
-            /*            OnInitializationEventArgs e = new OnInitializationEventArgs
-                        {
-                            CSV = table.Rows[0]["CSV"] as string,
-                            XML = table.Rows[0]["XML"] as string,
-                            PATH = table.Rows[0]["PATH"] as string
-                        };
-                        OnInitialization(e);*/
         }
 
         public void AddData(string name, string data)
         {
-            table.Rows[0][name] = data;
+            try
+            {
+                var temp = this.data.Tables[0].Rows[0][name];
+            }
+            catch (ArgumentException)
+            {
+                this.data.Tables[0].Columns.Add(name);
+                try
+                {
+                    var temp = this.data.Tables[0].Rows[0][name];
+                }
+                catch (ArgumentException)
+                {
+                    this.data.Tables[0].Rows.Add(this.data.Tables[0].NewRow());
+                }
+            }
+            finally
+            {
+                this.data.Tables[0].Rows[0][name] = data;
+            }
         }
 
         public void SaveData()
         {
-            data.WriteXml("..\\..\\..\\controls\\FlightGear\\FG_DATA\\save.xml");
+            data.WriteXml("..\\..\\Pages\\Settings\\FG_DATA\\save.xml");
         }
 
-        public DataPacket getSettings()
+        public DataPacket GetSettings()
         {
-            return new DataPacket
+
+
+            return new DataPacket() { CSV = getContent("CSV"), XML = getContent("XML"), PATH = getContent("PATH") };
+        }
+
+        public string getContent(string name)
+        {
+            try
             {
-                CSV = table.Rows[0]["CSV"] as string,
-                XML = table.Rows[0]["XML"] as string,
-                PATH = table.Rows[0]["PATH"] as string
-            };
+                return this.data.Tables[0].Rows[0][name] as string;
+            }
+            catch (ArgumentException)
+            {
+                return null;
+            }
         }
     }
 
@@ -104,7 +103,6 @@ namespace Flight_Inspection.Settings
                     return null;
             }
         }
-
     }
 }
 
