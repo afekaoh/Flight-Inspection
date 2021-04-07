@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Flight_Inspection.controls.Video;
 
 namespace Flight_Inspection
 {
@@ -22,12 +23,12 @@ namespace Flight_Inspection
     /// </summary>
     public partial class FlightData : Window
     {
-        private FlightCharts fc;
+        private VideoPanelView fc;
         private TimeSeries ts;
         public FlightData()
         {
             InitializeComponent();
-            fc = new FlightCharts();
+            fc = new VideoPanelView();
             frame1.Navigate(fc);
         }
 
@@ -37,7 +38,7 @@ namespace Flight_Inspection
             set
             {
                 ts = value;
-                fc.setTimeSeries(TS);
+                //fc.setTimeSeries(TS);
             }
         }
     }

@@ -20,13 +20,17 @@ namespace Flight_Inspection.controls.Video
     /// </summary>
     public partial class VideoPanelView : UserControl
     {
+        VideoPanelViewModel videoPanelViewModel;
         public VideoPanelView()
         {
             InitializeComponent();
+            videoPanelViewModel = new VideoPanelViewModel(new VideoPanelModel());
+            DataContext = videoPanelViewModel;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            videoPanelViewModel.MaxSliderUpdate(2);
 
         }
     }
