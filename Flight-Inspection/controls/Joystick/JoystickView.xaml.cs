@@ -16,18 +16,13 @@ using System.Windows.Shapes;
 namespace Flight_Inspection.controls.Joystick
 {
     /// <summary>
-    /// Interaction logic for Joystick.xaml
+    /// Interaction logic for JoystickView.xaml
     /// </summary>
     public partial class JoystickView : UserControl
     {
         public JoystickView()
         {
             InitializeComponent();
-        }
-
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
         }
     }
 }

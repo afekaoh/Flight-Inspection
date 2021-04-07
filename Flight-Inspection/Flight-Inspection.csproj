@@ -152,8 +152,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="controls\Joystick\JoystickModel.cs" />
     <Compile Include="controls\IControlView.cs" />
     <Compile Include="controls\IControlViewModel.cs" />
+    <Compile Include="controls\Joystick\JoystickView.xaml.cs">
+      <DependentUpon>JoystickView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="controls\Joystick\JoystickViewModel.cs" />
     <Compile Include="IViewModel.cs" />
     <Compile Include="Pages\IPagesViewModel.cs" />
     <Compile Include="controls\SettingsArgs.cs" />
@@ -167,6 +172,10 @@
     </Compile>
     <Compile Include="Pages\IViewPages.cs" />
     <Compile Include="Windows\MainWindow\MainWindowViewModel.cs" />
+    <Page Include="controls\Joystick\JoystickView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\FlightGear\FlightGearView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
