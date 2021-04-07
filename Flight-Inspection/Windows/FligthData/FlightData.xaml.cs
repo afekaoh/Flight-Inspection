@@ -1,5 +1,5 @@
 ﻿using Flight_Inspection.controls;
-using Flight_Inspection.controls.FlightGear;
+using Flight_Inspection.Windows.FligthData;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +27,9 @@ namespace Flight_Inspection
 
         public FlightData()
         {
+            this.DataContext = new FlightDataViewModel();
+            flight = DataContext as FlightDataViewModel;
+            flight.PropertyChanged += OnReady;
             InitializeComponent();
             views = new List<IControlView>();
             views.Add(new FlightCharts());
@@ -41,11 +44,10 @@ namespace Flight_Inspection
 
         internal TimeSeries TS
         {
-            get { return ts; }
+            get { return flight.Ts; }
             set
             {
-                ts = value;
-                fc.setTimeSeries(TS);
+                flight.Ts = value;
             }
         }
     }

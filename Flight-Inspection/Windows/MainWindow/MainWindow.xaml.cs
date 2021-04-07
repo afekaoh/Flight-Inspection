@@ -1,6 +1,8 @@
 ﻿using Flight_Inspection.controls;
-using Flight_Inspection.controls.FlightGear;
+using Flight_Inspection.Pages;
+using Flight_Inspection.Pages.FlightGear;
 using Flight_Inspection.Pages.Settings;
+using Flight_Inspection.Windows.MainWindow;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -26,17 +28,10 @@ namespace Flight_Inspection
     /// </summary>
     public partial class MainWindow : Window
     {
-        SettingsView settings;
-        FlightGearView FlightGear;
-        TimeSeries ts;
-        /*
-         * 
-                [DllImport("C:\\Users\\afeka\\OneDrive - Bar-Ilan University\\Code projects\\Advance-Programming-2\\Flight-Inspection\\Flight-Inspection\\Windows\\MainWindow\\anomaly_detection_util.dll", CallingConvention = CallingConvention.Cdecl)]
-                public static extern float pearson([MarshalAs(UnmanagedType.LPArray)] float[] x, [MarshalAs(UnmanagedType.LPArray)] float[] y, int sizeX, int sizeY);
-                    float[] x = { 1, 2, 5, 7, 9, 10 };
-                    float[] y = { 5, 6, 8, 10, 12, 14 };
-                    Console.WriteLine(pearson(x, y, x.Length, y.Length));
-         */
+
+        private readonly List<IViewPages> pages;
+        private readonly MainWindowViewModel mainWindowViewModel;
+
         public MainWindow()
         {
 
@@ -55,35 +50,25 @@ namespace Flight_Inspection
             this.Initialized += OnInitializedMain;
 
             InitializeComponent();
-            settings = new SettingsView();
-            settings.OnReady += Settings_OnReady;
-            FlightGear = new FlightGearView();
-            FlightGear.NewWindow += OnNewWindow;
-            settings.updateSettings();
         }
 
-        private void Settings_OnReady(object sender, EventArgs e)
+        public void OnInitializedMain(object sender, EventArgs e)
         {
-            var ea = e as OnReadyEventArgs;
-            ts = new TimeSeries(ea.CSV.Content, ea.XML.Content);
-            FlightGear.updateSettings(ts, ea.PATH.Content);
+            mainWindowViewModel.UpdateSettings();
         }
 
-        private void Setting_Click(object sender, RoutedEventArgs e)
+        private void Settings_OnReady(object sender, OnReadyEventArgs e)
         {
-            frame.Navigate(settings);
+            mainWindowViewModel.Settings = new SettingsArgs { ts = new TimeSeries(e.CSV.Content, e.XML.Content), procPath = e.PATH.Content };
         }
 
-        private void FlightGear_Click(object sender, RoutedEventArgs e)
+        private void Move_Page(object sender, RoutedEventArgs e)
         {
-            frame.Navigate(FlightGear);
+            frame.Navigate(pages.Find(p => p.Name == (sender as Button).Name));
         }
+
         public void OnNewWindow(object sender, EventArgs e)
         {
-            FlightData flight = new FlightData();
-            flight.TS = ts;
-            flight.Closed += Flight_Closed;
-            flight.Show();
             this.Hide();
         }
 

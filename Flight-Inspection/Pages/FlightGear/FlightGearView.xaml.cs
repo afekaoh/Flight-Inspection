@@ -82,4 +82,3 @@ namespace Flight_Inspection.Pages.FlightGear
         public bool Ready { get { return !(flightGearViewModel.Ts is null); } }
     }
 }
-

@@ -5,7 +5,6 @@ using System.Windows.Input;
 using System.Drawing;
 using System.Windows.Media;
 using System;
-using Flight_Inspection.controls.FlightGear;
 
 namespace Flight_Inspection.controls
 {
@@ -21,6 +20,12 @@ namespace Flight_Inspection.controls
             vm = new controls.Graphs.VMGraphs();
             DataContext = vm;
         }
+
+        public IControlViewModel GetViewModel()
+        {
+            return vm;
+        }
+
         public void setTimeSeries(TimeSeries ts)
         {
             lbTodoList.ItemsSource = vm.GetNames();
@@ -61,10 +66,6 @@ namespace Flight_Inspection.controls
         {
             if (e.Key == Key.Up || e.Key == Key.Down)
                 choosenOption(lbTodoList, null);
-        }
-        public IControlViewModel GetViewModel()
-        {
-            return vm;
         }
     }
 }

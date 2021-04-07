@@ -1,5 +1,4 @@
-﻿using Flight_Inspection.controls.FlightGear;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -12,10 +11,11 @@ namespace Flight_Inspection.controls.Graphs
     {
         private ChartsModel charts;
 
+
         public VMCharts()
         {
             charts = new ChartsModel();
-            
+
         }
 
         public List<Property> GetNames()

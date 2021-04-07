@@ -1,29 +1,25 @@
-﻿using Flight_Inspection.Pages.Settings;
+﻿using Flight_Inspection.controls;
+using Flight_Inspection.Pages.Settings;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Flight_Inspection
 {
     /// <summary>
     /// Interaction logic for Settings.xaml
     /// </summary>
-    public partial class SettingsView : Page
+    public partial class SettingsView : Page, IViewPages
     {
-        SettingsViewModel settings;
-        public event EventHandler OnReady;
+        private readonly SettingsViewModel settings;
+
+        public event EventHandler<OnReadyEventArgs> OnReady;
+        public event EventHandler NewWindow;
+        public event EventHandler Closed;
+
+
         public SettingsView()
         {
             settings = new SettingsViewModel();
@@ -38,7 +34,6 @@ namespace Flight_Inspection
             System.Windows.Forms.CommonDialog fbd;
             string name = (sender as Button).Name;
             name = (e.Source as Button).Content as string;
-            Console.WriteLine(name);
             switch (name)
             {
                 case "PATH":
@@ -67,7 +62,7 @@ namespace Flight_Inspection
             var settingsViewModel = (sender as SettingsViewModel);
             if (e.PropertyName == "Ready" && settingsViewModel.Ready)
             {
-                OnReadyEvent(this, e as OnReadyEventArgs);
+                OnReadyEvent(e as OnReadyEventArgs);
             }
         }
 
@@ -76,9 +71,14 @@ namespace Flight_Inspection
             settings.SaveData();
         }
 
-        public void OnReadyEvent(object sender, OnReadyEventArgs e)
+        public void OnReadyEvent(OnReadyEventArgs e)
         {
             OnReady?.Invoke(this, e);
+        }
+
+        public IPagesViewModel GetViewModel()
+        {
+            return settings;
         }
     }
 }
