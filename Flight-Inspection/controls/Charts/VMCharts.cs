@@ -21,7 +21,6 @@ namespace Flight_Inspection.controls
         public VMCharts()
         {
             charts = new ChartsModel();
-
         }
 
         public List<Property> GetNames()
