@@ -42,11 +42,6 @@ namespace Flight_Inspection
             flight.UpdateSettings(new SettingsArgs { ts = TS });
         }
 
-        public void OnReady(object sender, EventArgs e)
-        {
-            fc.setTimeSeries(TS);
-        }
-
         internal TimeSeries TS
         {
             get { return flight.Ts; }

@@ -20,7 +20,7 @@ namespace Flight_Inspection.controls
         {
             return charts.GetProperties();
         }
-        private List<float> getData(string property)
+        public List<float> getData(string property)
         {
             return charts.getData(property);
         }
