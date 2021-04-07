@@ -1,4 +1,5 @@
-﻿using Flight_Inspection.Pages.Settings;
+﻿using Flight_Inspection.controls;
+using Flight_Inspection.Pages.Settings;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -9,7 +10,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Flight_Inspection.controls.FlightGear
+namespace Flight_Inspection.Pages.FlightGear
 {
     class FlightGearModel
     {
@@ -48,7 +49,6 @@ namespace Flight_Inspection.controls.FlightGear
                 var rows = TS.Rows;
                 if (soc.Connected)
                 {
-                    Console.WriteLine("yay");
                     foreach (var buffer in from string r in rows
                                            let buffer = Encoding.ASCII.GetBytes(r + "\n")
                                            select buffer)
@@ -94,9 +94,9 @@ namespace Flight_Inspection.controls.FlightGear
             {
                 Process.GetProcessById(proc.Id);
             }
-            // the procces hasn't started yet
+            // the process hasn't started yet
             catch (InvalidOperationException) { return false; }
-            // the procces hasn't been initialized 
+            // the process hasn't been initialized 
             catch (Exception e) when (e is ArgumentException || e is ArgumentNullException) { return false; }
             return true;
         }
