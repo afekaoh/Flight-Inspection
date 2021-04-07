@@ -20,6 +20,12 @@ namespace Flight_Inspection.controls
             vm = new VMCharts();
             DataContext = vm;
         }
+
+        public IControlViewModel GetViewModel()
+        {
+            return vm;
+        }
+
         public void setTimeSeries(TimeSeries ts)
         {
             lbTodoList.ItemsSource = vm.GetNames();
@@ -30,16 +36,36 @@ namespace Flight_Inspection.controls
             chart2.ChartAreas["chartAreaSecond"].AxisY.MajorGrid.LineWidth = 0;
             chart2.ChartAreas["chartAreaSecond"].AxisX.MajorGrid.LineWidth = 0;
         }
-
         private void choosenOption(object sender, MouseButtonEventArgs e)
         {
-            string content = (sender as ContentControl).Content.ToString();
-            List<float> vs = vm.getData(content);
-
+            var chosen = (sender as ListBox).SelectedItem as Property;
+            string content = chosen.Name;
+            var rand = new Random();
+            List<Property> ls = vm.GetNames();
+            string next = ls[rand.Next(0, ls.Count)].Name;
+            chart1.DataSource = vm.getDataContent(content);
+            chart1.Series["series"].XValueMember = "Key";
+            chart1.Series["series"].YValueMembers = "Value";
+            chart1.DataBind();
+            chart2.DataSource = vm.getDataContent(next);
+            chart2.Series["seriesSecond"].XValueMember = "Key";
+            chart2.Series["seriesSecond"].YValueMembers = "Value";
+            chart2.DataBind();
+            var list = vm.getDataContent(content, next);
+            chart3.Series["seriesThird"].Points.Clear();
+            foreach (var item in list)
+            {
+                chart3.Series["seriesThird"].Points.AddXY(item.Item1, item.Item2);
+            }
+            chart3.Series["seriesThird"].XValueMember = "Key";
+            chart3.Series["seriesThird"].YValueMembers = "Value";
+            chart3.DataBind();
         }
-        public IControlViewModel GetViewModel()
+
+        private void lbTodoList_KeyDown(object sender, KeyEventArgs e)
         {
-            return vm;
+            if (e.Key == Key.Up || e.Key == Key.Down)
+                choosenOption(lbTodoList, null);
         }
     }
 }

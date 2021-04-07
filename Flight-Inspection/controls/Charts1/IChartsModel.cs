@@ -8,13 +8,28 @@ using System.Threading.Tasks;
 namespace Flight_Inspection.controls
 {
     class Property
-    { 
-        public string Name { get; set; }
+    {
+        private string name;
+        private string attach;
+        private List<float> data;
+        public string Name { get => name; set => name = value; }
+        public string Attach { get => attach; set => attach = value; }
+        public List<float> Data
+        {
+            get => data; set
+            {
+                if (data == null)
+                {
+                    data = value;
+                }
+
+            }
+        }
     }
     interface IChartsModel : INotifyPropertyChanged
     {
         //void setTimeSeries();
-        List<float> getData(string property);
+        Property getData(string property);
         List<Property> GetProperties();
     }
 }

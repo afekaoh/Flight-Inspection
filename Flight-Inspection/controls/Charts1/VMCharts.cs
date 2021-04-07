@@ -11,16 +11,18 @@ namespace Flight_Inspection.controls
     {
         private ChartsModel charts;
 
+
         public VMCharts()
         {
             charts = new ChartsModel();
+
         }
 
         public List<Property> GetNames()
         {
             return charts.GetProperties();
         }
-        public List<float> getData(string property)
+        private Property getData(string property)
         {
             return charts.getData(property);
         }
@@ -32,7 +34,7 @@ namespace Flight_Inspection.controls
         }
         public List<(float, float)> getDataContent(string content, string second)
         {
-            return charts.getDataContent(content, second);
+            return charts.getDataContentCor(content);
         }
 
         public override void SetSettings(SettingsArgs settingsArgs)
