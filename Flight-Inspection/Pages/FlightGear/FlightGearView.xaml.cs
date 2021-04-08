@@ -19,6 +19,7 @@ using System.Net;
 using System.Threading;
 using Flight_Inspection.Pages.Settings;
 using Flight_Inspection.controls;
+using Flight_Inspection.Windows.FligthData;
 
 namespace Flight_Inspection.Pages.FlightGear
 {
@@ -67,7 +68,9 @@ namespace Flight_Inspection.Pages.FlightGear
 
         private void OnStart(object sender, EventArgs e)
         {
-            flight = new FlightData() { TS = flightGearViewModel.Ts };
+            flight = new FlightData();
+            flightGearViewModel.DataViewModel = flight.DataContext as FlightDataViewModel;
+            flightGearViewModel.UpdateSettings();
             flight.Closed += Flight_Closed;
             OnNewWindow(e);
             flight.Show();

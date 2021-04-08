@@ -39,20 +39,16 @@ namespace Flight_Inspection.controls
         }
         private void choosenOption(object sender, MouseButtonEventArgs e)
         {
-            var chosen = (sender as ListBox).SelectedItem as Property;
-            string content = chosen.Name;
-            var rand = new Random();
-            List<Property> ls = vm.GetNames();
-            string next = ls[rand.Next(0, ls.Count)].Name;
-            chart1.DataSource = vm.getDataContent(content);
+            vm.Current = (sender as ListBox).SelectedItem as Property;
+            chart1.DataSource = vm.getDataContent(vm.Current.Name);
             chart1.Series["series"].XValueMember = "Key";
             chart1.Series["series"].YValueMembers = "Value";
             chart1.DataBind();
-            chart2.DataSource = vm.getDataContent(next);
+            chart2.DataSource = vm.getDataContent(vm.Current.Attach);
             chart2.Series["seriesSecond"].XValueMember = "Key";
             chart2.Series["seriesSecond"].YValueMembers = "Value";
             chart2.DataBind();
-            var list = vm.getDataContent(content, next);
+            var list = vm.getDataContentAttach(vm.Current.Name);
             chart3.Series["seriesThird"].Points.Clear();
             foreach (var item in list)
             {

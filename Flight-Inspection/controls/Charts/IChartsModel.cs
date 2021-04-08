@@ -12,6 +12,7 @@ namespace Flight_Inspection.controls
         private string name;
         private string attach;
         private List<float> data;
+        
         public string Name { get => name; set => name = value; }
         public string Attach { get => attach; set => attach = value; }
         public List<float> Data
@@ -25,6 +26,8 @@ namespace Flight_Inspection.controls
 
             }
         }
+
+       
     }
     interface IChartsModel : INotifyPropertyChanged
     {
