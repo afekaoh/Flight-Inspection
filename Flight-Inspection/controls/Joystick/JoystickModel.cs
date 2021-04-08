@@ -21,7 +21,7 @@ namespace Flight_Inspection.controls.Joystick
 
         public void SetSettings(SettingsArgs settingsArgs)
         {
-            ts = settingsArgs.ts;
+            ts = settingsArgs.Ts;
         }
         public float Aileron
         {
@@ -81,6 +81,7 @@ namespace Flight_Inspection.controls.Joystick
                 Elevator = ts.getFeatureData("elevator").ElementAt(i);
                 Throttle = ts.getFeatureData("throttle").ElementAt(i);
                 Console.WriteLine($"{aileron} {rudder}  {elevator} {throttle}");
+                Thread.Sleep(10);
             }
         }
     }

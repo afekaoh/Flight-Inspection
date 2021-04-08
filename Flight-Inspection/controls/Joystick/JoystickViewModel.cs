@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Flight_Inspection.controls.Joystick
@@ -17,8 +18,8 @@ namespace Flight_Inspection.controls.Joystick
         {
             get { return VM_aileron; }
             set { 
-                VM_aileron = value +300;
-                OnPropertyChanged("VM_Aileron");
+                VM_aileron = value*1000+ 300 ;
+                OnPropertyChanged();
             }
         }
 
@@ -28,7 +29,7 @@ namespace Flight_Inspection.controls.Joystick
             set
             {
                 VM_rudder = value;
-                OnPropertyChanged("VM_Rudder");
+                OnPropertyChanged();
             }
         }
         public float VM_Elevator
@@ -37,7 +38,7 @@ namespace Flight_Inspection.controls.Joystick
             set
             {
                 VM_elevator = value;
-                OnPropertyChanged("VM_Elevator");
+                OnPropertyChanged();
             }
         }
         public float VM_Throttle
@@ -62,7 +63,11 @@ namespace Flight_Inspection.controls.Joystick
 
         public void start()
         {
-            model.start();
+            Thread t = new Thread(model.start)
+            {
+                IsBackground = true
+            };
+            t.Start();
         }
 
         public void TheModlePropertyChanged(object sender , PropertyChangedEventArgs e)
@@ -85,5 +90,8 @@ namespace Flight_Inspection.controls.Joystick
             }
         }
 
+        internal override void setTime(int time)
+        {
+        }
     }
 }
