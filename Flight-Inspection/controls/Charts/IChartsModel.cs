@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Shapes;
 
 namespace Flight_Inspection.controls
 {
@@ -11,6 +12,7 @@ namespace Flight_Inspection.controls
     {
         private string name;
         private string attach;
+        private Line linearReg;
         private List<float> data;
         
         public string Name { get => name; set => name = value; }
@@ -26,7 +28,7 @@ namespace Flight_Inspection.controls
 
             }
         }
-
+        public Line LinearReg { get => linearReg; set => linearReg = value; }
        
     }
     interface IChartsModel : INotifyPropertyChanged

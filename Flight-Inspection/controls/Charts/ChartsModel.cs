@@ -9,6 +9,7 @@ using System.Windows.Shapes;
 using Flight_Inspection.Pages.Settings;
 using Flight_Inspection.Settings;
 using System.Windows.Forms.DataVisualization.Charting;
+using System.Collections.ObjectModel;
 
 namespace Flight_Inspection.controls
 {
@@ -60,17 +61,19 @@ namespace Flight_Inspection.controls
         {
             if (e.PropertyName != "TimeSeries")
                 return;
-            List<string> ls = timeSeries.getFeatureNames();
+            ReadOnlyCollection<string> ls = timeSeries.getFeatureNames().AsReadOnly();
             int sizeTable = TimeSeries.getFeatureData(ls[0]).Count;
             for (int i = 0; i < ls.Count; i++)
             {
                 float maxVal = 0;
                 string maxCor = "";
                 float[] data = TimeSeries.getFeatureData(ls[i]).ToArray();
-                for (int j = i + 1; j < ls.Count; j++)
+                for (int j = 0; j < ls.Count; j++)
                 {
-                    float val = pearson(data,
-                    TimeSeries.getFeatureData(ls[j]).ToArray(), sizeTable, sizeTable);
+                    if (i == j)
+                        continue;
+                    float[] data2 = TimeSeries.getFeatureData(ls[j]).ToArray();
+                    float val = pearson(data,data2, data.Length, data2.Length);
                     val = Math.Abs(val);
                     if (maxVal < val)
                     {
@@ -78,17 +81,9 @@ namespace Flight_Inspection.controls
                         maxCor = ls[j];
                     }
                 }
-                if (maxCor != "")
-                {
-                    unsafe
-                    {
-                        Line2* l = (Line2*)linear_reg(data, TimeSeries.getFeatureData(maxCor).ToArray(), data.Length);
-                        Console.WriteLine($"{l->a} {l->b}");
-                        freeLine2((IntPtr)l);
-                    }
-                }
-                properties.Add(new Property() { Name = ls[i], Attach = maxCor, Data = data.ToList() });
+                properties.Add(new Property() { Name = ls[i], Attach = maxCor, Data = data.ToList() ,LinearReg = getLinearReg(data.ToList(), TimeSeries.getFeatureData(maxCor)) });
             }
+    
         }
         public Property getData(string property)
         {
@@ -127,5 +122,19 @@ namespace Flight_Inspection.controls
             return value;            
         }
 
+        public Line getLinearReg(List<float> current, List<float> sec)
+        {
+            Line linearReg = new Line();
+            unsafe
+            {
+                Line2* l = (Line2*)linear_reg(current.ToArray(), sec.ToArray(), current.Count);
+                double x1 = 0,x2 = current.Max()+10, y1=l->b,y2=y1+x2*l->a;
+                linearReg.X1 = x1;
+                linearReg.X2 = x2;
+                linearReg.Y1 = y1;
+                linearReg.Y2 = y2;
+            }
+            return linearReg;
+        }
     }
 }

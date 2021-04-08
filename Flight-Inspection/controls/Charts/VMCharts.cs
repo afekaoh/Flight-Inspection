@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Shapes;
 
 namespace Flight_Inspection.controls
 {
@@ -12,6 +13,7 @@ namespace Flight_Inspection.controls
         private ChartsModel charts;
         public event EventHandler Ready;
         Property current;
+
         public Property Current {
             get => current; set
             {
@@ -35,20 +37,30 @@ namespace Flight_Inspection.controls
             return charts.GetProperties();
         }
 
-        public Dictionary<int, float> getDataContent(string content)
+        public Dictionary<int, float> getDataContent()
         {
-            return charts.getDataContent(content);
+            return charts.getDataContent(current.Name);
 
         }
-        public List<(float, float)> getDataContentAttach(string content)
+        public Dictionary<int, float> getDataContentAttach()
         {
-            return charts.getDataContentCor(content);
+            return charts.getDataContent(current.Attach);
+
+        }
+        public List<(float, float)> getDataContentCurretnAndAttach()
+        {
+            return charts.getDataContentCor(current.Name);
         }
 
         public override void SetSettings(SettingsArgs settingsArgs)
         {
             charts.TimeSeries = settingsArgs.ts;
             OnReady();
+        }
+
+        public Line getLinearReg()
+        {
+            return current.LinearReg;
         }
     }
 }
