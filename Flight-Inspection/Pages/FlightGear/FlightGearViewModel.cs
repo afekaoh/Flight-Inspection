@@ -31,8 +31,6 @@ namespace Flight_Inspection.Pages.FlightGear
             this.flightGearModel = new FlightGearModel();
         }
 
-
-
         public void StartFG()
         {
             if (ready)
