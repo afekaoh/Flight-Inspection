@@ -11,7 +11,14 @@ namespace Flight_Inspection.controls
     {
         private ChartsModel charts;
         public event EventHandler Ready;
-
+        Property current;
+        public Property Current {
+            get => current; set
+            {
+                current = value;
+                OnPropertyChanged("Current");
+            }
+        }
 
         public void OnReady()
         {
@@ -27,17 +34,13 @@ namespace Flight_Inspection.controls
         {
             return charts.GetProperties();
         }
-        private Property getData(string property)
-        {
-            return charts.getData(property);
-        }
 
         public Dictionary<int, float> getDataContent(string content)
         {
             return charts.getDataContent(content);
 
         }
-        public List<(float, float)> getDataContent(string content, string second)
+        public List<(float, float)> getDataContentAttach(string content)
         {
             return charts.getDataContentCor(content);
         }

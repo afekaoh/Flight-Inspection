@@ -5,8 +5,10 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Shapes;
 using Flight_Inspection.Pages.Settings;
 using Flight_Inspection.Settings;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace Flight_Inspection.controls
 {
@@ -16,14 +18,14 @@ namespace Flight_Inspection.controls
         public event PropertyChangedEventHandler PropertyChanged;
         private TimeSeries timeSeries;
         private List<Property> properties = new List<Property>();
-
+        
         public TimeSeries TimeSeries
         {
             get => timeSeries; set
             {
                 timeSeries = value;
                 INotifyPropertyChanged("TimeSeries");
-            }
+             }
         }
 
         private void INotifyPropertyChanged(string v)
@@ -44,6 +46,8 @@ namespace Flight_Inspection.controls
 
         private void updateProperties(object sender, PropertyChangedEventArgs e)
         {
+            if (e.PropertyName != "TimeSeries")
+                return;
             List<string> ls = timeSeries.getFeatureNames();
             int sizeTable = TimeSeries.getFeatureData(ls[0]).Count;
             for (int i = 0; i<ls.Count; i++)
@@ -76,6 +80,8 @@ namespace Flight_Inspection.controls
         }
         public Dictionary<int, float> getDataContent(string content)
         {
+            if (content == "")
+                return null;
             List<float> vs = getData(content).Data;
             Dictionary<int, float> value = new Dictionary<int, float>();
             for (int i = 150; i < 300; i++)
@@ -86,6 +92,8 @@ namespace Flight_Inspection.controls
         }
         public List<(float, float)> getDataContentCor(string content)
         {
+            if (content == "")
+                return null;
             Property property = getData(content);
             List<float> vs = property.Data;
             List<float> sec = getData(property.Attach).Data;
@@ -95,7 +103,8 @@ namespace Flight_Inspection.controls
             {
                 value.Add((vs[i], sec[i]));
             }
-            return value;
+            return value;            
         }
+
     }
 }
