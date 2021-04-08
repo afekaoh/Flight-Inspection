@@ -34,6 +34,8 @@ namespace Flight_Inspection.controls
             chart1.ChartAreas["chartArea"].AxisX.MajorGrid.LineWidth = 0;
             chart1.ChartAreas["chartArea"].AxisY.MajorGrid.LineWidth = 0;
             chart3.ChartAreas["chartAreaThird"].AxisY.MajorGrid.LineWidth = 0;
+            chart3.ChartAreas["chartAreaThird"].AxisX.LabelAutoFitMaxFontSize = 8;
+            chart3.ChartAreas["chartAreaThird"].AxisX.LabelAutoFitMinFontSize = 8;
             chart3.ChartAreas["chartAreaThird"].AxisX.MajorGrid.LineWidth = 0;
             chart2.ChartAreas["chartAreaSecond"].AxisY.MajorGrid.LineWidth = 0;
             chart2.ChartAreas["chartAreaSecond"].AxisX.MajorGrid.LineWidth = 0;
@@ -63,6 +65,7 @@ namespace Flight_Inspection.controls
             }
             chart3.Series["seriesThird"].XValueMember = "Key";
             chart3.Series["seriesThird"].YValueMembers = "Value";
+            chart3.ChartAreas["chartAreaThird"].AxisX.LabelStyle.Format = vm.getFormat();
             Line line = vm.getLinearReg();
             chart3.Series["lineCor"].Points.Clear();
             chart3.Series["lineCor"].Points.AddXY(line.X1,line.Y1);

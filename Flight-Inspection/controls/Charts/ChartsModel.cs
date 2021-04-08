@@ -73,9 +73,9 @@ namespace Flight_Inspection.controls
                     if (i == j)
                         continue;
                     float[] data2 = TimeSeries.getFeatureData(ls[j]).ToArray();
-                    float val = pearson(data,data2, data.Length, data2.Length);
+                    float val = pearson(data,data2, sizeTable, sizeTable);
                     val = Math.Abs(val);
-                    if (maxVal < val)
+                    if (maxVal <= val)
                     {
                         maxVal = val;
                         maxCor = ls[j];
@@ -100,7 +100,7 @@ namespace Flight_Inspection.controls
                 return null;
             List<float> vs = getData(content).Data;
             Dictionary<int, float> value = new Dictionary<int, float>();
-            for (int i = 150; i < 300; i++)
+            for (int i = 0; i < vs.Count; i++)
             {
                 value.Add(i, vs[i]);
             }
@@ -128,11 +128,22 @@ namespace Flight_Inspection.controls
             unsafe
             {
                 Line2* l = (Line2*)linear_reg(current.ToArray(), sec.ToArray(), current.Count);
-                double x1 = 0,x2 = current.Max()+10, y1=l->b,y2=y1+x2*l->a;
-                linearReg.X1 = x1;
-                linearReg.X2 = x2;
-                linearReg.Y1 = y1;
-                linearReg.Y2 = y2;
+                if (float.IsNaN(l->b) || float.IsNaN(l->a))
+                {
+                    linearReg.X1 = 0;
+                    linearReg.X2 = 0;
+                    linearReg.Y1 = 0;
+                    linearReg.Y2 = 0;
+                }
+                else
+                {
+                    double x1 = current.Min(), x2 = current.Max(), y1 = l->b + x1 * l->a, y2 = l->b + x2 * l->a;
+                    linearReg.X1 = x1;
+                    linearReg.X2 = x2;
+                    linearReg.Y1 = y1;
+                    linearReg.Y2 = y2;
+                }
+                freeLine2((IntPtr)l);
             }
             return linearReg;
         }

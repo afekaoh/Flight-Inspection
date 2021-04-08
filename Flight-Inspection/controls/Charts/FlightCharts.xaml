@@ -30,7 +30,7 @@
             <WindowsFormsHost Height="150" Margin="5,5,5,5" >
                 <winformchart:Chart x:Name="chart1" Dock="None"  >
                     <winformchart:Chart.Series>
-                        <winformchart:Series Name="series" ChartType="Line" Font="Ariel"/>
+                        <winformchart:Series Name="series" ChartType="Line" Font="Ariel" Color="Black"/>
                     </winformchart:Chart.Series>
                     <winformchart:Chart.ChartAreas>
                         <winformchart:ChartArea Name="chartArea" />
@@ -44,7 +44,7 @@
             <WindowsFormsHost Height="150" Margin="5,5,5,5" >
                 <winformchart:Chart x:Name="chart2" Dock="None" >
                     <winformchart:Chart.Series>
-                        <winformchart:Series Name="seriesSecond" ChartType="Line" Font="Ariel" LabelForeColor="DarkGray"/>
+                        <winformchart:Series Name="seriesSecond" ChartType="Line" Font="Ariel" LabelForeColor="DarkGray" Color="Black"/>
                     </winformchart:Chart.Series>
                     <winformchart:Chart.ChartAreas>
                         <winformchart:ChartArea Name="chartAreaSecond" />
@@ -55,13 +55,14 @@
         </StackPanel>
         <StackPanel Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Height="150" Margin="5,5,5,5">
             <WindowsFormsHost Height="150" Margin="5,5,5,5" >
-                <winformchart:Chart x:Name="chart3" Dock="None" >
+                <winformchart:Chart x:Name="chart3" Dock="None">
                     <winformchart:Chart.Series>
-                        <winformchart:Series Name="seriesThird" ChartType="Point" Font="Ariel" LabelForeColor="DarkGray"/>
-                        <winformchart:Series Name="lineCor" ChartType="Line" Font="Ariel" LabelForeColor="DarkGray"/>
+                        <winformchart:Series Name="seriesThird" ChartType="Point" Font="Ariel" LabelForeColor="DarkGray" MarkerSize="2" MarkerColor="Black"/>
+                        <winformchart:Series Name="lastThirty" ChartType="Point" Font="Ariel" LabelForeColor="DarkGray" Color="Red" MarkerColor="Red" MarkerSize="2"/>
+                        <winformchart:Series Name="lineCor" ChartType="Line" Font="Ariel" LabelForeColor="DarkGray" Color="Red" MarkerSize="10"/>
                     </winformchart:Chart.Series>
                     <winformchart:Chart.ChartAreas>
-                        <winformchart:ChartArea Name="chartAreaThird"  />
+                        <winformchart:ChartArea Name="chartAreaThird" />
                     </winformchart:Chart.ChartAreas>
                 </winformchart:Chart>
 

@@ -37,6 +37,11 @@ namespace Flight_Inspection.controls
             return charts.GetProperties();
         }
 
+        public string getFormat()
+        {
+            return current.Data.Max() - current.Data.Min() > 100 ? "0.0" : "0.00";
+        }
+
         public Dictionary<int, float> getDataContent()
         {
             return charts.getDataContent(current.Name);
