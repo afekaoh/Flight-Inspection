@@ -23,13 +23,19 @@ namespace Flight_Inspection.controls.Joystick
         JoystickViewModel JoystickViewModel;
         public JoystickView()
         {
-            this.JoystickViewModel = new JoystickViewModel();
+            this.DataContext = new JoystickViewModel();
+            this.JoystickViewModel = this.DataContext as JoystickViewModel;
             InitializeComponent();
         }
 
         public IControlViewModel GetViewModel()
         {
             return this.JoystickViewModel;
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            JoystickViewModel.start();
         }
     }
 }
