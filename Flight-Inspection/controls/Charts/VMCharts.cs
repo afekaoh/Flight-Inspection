@@ -1,4 +1,6 @@
-﻿using System;
+﻿using LiveCharts;
+using LiveCharts.Wpf;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -13,7 +15,32 @@ namespace Flight_Inspection.controls
         private ChartsModel charts;
         public event EventHandler Ready;
         Property current;
+        SeriesCollection series, series2, series3;
 
+        public SeriesCollection Series
+        {
+            get => series; set
+            {
+                series = value;
+                OnPropertyChanged("Series");
+            }
+        }
+        public SeriesCollection Series2
+        {
+            get => series2; set
+            {
+                series2 = value;
+                OnPropertyChanged("Series2");
+            }
+        }
+        public SeriesCollection Series3
+        {
+            get => series3; set
+            {
+                series3 = value;
+                OnPropertyChanged("Series3");
+            }
+        }
         public Property Current {
             get => current; set
             {
@@ -30,42 +57,27 @@ namespace Flight_Inspection.controls
         public VMCharts()
         {
             charts = new ChartsModel();
+            charts.PropertyChanged += delegate (Object sender, PropertyChangedEventArgs e) {
+                Series = charts.Series;
+                Series2 = charts.Series2;
+                Series3 = charts.Series3;
+            };
+
         }
 
         public List<Property> GetNames()
         {
             return charts.GetProperties();
         }
-
-        public string getFormat()
-        {
-            return current.Data.Max() - current.Data.Min() > 100 ? "0.0" : "0.00";
-        }
-
-        public Dictionary<int, float> getDataContent()
-        {
-            return charts.getDataContent(current.Name);
-
-        }
-        public Dictionary<int, float> getDataContentAttach()
-        {
-            return charts.getDataContent(current.Attach);
-
-        }
-        public List<(float, float)> getDataContentCurretnAndAttach()
-        {
-            return charts.getDataContentCor(current.Name);
-        }
-
         public override void SetSettings(SettingsArgs settingsArgs)
         {
             charts.TimeSeries = settingsArgs.ts;
             OnReady();
         }
 
-        public Line getLinearReg()
+        public void updateSeries()
         {
-            return current.LinearReg;
+            charts.updateSeries(current.Name);
         }
     }
 }

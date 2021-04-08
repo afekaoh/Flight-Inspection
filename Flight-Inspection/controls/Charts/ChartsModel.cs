@@ -8,8 +8,11 @@ using System.Threading.Tasks;
 using System.Windows.Shapes;
 using Flight_Inspection.Pages.Settings;
 using Flight_Inspection.Settings;
-using System.Windows.Forms.DataVisualization.Charting;
 using System.Collections.ObjectModel;
+using LiveCharts.Wpf;
+using LiveCharts;
+using LiveCharts.Defaults;
+using System.Drawing;
 
 namespace Flight_Inspection.controls
 {
@@ -19,7 +22,32 @@ namespace Flight_Inspection.controls
         public event PropertyChangedEventHandler PropertyChanged;
         private TimeSeries timeSeries;
         private List<Property> properties = new List<Property>();
-        
+        SeriesCollection series, series2, series3;
+
+        public SeriesCollection Series
+        {
+            get => series; set
+            {
+                series = value;
+                //INotifyPropertyChanged("Series");
+            }
+        }
+        public SeriesCollection Series2
+        {
+            get => series2; set
+            {
+                series2 = value;
+                //INotifyPropertyChanged("Series2");
+            }
+        }
+        public SeriesCollection Series3
+        {
+            get => series3; set
+            {
+                series3 = value;
+                INotifyPropertyChanged("Series3");
+            }
+        }
         public TimeSeries TimeSeries
         {
             get => timeSeries; set
@@ -59,8 +87,12 @@ namespace Flight_Inspection.controls
 
         private void updateProperties(object sender, PropertyChangedEventArgs e)
         {
+         
             if (e.PropertyName != "TimeSeries")
                 return;
+            Series = new SeriesCollection();
+            Series2 = new SeriesCollection();
+            Series3 = new SeriesCollection();
             ReadOnlyCollection<string> ls = timeSeries.getFeatureNames().AsReadOnly();
             int sizeTable = TimeSeries.getFeatureData(ls[0]).Count;
             for (int i = 0; i < ls.Count; i++)
@@ -94,34 +126,55 @@ namespace Flight_Inspection.controls
         {
             return properties;
         }
-        public Dictionary<int, float> getDataContent(string content)
+        public void updateSeries(string content)
         {
             if (content == "")
-                return null;
-            List<float> vs = getData(content).Data;
-            Dictionary<int, float> value = new Dictionary<int, float>();
-            for (int i = 0; i < vs.Count; i++)
-            {
-                value.Add(i, vs[i]);
-            }
-            return value;
-        }
-        public List<(float, float)> getDataContentCor(string content)
-        {
-            if (content == "")
-                return null;
+                return;
             Property property = getData(content);
             List<float> vs = property.Data;
-            List<float> sec = getData(property.Attach).Data;
-            List<(float, float)> value = new List<(float, float)>();
-            int size = Math.Min(vs.Count, sec.Count); ;
-            for (int i = 0; i < size; i++)
+            List<float> attach = getData(property.Attach).Data;
+            ChartValues<ScatterPoint> points = new ChartValues<ScatterPoint>();
+            ChartValues<ScatterPoint> points2 = new ChartValues<ScatterPoint>();
+            ChartValues<ScatterPoint> points3 = new ChartValues<ScatterPoint>();
+            for (int i = 0; i < vs.Count; i++)
             {
-                value.Add((vs[i], sec[i]));
+                points.Add(new ScatterPoint(i, vs[i]));
+                points2.Add(new ScatterPoint(i, attach[i]));
+                points3.Add(new ScatterPoint(vs[i], attach[i]));
             }
-            return value;            
+            Series.Clear();
+            Series.Add(new ScatterSeries
+            {
+                Values = points,
+                MaxPointShapeDiameter = 5,
+                MinPointShapeDiameter = 5
+            });
+            Series2.Clear();
+            Series2.Add(new ScatterSeries
+            {
+                Values = points2,
+                MaxPointShapeDiameter = 5,
+                MinPointShapeDiameter = 5
+            });
+            Series3.Clear();
+            Series3.Add(new ScatterSeries
+            {
+                 Values = points3,
+                 MaxPointShapeDiameter=5,
+                 MinPointShapeDiameter=5
+            });
+            Series3.Add(new LineSeries
+            {
+                Values = new ChartValues<ScatterPoint>
+                    {
+                        new ScatterPoint(property.LinearReg.X1,property.LinearReg.Y1),
+                        new ScatterPoint(property.LinearReg.X2,property.LinearReg.Y2),
+                    },
+                PointGeometry = null,
+                Fill = System.Windows.Media.Brushes.Transparent
+            });
         }
-
+       
         public Line getLinearReg(List<float> current, List<float> sec)
         {
             Line linearReg = new Line();

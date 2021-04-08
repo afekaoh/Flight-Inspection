@@ -6,6 +6,9 @@ using System.Drawing;
 using System.Windows.Media;
 using System;
 using System.Windows.Shapes;
+using LiveCharts.Wpf;
+using LiveCharts;
+using LiveCharts.Defaults;
 
 namespace Flight_Inspection.controls
 {
@@ -21,6 +24,7 @@ namespace Flight_Inspection.controls
             vm = new VMCharts();
             DataContext = vm;
             vm.Ready += OnReady;
+            
         }
 
         public IControlViewModel GetViewModel()
@@ -31,46 +35,12 @@ namespace Flight_Inspection.controls
         public void OnReady(object sender, EventArgs e)
         {
             lbTodoList.ItemsSource = vm.GetNames();
-            chart1.ChartAreas["chartArea"].AxisX.MajorGrid.LineWidth = 0;
-            chart1.ChartAreas["chartArea"].AxisY.MajorGrid.LineWidth = 0;
-            chart3.ChartAreas["chartAreaThird"].AxisY.MajorGrid.LineWidth = 0;
-            chart3.ChartAreas["chartAreaThird"].AxisX.LabelAutoFitMaxFontSize = 8;
-            chart3.ChartAreas["chartAreaThird"].AxisX.LabelAutoFitMinFontSize = 8;
-            chart3.ChartAreas["chartAreaThird"].AxisX.MajorGrid.LineWidth = 0;
-            chart2.ChartAreas["chartAreaSecond"].AxisY.MajorGrid.LineWidth = 0;
-            chart2.ChartAreas["chartAreaSecond"].AxisX.MajorGrid.LineWidth = 0;
         }
         private void choosenOption(object sender, MouseButtonEventArgs e)
         {
             vm.Current = (sender as ListBox).SelectedItem as Property;
-            chart1.DataSource = vm.getDataContent();
-            chart1.Titles.Clear();
-            chart1.Titles.Add(vm.Current.Name);
-            chart1.Series["series"].XValueMember = "Key";
-            chart1.Series["series"].YValueMembers = "Value";
-            chart1.DataBind();
-            chart2.DataSource = vm.getDataContentAttach();
-            chart2.Titles.Clear();
-            chart2.Titles.Add(vm.Current.Attach);
-            chart2.Series["seriesSecond"].XValueMember = "Key";
-            chart2.Series["seriesSecond"].YValueMembers = "Value";
-            chart2.DataBind();
-            var list = vm.getDataContentCurretnAndAttach();
-            chart3.Titles.Clear();
-            chart3.Titles.Add(vm.Current.Name +" and " + vm.Current.Attach);
-            chart3.Series["seriesThird"].Points.Clear();
-            foreach (var item in list)
-            {
-                chart3.Series["seriesThird"].Points.AddXY(item.Item1, item.Item2);
-            }
-            chart3.Series["seriesThird"].XValueMember = "Key";
-            chart3.Series["seriesThird"].YValueMembers = "Value";
-            chart3.ChartAreas["chartAreaThird"].AxisX.LabelStyle.Format = vm.getFormat();
-            Line line = vm.getLinearReg();
-            chart3.Series["lineCor"].Points.Clear();
-            chart3.Series["lineCor"].Points.AddXY(line.X1,line.Y1);
-            chart3.Series["lineCor"].Points.AddXY(line.X2, line.Y2);
-            chart3.DataBind();
+            vm.updateSeries();
+
         }
 
         private void lbTodoList_KeyDown(object sender, KeyEventArgs e)
