@@ -176,6 +176,7 @@
       <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\IViewPages.cs" />
+    <Compile Include="Windows\FligthData\SetTimeEventArgs.cs" />
     <Compile Include="Windows\MainWindow\MainWindowViewModel.cs" />
     <Page Include="controls\Joystick\JoystickView.xaml">
       <SubType>Designer</SubType>

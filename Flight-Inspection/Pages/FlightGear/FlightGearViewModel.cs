@@ -1,13 +1,8 @@
-﻿using Flight_Inspection.Pages.FlightGear;
-using Flight_Inspection.Pages.Settings;
+﻿using Flight_Inspection.controls;
+using Flight_Inspection.Windows.FligthData;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using Flight_Inspection.controls;
 
 namespace Flight_Inspection.Pages.FlightGear
 {
@@ -18,6 +13,21 @@ namespace Flight_Inspection.Pages.FlightGear
         public event EventHandler Start;
         private bool ready;
 
+        FlightDataViewModel dataViewModel;
+        public FlightDataViewModel DataViewModel
+        {
+            get => dataViewModel;
+            set
+            {
+                if (dataViewModel == value)
+                {
+                    return;
+                }
+
+                dataViewModel = value;
+                OnPropertyChanged();
+            }
+        }
 
         public void OnStart()
         {
@@ -29,9 +39,12 @@ namespace Flight_Inspection.Pages.FlightGear
         {
             this.ready = false;
             this.flightGearModel = new FlightGearModel();
+            this.PropertyChanged += delegate (object sender, PropertyChangedEventArgs e)
+            {
+                if (e.PropertyName == "DataViewModel")
+                    DataViewModel.SetTimeEvent += SetTime;
+            };
         }
-
-
 
         public void StartFG()
         {
@@ -44,20 +57,27 @@ namespace Flight_Inspection.Pages.FlightGear
         {
             if (ready)
             {
-                /*flightGearModel.StartPlay();*/
+                //flightGearModel.StartPlay();
                 OnStart();
             }
         }
 
         public override void SetSettings(SettingsArgs settingsArgs)
         {
-            flightGearModel.setSettings(settingsArgs.ts, settingsArgs.procPath);
-            this.Ts = settingsArgs.ts;
+            flightGearModel.setSettings(settingsArgs.Ts, settingsArgs.ProcPath);
+            this.Ts = settingsArgs.Ts;
             this.ready = true;
         }
 
         public override void UpdateSettings()
         {
+            if (!(dataViewModel is null))
+                dataViewModel.Ts = ts;
+        }
+
+        void SetTime(object sender, SetTimeEventArgs e)
+        {
+            flightGearModel.Time = e.Time;
         }
     }
 }
