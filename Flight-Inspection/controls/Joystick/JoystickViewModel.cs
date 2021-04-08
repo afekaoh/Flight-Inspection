@@ -18,7 +18,7 @@ namespace Flight_Inspection.controls.Joystick
         {
             get { return VM_aileron; }
             set { 
-                VM_aileron = value*1000+ 300 ;
+                VM_aileron = value*250+ 300 ;
                 OnPropertyChanged();
             }
         }
@@ -28,7 +28,7 @@ namespace Flight_Inspection.controls.Joystick
             get { return VM_rudder; }
             set
             {
-                VM_rudder = value;
+                VM_rudder =330+ value*400;
                 OnPropertyChanged();
             }
         }
@@ -37,7 +37,7 @@ namespace Flight_Inspection.controls.Joystick
             get { return VM_elevator; }
             set
             {
-                VM_elevator = value;
+                VM_elevator = value * 100 + 150;
                 OnPropertyChanged();
             }
         }
@@ -46,8 +46,9 @@ namespace Flight_Inspection.controls.Joystick
             get { return VM_throttle; }
             set
             {
-                VM_throttle = value;
+                VM_throttle = 230 - value * 100;
                 OnPropertyChanged("VM_throttle");
+
             }
         }
         private JoystickModel model;

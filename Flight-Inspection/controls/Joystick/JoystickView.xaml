@@ -17,14 +17,15 @@
             <ColumnDefinition Width="5*"/>
         </Grid.ColumnDefinitions>
         <Canvas Grid.Column="0" Grid.Row="0">
-            <Rectangle Width="100" Height="200" Fill="Gray" Canvas.Left="10" Canvas.Top="40" />
+            <Rectangle Width="10" Height="200" Fill="Gray" Canvas.Left="100" Canvas.Top="40" />
+            <Rectangle Width="10" Height="20" Fill="Red" Canvas.Left="100" Canvas.Top="{Binding VM_Throttle}" />
         </Canvas>
-        <TextBlock Text="{Binding VM_Aileron}" FontSize="64" Background="Orange" Margin="0,-10,0,9.8"></TextBlock>
+        <TextBlock Text="{Binding VM_Aileron}" FontSize="64" ></TextBlock>
         <Button Content="Button" Height="100" Width="254" Margin="495,234,51,35" Click="Button_Click"/>
         <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top"><Run Text="TextBlock"/><InlineUIContainer>
                 <TextBlock TextWrapping="Wrap" Text="TextBlock"/>
             </InlineUIContainer></TextBlock>
-        <TextBox Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="264.4,10,0,0" TextWrapping="Wrap" Text="Aileron" VerticalAlignment="Top" Width="120" Background="Gray"/>
+        <TextBox Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="264.4,10,0,0" TextWrapping="Wrap" Text="Aileron" VerticalAlignment="Top" Width="100" />
         <TextBox HorizontalAlignment="Left" Height="23" Margin="-33,162,0,0" TextWrapping="Wrap" Text="Throttle" VerticalAlignment="Top" Background="Gray" Width="120" RenderTransformOrigin="0.5,0.5">
             <TextBox.RenderTransform>
                 <TransformGroup>
@@ -36,7 +37,12 @@
             </TextBox.RenderTransform>
         </TextBox>
         <Canvas Grid.Column="1" Grid.Row="0">
-            <Ellipse Width="50" Height="50" Canvas.Left= "{Binding VM_Aileron}" Canvas.Top="150" HorizontalAlignment="Center" VerticalAlignment="Center" Fill="Yellow" />
+            <Ellipse Width="50" Height="50" Canvas.Left= "{Binding VM_Aileron}" Canvas.Top="{Binding VM_Elevator}" HorizontalAlignment="Center" VerticalAlignment="Center" Fill="Yellow" />
+        </Canvas>
+        <Canvas Grid.Column="1" Grid.Row="1">
+            <TextBox Text=" Rudder" Canvas.Left="330"/>
+            <Rectangle Height="20" Width="400" Fill="Gray" Margin="150,20"></Rectangle>
+            <Rectangle Fill="Black" Canvas.Left="{Binding VM_Rudder}" Height="20" Width="50" Canvas.Top="20"></Rectangle>
         </Canvas>
 
     </Grid>
