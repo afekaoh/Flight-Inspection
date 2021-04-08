@@ -14,7 +14,7 @@ namespace Flight_Inspection.controls.Joystick
     {
         public event PropertyChangedEventHandler PropertyChanged;
         private TimeSeries ts;
-        private float aileron;
+        private float aileron=0;
         private float rudder;
         private float elevator;
         private float throttle;
@@ -80,7 +80,7 @@ namespace Flight_Inspection.controls.Joystick
                 Rudder = ts.getFeatureData("rudder").ElementAt(i);
                 Elevator = ts.getFeatureData("elevator").ElementAt(i);
                 Throttle = ts.getFeatureData("throttle").ElementAt(i);
-                Console.WriteLine($"{Aileron} {Rudder}  {Elevator} {Throttle}");
+                Console.WriteLine($"{aileron} {rudder}  {elevator} {throttle}");
             }
         }
     }
