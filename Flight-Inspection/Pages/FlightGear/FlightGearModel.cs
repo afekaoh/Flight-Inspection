@@ -2,17 +2,19 @@
 using Flight_Inspection.Pages.Settings;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Flight_Inspection.Pages.FlightGear
 {
-    class FlightGearModel
+    class FlightGearModel : INotifyPropertyChanged
     {
         private TimeSeries TS;
         private readonly Process FG;
@@ -60,6 +62,13 @@ namespace Flight_Inspection.Pages.FlightGear
                         Thread.Sleep(sleepTime);
                     }
 
+                    /*    while (true)
+                        {
+                            var line = rows[Time] + "\n";
+                            var buffer = Encoding.ASCII.GetBytes(line);
+                            soc.Send(buffer);
+                            Thread.Sleep(1);
+                        }*/
                     /*for (; speed < rows.Count; speed++)
                     {
                         var buffer = Encoding.ASCII.GetBytes(rows[speed] + "\n");
@@ -99,6 +108,23 @@ namespace Flight_Inspection.Pages.FlightGear
             // the process hasn't been initialized 
             catch (Exception e) when (e is ArgumentException || e is ArgumentNullException) { return false; }
             return true;
+        }
+        int time;
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        virtual public void OnPropertyChanged([CallerMemberName] string name = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        }
+
+        public int Time
+        {
+            get => time;
+            set
+            {
+                time = value;
+            }
         }
     }
 }

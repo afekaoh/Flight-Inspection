@@ -47,7 +47,7 @@ namespace Flight_Inspection.controls
 
         public override void SetSettings(SettingsArgs settingsArgs)
         {
-            charts.TimeSeries = settingsArgs.ts;
+            charts.TimeSeries = settingsArgs.Ts;
             OnReady();
         }
     }
