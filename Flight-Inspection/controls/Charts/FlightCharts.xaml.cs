@@ -40,9 +40,7 @@ namespace Flight_Inspection.controls
         }
         private void choosenOption(object sender, MouseButtonEventArgs e)
         {
-            vm.Current = (sender as ListBox).SelectedItem as Property;
-            vm.updateSeries();
-            
+            vm.Current = (sender as ListBox).SelectedItem as Property;    
         }
 
         private void lbTodoList_KeyDown(object sender, KeyEventArgs e)

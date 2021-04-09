@@ -14,6 +14,7 @@ using LiveCharts;
 using LiveCharts.Defaults;
 using System.Drawing;
 using LiveCharts.Configurations;
+using static Flight_Inspection.controls.AnalomyDetectorClass;
 
 namespace Flight_Inspection.controls
 {
@@ -23,7 +24,6 @@ namespace Flight_Inspection.controls
         public event PropertyChangedEventHandler PropertyChanged;
         private TimeSeries timeSeries;
         private List<Property> properties = new List<Property>();
-        SeriesCollection series3;
         private double xMax;
         public double XMax
         {
@@ -149,21 +149,6 @@ namespace Flight_Inspection.controls
             }
         }
 
-        [DllImport("anomaly_detection_util.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern float pearson([MarshalAs(UnmanagedType.LPArray)] float[] x, [MarshalAs(UnmanagedType.LPArray)] float[] y, int sizeX, int sizeY);
-
-        [DllImport("anomaly_detection_util.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern IntPtr linear_reg([MarshalAs(UnmanagedType.LPArray)] float[] x, [MarshalAs(UnmanagedType.LPArray)] float[] y, int size);
-
-        [DllImport("anomaly_detection_util.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void freeLine2(IntPtr l);
-
-        [StructLayout(LayoutKind.Sequential)]
-        unsafe struct Line2
-        {
-            public float a, b;
-        }
-
         public ChartsModel()
         {
             PropertyChanged += updateProperties;
@@ -175,6 +160,7 @@ namespace Flight_Inspection.controls
             if (e.PropertyName != "TimeSeries")
                 return;
             ReadOnlyCollection<string> ls = timeSeries.getFeatureNames().AsReadOnly();
+            LinearRegVal = new ChartValues<ObservablePoint>();
             int sizeTable = TimeSeries.getFeatureData(ls[0]).Count;
             for (int i = 0; i < ls.Count; i++)
             {
@@ -218,8 +204,9 @@ namespace Flight_Inspection.controls
             ChartValues<ObservablePoint> points2 = new ChartValues<ObservablePoint>();
             ChartValues<ObservablePoint> points3 = new ChartValues<ObservablePoint>();
             ObservablePoint[] pointUpdate = new ObservablePoint[4];
-            for (int i = 0; i < vs.Count-4; i+=4)
+            for (int i = 0; i < vs.Count -4; i+=4)
             {
+                //loop unroling
                 pointUpdate[0] = new ObservablePoint(i, vs[i]);
                 pointUpdate[1] = new ObservablePoint(i+1, vs[i+1]);
                 pointUpdate[2] = new ObservablePoint(i+2, vs[i+2]);
@@ -242,40 +229,18 @@ namespace Flight_Inspection.controls
             DataMapperAttach = new CartesianMapper<ObservablePoint>().X(point => point.X).Y(point => point.Y);
             ChartValuesCurrentAndAttach = points3;
             DataMapperCurrentAndAttach = new CartesianMapper<ObservablePoint>().X(point => point.X).Y(point => point.Y);
-            Line line = getLinearReg(vs, attach);
-            LinearRegVal = new ChartValues<ObservablePoint>();
-            LinearRegVal.Add(new ObservablePoint(line.X1, line.Y1));
-            LinearRegVal.Add(new ObservablePoint(line.X2, line.Y2));
+            LineSafe line = getLinearReg(vs, attach);
+            LinearRegVal.Clear();
+            float x1 = vs.Min(), y1 = line.b + x1 * line.a;
+            float x2 = vs.Max(), y2 = line.b + x2 * line.a;
+            LinearRegVal.Add(new ObservablePoint(x1, y1));
+            LinearRegVal.Add(new ObservablePoint(x2, y2));
             XMax = vs.Count;
             XMin = 0;
             XMaxThird = vs.Max();
             XMinThird = vs.Min();
         }
        
-        public Line getLinearReg(List<float> current, List<float> sec)
-        {
-            Line linearReg = new Line();
-            unsafe
-            {
-                Line2* l = (Line2*)linear_reg(current.ToArray(), sec.ToArray(), current.Count);
-                if (float.IsNaN(l->b) || float.IsNaN(l->a))
-                {
-                    linearReg.X1 = 0;
-                    linearReg.X2 = 0;
-                    linearReg.Y1 = 0;
-                    linearReg.Y2 = 0;
-                }
-                else
-                {
-                    double x1 = current.Min(), x2 = current.Max(), y1 = l->b + x1 * l->a, y2 = l->b + x2 * l->a;
-                    linearReg.X1 = x1;
-                    linearReg.X2 = x2;
-                    linearReg.Y1 = y1;
-                    linearReg.Y2 = y2;
-                }
-                freeLine2((IntPtr)l);
-            }
-            return linearReg;
-        }
+        
     }
 }

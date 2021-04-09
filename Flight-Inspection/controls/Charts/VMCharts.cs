@@ -16,7 +16,6 @@ namespace Flight_Inspection.controls
         private ChartsModel charts;
         public event EventHandler Ready;
         Property current;
-        SeriesCollection series3;
 
         public Func<double, string> LabelFormatter => value => value.ToString("F");
 
@@ -138,6 +137,7 @@ namespace Flight_Inspection.controls
             {
                 current = value;
                 OnPropertyChanged("Current");
+                updateSeries();
             }
         }
 
@@ -203,6 +203,11 @@ namespace Flight_Inspection.controls
         public void updateSeries()
         {
             charts.updateSeries(current.Name);
+        }
+
+        internal override void setTime(int time)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Shapes;
+using static Flight_Inspection.controls.AnalomyDetectorClass;
 
 namespace Flight_Inspection.controls
 {
@@ -12,7 +13,7 @@ namespace Flight_Inspection.controls
     {
         private string name;
         private string attach;
-        private Line linearReg;
+        private LineSafe linearReg;
         private List<float> data;
         
         public string Name { get => name; set => name = value; }
@@ -28,7 +29,7 @@ namespace Flight_Inspection.controls
 
             }
         }
-        public Line LinearReg { get => linearReg; set => linearReg = value; }
+        public LineSafe LinearReg { get => linearReg; set => linearReg = value; }
        
     }
     interface IChartsModel : INotifyPropertyChanged
