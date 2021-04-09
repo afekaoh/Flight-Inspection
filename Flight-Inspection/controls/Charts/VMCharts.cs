@@ -1,4 +1,5 @@
 ﻿using LiveCharts;
+using LiveCharts.Defaults;
 using LiveCharts.Wpf;
 using System;
 using System.Collections.Generic;
@@ -15,30 +16,121 @@ namespace Flight_Inspection.controls
         private ChartsModel charts;
         public event EventHandler Ready;
         Property current;
-        SeriesCollection series, series2, series3;
+        SeriesCollection series3;
 
-        public SeriesCollection Series
+        public Func<double, string> LabelFormatter => value => value.ToString("F");
+
+        private double xMax=1000;
+        public double XMax
         {
-            get => series; set
+            get => this.xMax;
+            set
             {
-                series = value;
-                OnPropertyChanged("Series");
+                this.xMax = value;
+                OnPropertyChanged("XMax");
             }
         }
-        public SeriesCollection Series2
+
+        private double xMin =0;
+        public double XMin
         {
-            get => series2; set
+            get => this.xMin;
+            set
             {
-                series2 = value;
-                OnPropertyChanged("Series2");
+                this.xMin = value;
+                OnPropertyChanged("XMin");
             }
         }
-        public SeriesCollection Series3
+
+        private double xMaxThird = 1000;
+        public double XMaxThird
         {
-            get => series3; set
+            get => this.xMaxThird;
+            set
             {
-                series3 = value;
-                OnPropertyChanged("Series3");
+                this.xMaxThird = value;
+                OnPropertyChanged("XMaxThird");
+            }
+        }
+
+        private double xMinThird = 0;
+        public double XMinThird
+        {
+            get => this.xMinThird;
+            set
+            {
+                this.xMinThird = value;
+                OnPropertyChanged("XMinThird");
+            }
+        }
+
+        private object dataMapper;
+        public object DataMapper
+        {
+            get => this.dataMapper;
+            set
+            {
+                this.dataMapper = value;
+                OnPropertyChanged("DataMapper");
+            }
+        }
+
+        ChartValues<ObservablePoint> chartVal;
+        public ChartValues<ObservablePoint> ChartValues { get => chartVal; set { 
+                chartVal = value;
+                OnPropertyChanged("ChartValues");
+            } 
+        }
+
+        private object dataMapperAttach;
+        public object DataMapperAttach
+        {
+            get => this.dataMapperAttach;
+            set
+            {
+                this.dataMapperAttach = value;
+                OnPropertyChanged("DataMapperAttach");
+            }
+        }
+
+        ChartValues<ObservablePoint> chartValAttach;
+        public ChartValues<ObservablePoint> ChartValuesAttach
+        {
+            get => chartValAttach; set
+            {
+                chartValAttach = value;
+                OnPropertyChanged("ChartValuesAttach");
+            }
+        }
+
+        private object dataMapperCurrentAndAttach;
+        public object DataMapperCurrentAndAttach
+        {
+            get => this.dataMapperCurrentAndAttach;
+            set
+            {
+                this.dataMapperCurrentAndAttach = value;
+                OnPropertyChanged("DataMapperCurrentAndAttach");
+            }
+        }
+
+        ChartValues<ObservablePoint> chartValCurrentAndAttach;
+        public ChartValues<ObservablePoint> ChartValuesCurrentAndAttach
+        {
+            get => chartValCurrentAndAttach; set
+            {
+                chartValCurrentAndAttach = value;
+                OnPropertyChanged("ChartValuesCurrentAndAttach");
+            }
+        }
+
+        ChartValues<ObservablePoint> linearRegVal;
+        public ChartValues<ObservablePoint> LinearRegVal
+        {
+            get => linearRegVal; set
+            {
+                linearRegVal = value;
+                OnPropertyChanged("ChartValuesCurrentAndAttach");
             }
         }
         public Property Current {
@@ -58,9 +150,42 @@ namespace Flight_Inspection.controls
         {
             charts = new ChartsModel();
             charts.PropertyChanged += delegate (Object sender, PropertyChangedEventArgs e) {
-                Series = charts.Series;
-                Series2 = charts.Series2;
-                Series3 = charts.Series3;
+                switch (e.PropertyName)
+                {
+                    case "XMax":
+                        XMax = charts.XMax;
+                        break;
+                    case "XMin":
+                        XMin = charts.XMin;
+                        break;
+                    case "XMaxThird":
+                        XMaxThird = charts.XMaxThird;
+                        break;
+                    case "XMinThird":
+                        XMinThird = charts.XMinThird;
+                        break;
+                    case "DataMapper":
+                        DataMapper = charts.DataMapper;
+                        break;
+                    case "ChartValues":
+                        ChartValues = charts.ChartValues;
+                        break;
+                    case "DataMapperAttach":
+                        DataMapperAttach = charts.DataMapperAttach;
+                        break;
+                    case "ChartValuesAttach":
+                        ChartValuesAttach = charts.ChartValuesAttach;
+                        break;
+                    case "LinearRegVal":
+                        LinearRegVal = charts.LinearRegVal;
+                        break;
+                    case "ChartValuesCurrentAndAttach":
+                        ChartValuesCurrentAndAttach = charts.ChartValuesCurrentAndAttach;
+                        break;
+                    case "DataMapperCurrentAndAttach":
+                        DataMapperCurrentAndAttach = charts.DataMapperCurrentAndAttach;
+                        break;
+                }
             };
 
         }

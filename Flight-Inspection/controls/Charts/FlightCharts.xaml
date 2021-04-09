@@ -25,9 +25,114 @@
             </ListBox.ItemTemplate>
         </ListBox>
 
-        <lvc1:CartesianChart Grid.Column="1" Name="Series" Margin="4" DataTooltip="{x:Null}"  Hoverable="False" DisableAnimations="True" Series="{Binding Series}" ></lvc1:CartesianChart>
-        <lvc1:CartesianChart Name="Series2" Margin="4" Grid.Column="2"  DataTooltip="{x:Null}" Hoverable="False" Series="{Binding Series2}" DisableAnimations="True" ></lvc1:CartesianChart>
-        <lvc1:CartesianChart Name="Series3" Margin="4" Grid.Column="1" DataTooltip="{x:Null}" Hoverable="False" Grid.Row="1" Grid.ColumnSpan="2" Series="{Binding Series3}" DisableAnimations="True"></lvc1:CartesianChart>
+        <lvc1:CartesianChart Grid.Column="1" Name="Series" Margin="4"  DataTooltip="{x:Null}"  Hoverable="False" DisableAnimations="True" >
+            <lvc1:CartesianChart.Series>
+                <lvc1:ScatterSeries
+                      MaxPointShapeDiameter="5"
+                      MinPointShapeDiameter="5"
+                      Title="First Property"
+                      Values="{Binding ChartValues}"
+                      Configuration="{Binding DataMapper}"/>
+            </lvc1:CartesianChart.Series>
+
+            <lvc1:CartesianChart.CacheMode>
+                <BitmapCache EnableClearType="False" 
+                   RenderAtScale="1"
+                   SnapsToDevicePixels="False" />
+            </lvc1:CartesianChart.CacheMode>
+            <lvc1:CartesianChart.AxisY>
+                <lvc1:Axis Title="{Binding Current.Name}"
+            FontSize="14" 
+            Unit="1"
+            DisableAnimations="True"
+            LabelFormatter="{Binding LabelFormatter}"
+             />
+            </lvc1:CartesianChart.AxisY>
+
+            <lvc1:CartesianChart.AxisX>
+                <lvc1:Axis Title="Time" 
+            DisableAnimations="True" 
+            FontSize="14" 
+            Unit="1"
+            MaxValue="{Binding XMax}"
+            MinValue="{Binding XMin}" />
+            </lvc1:CartesianChart.AxisX>
+        </lvc1:CartesianChart>
+        
+        <lvc1:CartesianChart Name="Series2" Margin="4" Grid.Column="2" DataTooltip="{x:Null}" Hoverable="False" DisableAnimations="True" >
+            <lvc1:CartesianChart.Series>
+                <lvc1:ScatterSeries
+                      MaxPointShapeDiameter="5"
+                      MinPointShapeDiameter="5"
+                      Title="Attach Property"
+                      Values="{Binding ChartValuesAttach}"
+                      Configuration="{Binding DataMapperAttach}"/>
+            </lvc1:CartesianChart.Series>
+
+            <lvc1:CartesianChart.CacheMode>
+                <BitmapCache EnableClearType="False" 
+                   RenderAtScale="1"
+                   SnapsToDevicePixels="False" />
+            </lvc1:CartesianChart.CacheMode>
+            <lvc1:CartesianChart.AxisY>
+                <lvc1:Axis Title="{Binding Current.Attach}"
+            FontSize="14" 
+            Unit="1"
+            DisableAnimations="True"
+            LabelFormatter="{Binding LabelFormatter}"
+             />
+            </lvc1:CartesianChart.AxisY>
+
+            <lvc1:CartesianChart.AxisX>
+                <lvc1:Axis Title="Time" 
+            DisableAnimations="True" 
+            FontSize="14" 
+            Unit="1"
+            MaxValue="{Binding XMax}"
+            MinValue="{Binding XMin}" />
+            </lvc1:CartesianChart.AxisX>
+        </lvc1:CartesianChart>
+        
+        
+        <lvc1:CartesianChart Name="Series3" Margin="4" Grid.Column="1" DataTooltip="{x:Null}" Hoverable="False" Grid.Row="1" Grid.ColumnSpan="2" DisableAnimations="True">
+            <lvc1:CartesianChart.Series>
+                <lvc1:ScatterSeries
+                      MaxPointShapeDiameter="5"
+                      MinPointShapeDiameter="5"
+                      Title="Attach Property"
+                      Values="{Binding ChartValuesCurrentAndAttach}"
+                      Configuration="{Binding DataMapperCurrentAndAttach}"/>
+                <lvc1:LineSeries
+                      PointGeometry="{x:Null}"
+                      Title="Attach Property"
+                      Values="{Binding LinearRegVal}"
+                      />
+            </lvc1:CartesianChart.Series>
+            
+
+            <lvc1:CartesianChart.CacheMode>
+                <BitmapCache EnableClearType="False" 
+                   RenderAtScale="1"
+                   SnapsToDevicePixels="False" />
+            </lvc1:CartesianChart.CacheMode>
+            <lvc1:CartesianChart.AxisY>
+                <lvc1:Axis Title="{Binding Current.Attach}"
+            FontSize="14" 
+            Unit="1"
+            DisableAnimations="True"
+            LabelFormatter="{Binding LabelFormatter}"
+             />
+            </lvc1:CartesianChart.AxisY>
+
+            <lvc1:CartesianChart.AxisX>
+                <lvc1:Axis Title="{Binding Current.Name}" 
+            DisableAnimations="True" 
+            FontSize="14" 
+            Unit="1"
+            MaxValue="{Binding XMaxThird}"
+            MinValue="{Binding XMinThird}" />
+            </lvc1:CartesianChart.AxisX>
+        </lvc1:CartesianChart>
         
 
     </Grid>

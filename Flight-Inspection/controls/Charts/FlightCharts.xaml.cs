@@ -35,12 +35,14 @@ namespace Flight_Inspection.controls
         public void OnReady(object sender, EventArgs e)
         {
             lbTodoList.ItemsSource = vm.GetNames();
+            vm.Current = vm.GetNames()[0];
+            vm.updateSeries();
         }
         private void choosenOption(object sender, MouseButtonEventArgs e)
         {
             vm.Current = (sender as ListBox).SelectedItem as Property;
             vm.updateSeries();
-
+            
         }
 
         private void lbTodoList_KeyDown(object sender, KeyEventArgs e)

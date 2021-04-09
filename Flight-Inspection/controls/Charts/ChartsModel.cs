@@ -13,6 +13,7 @@ using LiveCharts.Wpf;
 using LiveCharts;
 using LiveCharts.Defaults;
 using System.Drawing;
+using LiveCharts.Configurations;
 
 namespace Flight_Inspection.controls
 {
@@ -22,30 +23,113 @@ namespace Flight_Inspection.controls
         public event PropertyChangedEventHandler PropertyChanged;
         private TimeSeries timeSeries;
         private List<Property> properties = new List<Property>();
-        SeriesCollection series, series2, series3;
+        SeriesCollection series3;
+        private double xMax;
+        public double XMax
+        {
+            get => this.xMax;
+            set
+            {
+                this.xMax = value;
+                INotifyPropertyChanged("XMax");
+            }
+        }
 
-        public SeriesCollection Series
+        private double xMin;
+        public double XMin
         {
-            get => series; set
+            get => this.xMin;
+            set
             {
-                series = value;
-                //INotifyPropertyChanged("Series");
+                this.xMin = value;
+                INotifyPropertyChanged("XMin");
             }
         }
-        public SeriesCollection Series2
+
+        private double xMaxThird;
+        public double XMaxThird
         {
-            get => series2; set
+            get => this.xMaxThird;
+            set
             {
-                series2 = value;
-                //INotifyPropertyChanged("Series2");
+                this.xMaxThird = value;
+                INotifyPropertyChanged("XMaxThird");
             }
         }
-        public SeriesCollection Series3
+
+        private double xMinThird;
+        public double XMinThird
         {
-            get => series3; set
+            get => this.xMinThird;
+            set
             {
-                series3 = value;
-                INotifyPropertyChanged("Series3");
+                this.xMinThird = value;
+                INotifyPropertyChanged("XMinThird");
+            }
+        }
+        private object dataMapper;
+        public object DataMapper
+        {
+            get => this.dataMapper;
+            set
+            {
+                this.dataMapper = value;
+                INotifyPropertyChanged("DataMapper");
+            }
+        }
+
+        private object dataMapperAttach;
+        public object DataMapperAttach
+        {
+            get => this.dataMapperAttach;
+            set
+            {
+                this.dataMapperAttach = value;
+                INotifyPropertyChanged("DataMapperAttach");
+            }
+        }
+        ChartValues<ObservablePoint> chartVal;
+        public ChartValues<ObservablePoint> ChartValues { get => chartVal; set
+            {
+                INotifyPropertyChanged("ChartValues");
+                chartVal= value;
+            }
+        }
+
+        ChartValues<ObservablePoint> chartValAttch;
+        public ChartValues<ObservablePoint> ChartValuesAttach { get => chartValAttch; set {
+                INotifyPropertyChanged("ChartValuesAttach");
+                chartValAttch = value; 
+            }
+        }
+
+        ChartValues<ObservablePoint> chartValCurrentAndAttach;
+        public ChartValues<ObservablePoint> ChartValuesCurrentAndAttach
+        {
+            get => chartValCurrentAndAttach; set
+            {
+                chartValCurrentAndAttach = value;
+                INotifyPropertyChanged("ChartValuesCurrentAndAttach");
+            }
+        }
+
+        private object dataMapperCurrentAndAttach;
+        public object DataMapperCurrentAndAttach
+        {
+            get => this.dataMapperCurrentAndAttach;
+            set
+            {
+                this.dataMapperCurrentAndAttach = value;
+                INotifyPropertyChanged("DataMapperCurrentAndAttach");
+            }
+        }
+        ChartValues<ObservablePoint> linearRegVal;
+        public ChartValues<ObservablePoint> LinearRegVal
+        {
+            get => linearRegVal; set
+            {
+                linearRegVal = value;
+                INotifyPropertyChanged("LinearRegVal");
             }
         }
         public TimeSeries TimeSeries
@@ -90,9 +174,6 @@ namespace Flight_Inspection.controls
          
             if (e.PropertyName != "TimeSeries")
                 return;
-            Series = new SeriesCollection();
-            Series2 = new SeriesCollection();
-            Series3 = new SeriesCollection();
             ReadOnlyCollection<string> ls = timeSeries.getFeatureNames().AsReadOnly();
             int sizeTable = TimeSeries.getFeatureData(ls[0]).Count;
             for (int i = 0; i < ls.Count; i++)
@@ -115,7 +196,7 @@ namespace Flight_Inspection.controls
                 }
                 properties.Add(new Property() { Name = ls[i], Attach = maxCor, Data = data.ToList() ,LinearReg = getLinearReg(data.ToList(), TimeSeries.getFeatureData(maxCor)) });
             }
-    
+            
         }
         public Property getData(string property)
         {
@@ -133,46 +214,42 @@ namespace Flight_Inspection.controls
             Property property = getData(content);
             List<float> vs = property.Data;
             List<float> attach = getData(property.Attach).Data;
-            ChartValues<ScatterPoint> points = new ChartValues<ScatterPoint>();
-            ChartValues<ScatterPoint> points2 = new ChartValues<ScatterPoint>();
-            ChartValues<ScatterPoint> points3 = new ChartValues<ScatterPoint>();
-            for (int i = 0; i < vs.Count; i++)
+            ChartValues<ObservablePoint> points = new ChartValues<ObservablePoint>();
+            ChartValues<ObservablePoint> points2 = new ChartValues<ObservablePoint>();
+            ChartValues<ObservablePoint> points3 = new ChartValues<ObservablePoint>();
+            ObservablePoint[] pointUpdate = new ObservablePoint[4];
+            for (int i = 0; i < vs.Count-4; i+=4)
             {
-                points.Add(new ScatterPoint(i, vs[i]));
-                points2.Add(new ScatterPoint(i, attach[i]));
-                points3.Add(new ScatterPoint(vs[i], attach[i]));
+                pointUpdate[0] = new ObservablePoint(i, vs[i]);
+                pointUpdate[1] = new ObservablePoint(i+1, vs[i+1]);
+                pointUpdate[2] = new ObservablePoint(i+2, vs[i+2]);
+                pointUpdate[3] = new ObservablePoint(i+3, vs[i+3]);
+                points.AddRange(pointUpdate);
+                pointUpdate[0] = new ObservablePoint(i, attach[i]);
+                pointUpdate[1] = new ObservablePoint(i + 1, attach[i + 1]);
+                pointUpdate[2] = new ObservablePoint(i + 2, attach[i + 2]);
+                pointUpdate[3] = new ObservablePoint(i + 3, attach[i + 3]);
+                points2.AddRange(pointUpdate);
+                pointUpdate[0] = new ObservablePoint(vs[i], attach[i]);
+                pointUpdate[1] = new ObservablePoint(vs[i + 1], attach[i + 1]);
+                pointUpdate[2] = new ObservablePoint(vs[i + 2], attach[i + 2]);
+                pointUpdate[3] = new ObservablePoint(vs[i + 3], attach[i + 3]);
+                points3.AddRange(pointUpdate);
             }
-            Series.Clear();
-            Series.Add(new ScatterSeries
-            {
-                Values = points,
-                MaxPointShapeDiameter = 5,
-                MinPointShapeDiameter = 5
-            });
-            Series2.Clear();
-            Series2.Add(new ScatterSeries
-            {
-                Values = points2,
-                MaxPointShapeDiameter = 5,
-                MinPointShapeDiameter = 5
-            });
-            Series3.Clear();
-            Series3.Add(new ScatterSeries
-            {
-                 Values = points3,
-                 MaxPointShapeDiameter=5,
-                 MinPointShapeDiameter=5
-            });
-            Series3.Add(new LineSeries
-            {
-                Values = new ChartValues<ScatterPoint>
-                    {
-                        new ScatterPoint(property.LinearReg.X1,property.LinearReg.Y1),
-                        new ScatterPoint(property.LinearReg.X2,property.LinearReg.Y2),
-                    },
-                PointGeometry = null,
-                Fill = System.Windows.Media.Brushes.Transparent
-            });
+            ChartValues = points;
+            DataMapper = new CartesianMapper<ObservablePoint>().X(point => point.X).Y(point => point.Y);
+            ChartValuesAttach = points2;
+            DataMapperAttach = new CartesianMapper<ObservablePoint>().X(point => point.X).Y(point => point.Y);
+            ChartValuesCurrentAndAttach = points3;
+            DataMapperCurrentAndAttach = new CartesianMapper<ObservablePoint>().X(point => point.X).Y(point => point.Y);
+            Line line = getLinearReg(vs, attach);
+            LinearRegVal = new ChartValues<ObservablePoint>();
+            LinearRegVal.Add(new ObservablePoint(line.X1, line.Y1));
+            LinearRegVal.Add(new ObservablePoint(line.X2, line.Y2));
+            XMax = vs.Count;
+            XMin = 0;
+            XMaxThird = vs.Max();
+            XMinThird = vs.Min();
         }
        
         public Line getLinearReg(List<float> current, List<float> sec)
