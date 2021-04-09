@@ -3,8 +3,10 @@ namespace Flight_Inspection.controls
 {
     public class SettingsArgs
     {
-        public TimeSeries ts;
-        public string procPath;
+        private TimeSeries ts;
+        private string procPath;
 
+        public TimeSeries Ts { get => ts; set => ts = value; }
+        public string ProcPath { get => procPath; set => procPath = value; }
     }
 }

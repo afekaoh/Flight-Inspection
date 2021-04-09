@@ -1,4 +1,5 @@
 ﻿using Flight_Inspection.controls;
+using Flight_Inspection.Pages.Settings;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -12,7 +13,8 @@ namespace Flight_Inspection.Windows.FligthData
     public class FlightDataViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
-        private List<IControlViewModel> viewModels;
+        public event EventHandler<SetTimeEventArgs> SetTimeEvent;
+        private readonly List<IControlViewModel> viewModels;
         private TimeSeries ts;
 
         public FlightDataViewModel()
@@ -30,6 +32,12 @@ namespace Flight_Inspection.Windows.FligthData
             }
         }
 
+        public void SetTime(object sender, SetTimeEventArgs e)
+        {
+            viewModels.ForEach(vm => vm.setTime(e.Time));
+            SetTimeEvent?.Invoke(this, e);
+        }
+
         public void AddViewModel(IControlViewModel viewModel)
         {
             viewModels.Add(viewModel);
@@ -37,7 +45,8 @@ namespace Flight_Inspection.Windows.FligthData
 
         protected void OnPropertyChanged([CallerMemberName] string name = null)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+            var e = new OnReadyEventArgs(name, Ts);
+            PropertyChanged?.Invoke(this, e);
         }
 
         internal void UpdateSettings(SettingsArgs settingsArgs)
