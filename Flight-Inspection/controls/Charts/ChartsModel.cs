@@ -67,6 +67,27 @@ namespace Flight_Inspection.controls
                 INotifyPropertyChanged("XMinThird");
             }
         }
+        private double xMaxAttach = 1000;
+        public double XMaxAttach
+        {
+            get => this.xMaxAttach;
+            set
+            {
+                this.xMaxAttach = value;
+                INotifyPropertyChanged("XMaxAttach");
+            }
+        }
+
+        private double xMinAttach = 0;
+        public double XMinAttach
+        {
+            get => this.xMinAttach;
+            set
+            {
+                this.xMinAttach = value;
+                INotifyPropertyChanged("XMinAttach");
+            }
+        }
         private object dataMapper;
         public object DataMapper
         {
@@ -161,6 +182,9 @@ namespace Flight_Inspection.controls
                 return;
             ReadOnlyCollection<string> ls = timeSeries.getFeatureNames().AsReadOnly();
             LinearRegVal = new ChartValues<ObservablePoint>();
+            ChartValues = new ChartValues<ObservablePoint>();
+            ChartValuesAttach = new ChartValues<ObservablePoint>();
+            ChartValuesCurrentAndAttach = new ChartValues<ObservablePoint>();
             int sizeTable = TimeSeries.getFeatureData(ls[0]).Count;
             for (int i = 0; i < ls.Count; i++)
             {
@@ -200,38 +224,37 @@ namespace Flight_Inspection.controls
             Property property = getData(content);
             List<float> vs = property.Data;
             List<float> attach = getData(property.Attach).Data;
-            ChartValues<ObservablePoint> points = new ChartValues<ObservablePoint>();
-            ChartValues<ObservablePoint> points2 = new ChartValues<ObservablePoint>();
-            ChartValues<ObservablePoint> points3 = new ChartValues<ObservablePoint>();
-            ObservablePoint[] pointUpdate = new ObservablePoint[4];
-            for (int i = 0; i < vs.Count -4; i+=4)
+            ObservablePoint[] points = new ObservablePoint[vs.Count];
+            ObservablePoint[] points2 = new ObservablePoint[vs.Count];
+            ObservablePoint[] points3 = new ObservablePoint[vs.Count];
+            for (int i = 0; i < vs.Count; i++)
             {
-                //loop unroling
-                pointUpdate[0] = new ObservablePoint(i, vs[i]);
-                pointUpdate[1] = new ObservablePoint(i+1, vs[i+1]);
-                pointUpdate[2] = new ObservablePoint(i+2, vs[i+2]);
-                pointUpdate[3] = new ObservablePoint(i+3, vs[i+3]);
-                points.AddRange(pointUpdate);
-                pointUpdate[0] = new ObservablePoint(i, attach[i]);
-                pointUpdate[1] = new ObservablePoint(i + 1, attach[i + 1]);
-                pointUpdate[2] = new ObservablePoint(i + 2, attach[i + 2]);
-                pointUpdate[3] = new ObservablePoint(i + 3, attach[i + 3]);
-                points2.AddRange(pointUpdate);
-                pointUpdate[0] = new ObservablePoint(vs[i], attach[i]);
-                pointUpdate[1] = new ObservablePoint(vs[i + 1], attach[i + 1]);
-                pointUpdate[2] = new ObservablePoint(vs[i + 2], attach[i + 2]);
-                pointUpdate[3] = new ObservablePoint(vs[i + 3], attach[i + 3]);
-                points3.AddRange(pointUpdate);
+                points[i] = new ObservablePoint(i, vs[i]);
+                points2[i] = new ObservablePoint(i, attach[i]);
+                points3[i] = new ObservablePoint(vs[i], attach[i]);
             }
             XMax = vs.Count;
             XMin = 0;
+            XMaxAttach = attach.Max();
+            XMinAttach = attach.Min();
             XMaxThird = vs.Max();
             XMinThird = vs.Min();
-            ChartValues = points;
+            if (XMaxThird == XMinThird)
+            {
+                XMaxThird += 1;
+                XMinThird -= 1;
+            }
+            ChartValues.Clear();
+            ChartValues.AddRange(points);
+            INotifyPropertyChanged("ChartValues");
             DataMapper = new CartesianMapper<ObservablePoint>().X(point => point.X).Y(point => point.Y);
-            ChartValuesAttach = points2;
+            ChartValuesAttach.Clear();
+            ChartValuesAttach.AddRange(points2);
+            INotifyPropertyChanged("ChartValuesAttach");
             DataMapperAttach = new CartesianMapper<ObservablePoint>().X(point => point.X).Y(point => point.Y);
-            ChartValuesCurrentAndAttach = points3;
+            ChartValuesCurrentAndAttach.Clear();
+            ChartValuesCurrentAndAttach.AddRange(points3);
+            INotifyPropertyChanged("ChartValuesCurrentAndAttach");
             DataMapperCurrentAndAttach = new CartesianMapper<ObservablePoint>().X(point => point.X).Y(point => point.Y);
             LineSafe line = getLinearReg(vs, attach);
             LinearRegVal.Clear();

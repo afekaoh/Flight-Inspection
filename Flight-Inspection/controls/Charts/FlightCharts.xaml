@@ -44,7 +44,9 @@
                 <lvc1:Axis Title="{Binding Current.Name}"
             FontSize="14" 
             Unit="1"
-            DisableAnimations="True"
+            DisableAnimations="True"              
+            MaxValue="{Binding XMaxThird}"
+            MinValue="{Binding XMinThird}"              
             LabelFormatter="{Binding LabelFormatter}"
              />
             </lvc1:CartesianChart.AxisY>
@@ -79,6 +81,8 @@
             FontSize="14" 
             Unit="1"
             DisableAnimations="True"
+            MaxValue="{Binding XMaxAttach}"
+            MinValue="{Binding XMinAttach}"   
             LabelFormatter="{Binding LabelFormatter}"
              />
             </lvc1:CartesianChart.AxisY>
@@ -94,7 +98,7 @@
         </lvc1:CartesianChart>
         
         
-        <lvc1:CartesianChart Name="Series3" Margin="4" Grid.Column="1"  DataTooltip="{x:Null}" Hoverable="False" Grid.Row="1" Grid.ColumnSpan="2" DisableAnimations="True" DataClick="onChoosePoint">
+        <lvc1:CartesianChart Name="Series3" Margin="4" Grid.Column="1"  DataTooltip="{x:Null}" Hoverable="False" Grid.Row="1" Grid.ColumnSpan="2" DisableAnimations="True" DataClick="onChoosePoint" >
             <lvc1:CartesianChart.Series>
                 <lvc1:ScatterSeries
                       MaxPointShapeDiameter="5"
@@ -122,6 +126,8 @@
             Unit="1"
             DisableAnimations="True"
             LabelFormatter="{Binding LabelFormatter}"
+            MaxValue="{Binding XMaxAttach}"
+            MinValue="{Binding XMinAttach}"  
              />
             </lvc1:CartesianChart.AxisY>
 

@@ -48,7 +48,6 @@ namespace Flight_Inspection.controls
             set
             {
                 this.xMaxThird = value;
-                Console.WriteLine("here");
                 OnPropertyChanged("XMaxThird");
             }
         }
@@ -60,11 +59,31 @@ namespace Flight_Inspection.controls
             set
             {
                 this.xMinThird = value;
-                Console.WriteLine("here");
                 OnPropertyChanged("XMinThird");
             }
         }
 
+        private double xMaxAttach = 1000;
+        public double XMaxAttach
+        {
+            get => this.xMaxAttach;
+            set
+            {
+                this.xMaxAttach = value;
+                OnPropertyChanged("XMaxAttach");
+            }
+        }
+
+        private double xMinAttach = 0;
+        public double XMinAttach
+        {
+            get => this.xMinAttach;
+            set
+            {
+                this.xMinAttach = value;
+                OnPropertyChanged("XMinAttach");
+            }
+        }
         private object dataMapper;
         public object DataMapper
         {
@@ -165,6 +184,12 @@ namespace Flight_Inspection.controls
                         break;
                     case "XMinThird":
                         XMinThird = charts.XMinThird;
+                        break;
+                    case "XMaxAttach":
+                        XMaxAttach = charts.XMaxAttach;
+                        break;
+                    case "XMinAttach":
+                        XMinAttach = charts.XMinAttach;
                         break;
                     case "DataMapper":
                         DataMapper = charts.DataMapper;
