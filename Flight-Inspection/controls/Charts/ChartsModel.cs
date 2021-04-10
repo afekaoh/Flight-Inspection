@@ -223,6 +223,10 @@ namespace Flight_Inspection.controls
                 pointUpdate[3] = new ObservablePoint(vs[i + 3], attach[i + 3]);
                 points3.AddRange(pointUpdate);
             }
+            XMax = vs.Count;
+            XMin = 0;
+            XMaxThird = vs.Max();
+            XMinThird = vs.Min();
             ChartValues = points;
             DataMapper = new CartesianMapper<ObservablePoint>().X(point => point.X).Y(point => point.Y);
             ChartValuesAttach = points2;
@@ -235,10 +239,7 @@ namespace Flight_Inspection.controls
             float x2 = vs.Max(), y2 = line.b + x2 * line.a;
             LinearRegVal.Add(new ObservablePoint(x1, y1));
             LinearRegVal.Add(new ObservablePoint(x2, y2));
-            XMax = vs.Count;
-            XMin = 0;
-            XMaxThird = vs.Max();
-            XMinThird = vs.Min();
+            
         }
        
         

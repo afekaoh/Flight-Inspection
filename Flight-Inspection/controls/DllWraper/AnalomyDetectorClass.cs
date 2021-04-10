@@ -37,7 +37,6 @@ namespace Flight_Inspection.controls
                 Line2* l = (Line2*)linear_reg(current.ToArray(), sec.ToArray(), current.Count);
                 if (float.IsNaN(l->b) || float.IsNaN(l->a))
                 {
-                    Console.WriteLine(0 + " " + 0);
                     linearReg.a = 0;
                     linearReg.b = 0;
                 }

@@ -48,6 +48,7 @@ namespace Flight_Inspection.controls
             set
             {
                 this.xMaxThird = value;
+                Console.WriteLine("here");
                 OnPropertyChanged("XMaxThird");
             }
         }
@@ -59,6 +60,7 @@ namespace Flight_Inspection.controls
             set
             {
                 this.xMinThird = value;
+                Console.WriteLine("here");
                 OnPropertyChanged("XMinThird");
             }
         }

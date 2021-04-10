@@ -94,7 +94,7 @@
         </lvc1:CartesianChart>
         
         
-        <lvc1:CartesianChart Name="Series3" Margin="4" Grid.Column="1" DataTooltip="{x:Null}" Hoverable="False" Grid.Row="1" Grid.ColumnSpan="2" DisableAnimations="True">
+        <lvc1:CartesianChart Name="Series3" Margin="4" Grid.Column="1"  DataTooltip="{x:Null}" Hoverable="False" Grid.Row="1" Grid.ColumnSpan="2" DisableAnimations="True" DataClick="onChoosePoint">
             <lvc1:CartesianChart.Series>
                 <lvc1:ScatterSeries
                       MaxPointShapeDiameter="5"
@@ -103,6 +103,7 @@
                       Values="{Binding ChartValuesCurrentAndAttach}"
                       Configuration="{Binding DataMapperCurrentAndAttach}"/>
                 <lvc1:LineSeries
+                      Fill="Transparent"
                       PointGeometry="{x:Null}"
                       Title="Attach Property"
                       Values="{Binding LinearRegVal}"

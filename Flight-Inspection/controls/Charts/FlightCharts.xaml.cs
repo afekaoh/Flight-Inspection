@@ -24,7 +24,6 @@ namespace Flight_Inspection.controls
             vm = new VMCharts();
             DataContext = vm;
             vm.Ready += OnReady;
-            
         }
 
         public IControlViewModel GetViewModel()
@@ -40,13 +39,18 @@ namespace Flight_Inspection.controls
         }
         private void choosenOption(object sender, MouseButtonEventArgs e)
         {
-            vm.Current = (sender as ListBox).SelectedItem as Property;    
+            vm.Current = (sender as ListBox).SelectedItem as Property;
         }
 
         private void lbTodoList_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Up || e.Key == Key.Down)
                 choosenOption(lbTodoList, null);
+        }
+
+        private void onChoosePoint(object sender, ChartPoint chartPoint)
+        {
+            Console.WriteLine(chartPoint.X + " " + chartPoint.Y);
         }
     }
 }
