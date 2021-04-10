@@ -33,10 +33,14 @@ namespace Flight_Inspection.controls.Video
             return videoPanelViewModel;
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Button_Play(object sender, RoutedEventArgs e)
         {
             videoPanelViewModel.MaxSliderUpdate(2);
+        }
 
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            videoPanelViewModel.MaxSliderUpdate(3);
         }
     }
 }
