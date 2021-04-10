@@ -3,17 +3,17 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Flight_Inspection.controls.Video"
-             x:Name="VideoPanel"
+             xmlns:local="clr-namespace:Flight_Inspection.controls.Video" d:DataContext="{d:DesignInstance Type=local:VideoPanelViewModel}"
+              x:Name="VideoPanel"
              mc:Ignorable="d" 
              d:DesignHeight="88" d:DesignWidth="659">
     <Grid>
         <Rectangle HorizontalAlignment="Left" Height="88" Stroke="Black" VerticalAlignment="Top" Width="659" Fill="#FF5B5B5D"/>
         <Button Name ="Play" Content="Play" HorizontalAlignment="Left" Height="29" VerticalAlignment="Top" Margin="27,28,0,0" Width="75" Click="Button_Click"/>
-        <Button Name ="Pause" Content="pause" HorizontalAlignment="Left" Height="29" VerticalAlignment="Top" Width="75"  Margin="152,28,0,0" Click="Button_Click"/>
-        <Button Content="Stop" HorizontalAlignment="Left" Height="29" VerticalAlignment="Top" Width="75"  Margin="251,34,0,0" Click="Button_Click" RenderTransformOrigin="0.893,0.609"/>
-        <Slider HorizontalAlignment="Left" Name ="Time" VerticalAlignment="Top" Width="142"  Margin="478,34,0,0" Height="24"/>
-        <TextBox Text="{Binding MaxSlider}" HorizontalAlignment="Left" Height="22" Margin="371,36,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="69"/>
+        <Button Name ="Pause" Content="pause" HorizontalAlignment="Left" Height="29" VerticalAlignment="Top" Width="75"  Margin="138,28,0,0" Click="Button_Click"/>
+        <Button Content="Stop" HorizontalAlignment="Left" Height="29" VerticalAlignment="Top" Width="75"  Margin="251,28,0,0" Click="Button_Click" RenderTransformOrigin="0.893,0.609"/>
+        <Slider HorizontalAlignment="Left" Name ="Time" VerticalAlignment="Top" Width="142"  Margin="478,28,0,0" Height="29"/>
+        <TextBox Text="{Binding MaxSlider}" HorizontalAlignment="Left" Height="29" Margin="371,28,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="75"/>
 
     </Grid>
 </UserControl>

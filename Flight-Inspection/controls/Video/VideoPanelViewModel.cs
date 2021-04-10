@@ -32,6 +32,7 @@ namespace Flight_Inspection.controls.Video
             set
             {
                 maxSlider = value;
+                OnPropertyChanged("MaxSlider");
             }
         }
 
@@ -61,7 +62,9 @@ namespace Flight_Inspection.controls.Video
             {
                 return currentTime;
             }
-            set { currentTime = value; }
+            set { currentTime = value;
+            OnPropertyChanged("CurrentTime");
+            }
         }
 
         private int timeSeries;
