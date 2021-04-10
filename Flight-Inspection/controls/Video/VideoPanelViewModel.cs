@@ -17,10 +17,9 @@ namespace Flight_Inspection.controls.Video
         public VideoPanelViewModel()
         {
             this.model = new VideoPanelModel();
-            model.PropertyChanged += delegate (Object sender, PropertyChangedEventArgs e)
-            {
-                INotifyPropertyChanged(e.PropertyName);
-            };
+            model.PropertyChanged += UpdateCurrentTime;
+            model.PropertyChanged += MaxSliderUpdate;
+            model.CurrentTime++;
         }
 
         public int MaxSlider
@@ -32,26 +31,20 @@ namespace Flight_Inspection.controls.Video
             set
             {
                 maxSlider = value;
-                OnPropertyChanged("MaxSlider");
+                OnPropertyChanged();
             }
         }
 
-        private void INotifyPropertyChanged(string v)
+        public void MaxSliderUpdate(object sender, PropertyChangedEventArgs e)
         {
-            if (v == "MaxSlider")
-            {
-                maxSlider = model.MaxSlider;
-            }
-        }
-
-        public void MaxSliderUpdate(int u)
-        {
-            model.MaxSlider = u;
+            if (e.PropertyName is "MaxSlider")
+                this.MaxSlider = model.MaxSlider;
         }
 
         public override void SetSettings(SettingsArgs settingsArgs)
         {
-
+            model.TimeSeries = settingsArgs.ts;
+            model.MaxSlider = settingsArgs.ts.Rows.Count;
         }
 
         private int currentTime;
@@ -62,9 +55,21 @@ namespace Flight_Inspection.controls.Video
             {
                 return currentTime;
             }
-            set { currentTime = value;
-            OnPropertyChanged("CurrentTime");
+            set
+            {
+                currentTime = value;
+                OnPropertyChanged();
             }
+        }
+
+        internal void StartPlay()
+        {
+            model.StartPlay();
+        }
+
+        internal void Pause()
+        {
+            model.Pause();
         }
 
         private int timeSeries;
@@ -75,11 +80,13 @@ namespace Flight_Inspection.controls.Video
             set { timeSeries = value; }
         }
 
-
+        public void UpdateCurrentTime(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName is "CurrentTime")
+                this.CurrentTime = model.CurrentTime;
+        }
 
 
     }
 
 }
-
-
