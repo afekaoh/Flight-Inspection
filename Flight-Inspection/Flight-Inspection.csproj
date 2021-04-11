@@ -184,7 +184,9 @@
       <DependentUpon>JoystickView.xaml</DependentUpon>
     </Compile>
     <Compile Include="controls\Joystick\JoystickViewModel.cs" />
+    <Compile Include="controls\Video\TimeConverterToString.cs" />
     <Compile Include="IViewModel.cs" />
+    <Compile Include="Pages\FlightGear\SetStopEventArgs.cs" />
     <Compile Include="Pages\IPagesViewModel.cs" />
     <Compile Include="controls\SettingsArgs.cs" />
     <Compile Include="controls\Video\VideoPanelModel.cs" />

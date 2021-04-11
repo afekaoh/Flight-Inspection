@@ -42,7 +42,10 @@ namespace Flight_Inspection.Pages.FlightGear
             this.PropertyChanged += delegate (object sender, PropertyChangedEventArgs e)
             {
                 if (e.PropertyName == "DataViewModel")
+                {
                     DataViewModel.SetTimeEvent += SetTime;
+                    DataViewModel.SetStopEvent += SetStop;
+                }
             };
         }
 
@@ -57,7 +60,7 @@ namespace Flight_Inspection.Pages.FlightGear
         {
             if (ready)
             {
-                //flightGearModel.StartPlay();
+                flightGearModel.StartPlay();
                 OnStart();
             }
         }
@@ -78,6 +81,11 @@ namespace Flight_Inspection.Pages.FlightGear
         void SetTime(object sender, SetTimeEventArgs e)
         {
             flightGearModel.Time = e.Time;
+        }
+
+        void SetStop(object sender, SetStopEventArgs e)
+        {
+            flightGearModel.Play = !e.Stop;
         }
     }
 }
