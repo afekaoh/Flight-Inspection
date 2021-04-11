@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,13 +24,35 @@ namespace Flight_Inspection.controls.Joystick
         JoystickViewModel JoystickViewModel;
         public JoystickView()
         {
-            this.JoystickViewModel = new JoystickViewModel();
+            this.DataContext = new JoystickViewModel();
+            this.JoystickViewModel = this.DataContext as JoystickViewModel;
+            JoystickViewModel.Ready += addFeatures;
             InitializeComponent();
+
+        }
+
+        private void JoyStickCanvas_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+
+        }
+
+        public void addFeatures(object sender, EventArgs e)
+        {
+            JoystickViewModel.addData("aileron", (float)JoyStickCanvas.ActualWidth);
+            JoystickViewModel.addData("elevator", (float)JoyStickCanvas.ActualHeight);
+            JoystickViewModel.addData("throttle", (float)ThrotteleCanvas.ActualHeight);
+            JoystickViewModel.addData("rudder", (float)RudderCanvas.ActualWidth);
+
         }
 
         public IControlViewModel GetViewModel()
         {
             return this.JoystickViewModel;
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            JoystickViewModel.start();
         }
     }
 }

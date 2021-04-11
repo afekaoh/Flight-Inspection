@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -35,12 +36,12 @@ namespace Flight_Inspection.controls.Video
 
         private void Button_Play(object sender, RoutedEventArgs e)
         {
-            videoPanelViewModel.MaxSliderUpdate(2);
+            videoPanelViewModel.StartPlay();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Button_Pause(object sender, RoutedEventArgs e)
         {
-            videoPanelViewModel.MaxSliderUpdate(3);
+            videoPanelViewModel.Pause();
         }
     }
 }

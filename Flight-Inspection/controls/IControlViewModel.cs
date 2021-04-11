@@ -16,7 +16,11 @@ namespace Flight_Inspection.controls
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
-
+        virtual public void OnPropertyChanged(int time, [CallerMemberName] string name = null)
+        {
+            PropertyChanged?.Invoke(this, new SetTimeEventArgs(time, name));
+        }
         public abstract void SetSettings(SettingsArgs settingsArgs);
+        internal abstract void setTime(int time);
     }
 }

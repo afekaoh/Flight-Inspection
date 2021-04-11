@@ -4,8 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Flight_Inspection.controls"
-             mc:Ignorable="d" 
-             xmlns:winformchart="clr-namespace:System.Windows.Forms.DataVisualization.Charting;assembly=System.Windows.Forms.DataVisualization"
+             mc:Ignorable="d"
+             xmlns:lvc1="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf" d:DataContext="{d:DesignInstance Type=local:VMCharts}"
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <Grid.ColumnDefinitions>
@@ -14,7 +14,7 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <ListBox Name="lbTodoList" HorizontalContentAlignment="Stretch" MouseDoubleClick="choosenOption" KeyUp="lbTodoList_KeyDown" Width="150" Grid.RowSpan="3"  Margin="5,5,5,5">
@@ -24,49 +24,172 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <!--<Canvas Grid.Column="1" Height="150" Margin="5,5,5,5" Name="chart1" Background="BlueViolet">
-        </Canvas>-->
-        <StackPanel Grid.Column="1" Height="150" Margin="5,5,5,5">
-            <WindowsFormsHost Height="150" Margin="5,5,5,5" >
-                <winformchart:Chart x:Name="chart1" Dock="None" >
-                    <winformchart:Chart.Series>
-                        <winformchart:Series Name="series" ChartType="Line" Font="Ariel"/>
-                    </winformchart:Chart.Series>
-                    <winformchart:Chart.ChartAreas>
-                        <winformchart:ChartArea Name="chartArea"  />
-                    </winformchart:Chart.ChartAreas>
-                </winformchart:Chart>
 
-            </WindowsFormsHost>
-        </StackPanel>
+        <lvc1:CartesianChart Grid.Column="1" Name="Series" Margin="4"  DataTooltip="{x:Null}"  Hoverable="False" DisableAnimations="True" >
+            <lvc1:CartesianChart.Series>
+                <lvc1:LineSeries
+                     PointGeometry="{x:Null}"
+                      Title="First Property"
+                      Fill="Transparent"
+                      Values="{Binding ChartValues}"
+                      Configuration="{Binding DataMapper}"/>
+            </lvc1:CartesianChart.Series>
 
-        <StackPanel Grid.Column="2" Height="150" Margin="5,5,5,5">
-            <WindowsFormsHost Height="150" Margin="5,5,5,5" >
-                <winformchart:Chart x:Name="chart2" Dock="None" >
-                    <winformchart:Chart.Series>
-                        <winformchart:Series Name="seriesSecond" ChartType="Line" Font="Ariel" LabelForeColor="DarkGray"/>
-                    </winformchart:Chart.Series>
-                    <winformchart:Chart.ChartAreas>
-                        <winformchart:ChartArea Name="chartAreaSecond"  />
-                    </winformchart:Chart.ChartAreas>
-                </winformchart:Chart>
+            <lvc1:CartesianChart.CacheMode>
+                <BitmapCache EnableClearType="False" 
+                   RenderAtScale="1"
+                   SnapsToDevicePixels="False" />
+            </lvc1:CartesianChart.CacheMode>
+            <lvc1:CartesianChart.AxisY>
+                <lvc1:Axis Title="{Binding Current.Name}"
+            FontSize="14" 
+            Unit="1"
+            DisableAnimations="True"              
+            MaxValue="{Binding XMaxThird}"
+            MinValue="{Binding XMinThird}"              
+            LabelFormatter="{Binding LabelFormatter}"
+             />
+            </lvc1:CartesianChart.AxisY>
 
-            </WindowsFormsHost>
-        </StackPanel>
+            <lvc1:CartesianChart.AxisX>
+                <lvc1:Axis Title="Time" 
+            DisableAnimations="True" 
+            FontSize="14" 
+            Unit="1"
+            MaxValue="{Binding CurrentTime}"
+            MinValue="0" />
+            </lvc1:CartesianChart.AxisX>
+        </lvc1:CartesianChart>
 
-        <StackPanel Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Height="150" Margin="5,5,5,5">
-            <WindowsFormsHost Height="150" Margin="5,5,5,5" >
-                <winformchart:Chart x:Name="chart3" Dock="None" >
-                    <winformchart:Chart.Series>
-                        <winformchart:Series Name="seriesThird" ChartType="Point" Font="Ariel" LabelForeColor="DarkGray"/>
-                    </winformchart:Chart.Series>
-                    <winformchart:Chart.ChartAreas>
-                        <winformchart:ChartArea Name="chartAreaThird"  />
-                    </winformchart:Chart.ChartAreas>
-                </winformchart:Chart>
+        <lvc1:CartesianChart Name="Series2" Margin="4" Grid.Column="2" DataTooltip="{x:Null}" Hoverable="False" DisableAnimations="True" >
+            <lvc1:CartesianChart.Series>
+                <lvc1:LineSeries
+                     PointGeometry="{x:Null}"
+                      Title="Attach Property"
+                      Values="{Binding ChartValuesAttach}"
+                      Fill="Transparent"
+                      Configuration="{Binding DataMapperAttach}"/>
+         
+            </lvc1:CartesianChart.Series>
 
-            </WindowsFormsHost>
-        </StackPanel>
+            <lvc1:CartesianChart.CacheMode>
+                <BitmapCache EnableClearType="False" 
+                   RenderAtScale="1"
+                   SnapsToDevicePixels="False" />
+            </lvc1:CartesianChart.CacheMode>
+            <lvc1:CartesianChart.AxisY>
+                <lvc1:Axis Title="{Binding Current.Attach}"
+            FontSize="14" 
+            Unit="1"
+            DisableAnimations="True"
+            MaxValue="{Binding XMaxAttach}"
+            MinValue="{Binding XMinAttach}"   
+            LabelFormatter="{Binding LabelFormatter}"
+             />
+            </lvc1:CartesianChart.AxisY>
+
+            <lvc1:CartesianChart.AxisX>
+                <lvc1:Axis Title="Time" 
+            DisableAnimations="True" 
+            FontSize="14" 
+            Unit="1"
+            MaxValue="{Binding CurrentTime}"
+            MinValue="0" />
+            </lvc1:CartesianChart.AxisX>
+        </lvc1:CartesianChart>
+
+
+        <lvc1:CartesianChart Name="Series3" Margin="4" Grid.Column="1" Hoverable="False" DataTooltip="{x:Null}" Grid.Row="1" Grid.ColumnSpan="2" DisableAnimations="True"  
+                            >
+            <lvc1:CartesianChart.Series>
+                <lvc1:ScatterSeries
+                      MaxPointShapeDiameter="3"
+                      MinPointShapeDiameter="3"
+                      Title="Attach Property"
+                      Values="{Binding ChartValuesCurrentAndAttach}"
+                   />
+
+                <lvc1:LineSeries
+                      Fill="Transparent"
+                      PointGeometry="{x:Null}"
+                      Title="Attach Property"
+                      Values="{Binding LinearRegVal}"
+                      />
+                <lvc1:ScatterSeries 
+                    
+                    />
+            </lvc1:CartesianChart.Series>
+
+
+            <lvc1:CartesianChart.CacheMode>
+                <BitmapCache EnableClearType="False" 
+                   RenderAtScale="1"
+                   SnapsToDevicePixels="False" />
+            </lvc1:CartesianChart.CacheMode>
+            <lvc1:CartesianChart.AxisY>
+                <lvc1:Axis Title="{Binding Current.Attach}"
+            FontSize="14" 
+            Unit="1"
+            DisableAnimations="True"
+            LabelFormatter="{Binding LabelFormatter}"
+            MaxValue="{Binding XMaxAttach}"
+            MinValue="{Binding XMinAttach}"  
+             />
+            </lvc1:CartesianChart.AxisY>
+
+            <lvc1:CartesianChart.AxisX>
+                <lvc1:Axis Title="{Binding Current.Name}" 
+            DisableAnimations="True" 
+                          
+            FontSize="14" 
+            Unit="1"
+            MaxValue="{Binding XMaxThird}"
+            MinValue="{Binding XMinThird}" />
+            </lvc1:CartesianChart.AxisX>
+        </lvc1:CartesianChart>
+
+        <lvc1:CartesianChart Name="Series4" Margin="4" Grid.Column="1"  DataTooltip="{x:Null}" Grid.Row="1" Grid.ColumnSpan="2" DisableAnimations="True" 
+                           DataClick="onChoosePoint"  
+                           Background="Transparent" 
+                             BorderThickness="0">
+            <lvc1:CartesianChart.Series>
+                <lvc1:ScatterSeries
+                      MaxPointShapeDiameter="5"
+                      MinPointShapeDiameter="5"
+                      Title="Attach Property"
+                      Values="{Binding Test}"
+                   />
+                <lvc1:ScatterSeries/>
+            </lvc1:CartesianChart.Series>
+
+
+            <lvc1:CartesianChart.CacheMode>
+                <BitmapCache EnableClearType="False" 
+                   RenderAtScale="1"
+                   SnapsToDevicePixels="False" />
+            </lvc1:CartesianChart.CacheMode>
+            <lvc1:CartesianChart.AxisY>
+                <lvc1:Axis Title="{Binding Current.Attach}"
+            FontSize="14" 
+            Name="chartYAnomaly"
+            Unit="1"
+            DisableAnimations="True"
+            LabelFormatter="{Binding LabelFormatter}"
+            MaxValue="{Binding XMaxAttach}"
+            MinValue="{Binding XMinAttach}"  
+             />
+            </lvc1:CartesianChart.AxisY>
+
+            <lvc1:CartesianChart.AxisX>
+                <lvc1:Axis Title="{Binding Current.Name}" 
+            DisableAnimations="True" 
+            Name="chartXAnomaly"
+            FontSize="14" 
+            Unit="1"
+            MaxValue="{Binding XMaxThird}"
+            MinValue="{Binding XMinThird}" />
+            </lvc1:CartesianChart.AxisX>
+        </lvc1:CartesianChart>
 
     </Grid>
 </UserControl>

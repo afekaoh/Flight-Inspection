@@ -63,8 +63,11 @@ namespace Flight_Inspection.controls
                     row = reader.ReadLine();
                     Rows.Add(row);
                     var values = row.Split(',');
-                    // converting column based table (each feature in a column) to a row based table (each feature in a row)
-                    TableByFeaturs[features[(colIndex++) % length]].AddRange(values.Select(s => float.Parse(s)));
+                    for (int i = 0; i < values.Length; i++)
+                    {
+                        // converting column based table (each feature in a column) to a row based table (each feature in a row)
+                        TableByFeaturs[features[i]].Add(float.Parse(values[i]));
+                    }
                 }
             }
         }
