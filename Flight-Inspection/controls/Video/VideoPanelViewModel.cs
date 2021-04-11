@@ -47,7 +47,7 @@ namespace Flight_Inspection.controls.Video
             model.MaxSlider = settingsArgs.ts.Rows.Count;
         }
 
-        private int currentTime;
+        private volatile int currentTime;
 
         public int CurrentTime
         {
@@ -57,8 +57,12 @@ namespace Flight_Inspection.controls.Video
             }
             set
             {
-                currentTime = value;
-                OnPropertyChanged();
+                if (CurrentTime != value)
+                {
+                    currentTime = value;
+                    model.CurrentTime = value;
+                    OnPropertyChanged();
+                }
             }
         }
 
@@ -84,9 +88,8 @@ namespace Flight_Inspection.controls.Video
         {
             if (e.PropertyName is "CurrentTime")
                 this.CurrentTime = model.CurrentTime;
+                
         }
-
-
     }
 
 }
