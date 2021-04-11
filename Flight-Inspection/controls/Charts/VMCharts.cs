@@ -21,27 +21,20 @@ namespace Flight_Inspection.controls
 
         public Func<double, string> LabelFormatter => value => value.ToString("F");
 
-        private double xMax = 1000;
-        public double XMax
+        private int currentTime;
+
+        public int CurrentTime
         {
-            get => this.xMax;
+            get => currentTime = 100;
             set
             {
-                this.xMax = value;
-                OnPropertyChanged("XMax");
+                if (value <= xMax)
+                    currentTime = value;
+                OnPropertyChanged("CurrentTime");
             }
         }
 
-        private double xMin = 0;
-        public double XMin
-        {
-            get => this.xMin;
-            set
-            {
-                this.xMin = value;
-                OnPropertyChanged("XMin");
-            }
-        }
+        private double xMax = 1000;
 
         private double xMaxThird = 1000;
         public double XMaxThird
@@ -96,6 +89,8 @@ namespace Flight_Inspection.controls
                 OnPropertyChanged("DataMapper");
             }
         }
+
+
 
         ChartValues<ObservablePoint> chartVal;
         public ChartValues<ObservablePoint> ChartValues
@@ -158,13 +153,13 @@ namespace Flight_Inspection.controls
                 OnPropertyChanged("ChartValuesCurrentAndAttach");
             }
         }
-        ChartValues<ObservablePoint> test;
-        public ChartValues<ObservablePoint> Test
+        ChartValues<ObservablePoint> analomyPoints;
+        public ChartValues<ObservablePoint> AnalomyPoints
         {
-            get => test; set
+            get => analomyPoints; set
             {
-                test = value;
-                OnPropertyChanged("Test");
+                analomyPoints = value;
+                OnPropertyChanged("AnalomyPoints");
             }
         }
         public Property Current
@@ -185,7 +180,7 @@ namespace Flight_Inspection.controls
         public VMCharts()
         {
             charts = new ChartsModel();
-            Test = new ChartValues<ObservablePoint>()
+            AnalomyPoints = new ChartValues<ObservablePoint>()
             {
                 new ObservablePoint(0,1),
                 new ObservablePoint(1,1)
@@ -195,10 +190,7 @@ namespace Flight_Inspection.controls
                 switch (e.PropertyName)
                 {
                     case "XMax":
-                        XMax = charts.XMax;
-                        break;
-                    case "XMin":
-                        XMin = charts.XMin;
+                        xMax = charts.XMax;
                         break;
                     case "XMaxThird":
                         XMaxThird = charts.XMaxThird;
@@ -233,6 +225,9 @@ namespace Flight_Inspection.controls
                     case "DataMapperCurrentAndAttach":
                         DataMapperCurrentAndAttach = charts.DataMapperCurrentAndAttach;
                         break;
+                    case "AnalomyPoints":
+                        AnalomyPoints = charts.AnalomyPoints;
+                        break;
                 }
             };
 
@@ -250,13 +245,12 @@ namespace Flight_Inspection.controls
 
         public void updateSeries()
         {
-            charts.updateSeries(current.Name);
-            
+            charts.updateSeries(current.Name); 
         }
 
         internal override void setTime(int time)
         {
-            throw new NotImplementedException();
+             this.CurrentTime = time;
         }
 
         

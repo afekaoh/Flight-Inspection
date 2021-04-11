@@ -2,20 +2,11 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Shapes;
-using Flight_Inspection.Pages.Settings;
-using Flight_Inspection.Settings;
 using System.Collections.ObjectModel;
-using LiveCharts.Wpf;
 using LiveCharts;
 using LiveCharts.Defaults;
-using System.Drawing;
 using LiveCharts.Configurations;
 using static Flight_Inspection.controls.AnalomyDetectorClass;
-using System.Threading;
 
 namespace Flight_Inspection.controls
 {
@@ -25,6 +16,17 @@ namespace Flight_Inspection.controls
         public event PropertyChangedEventHandler PropertyChanged;
         private TimeSeries timeSeries;
         private List<Property> properties = new List<Property>();
+
+        ChartValues<ObservablePoint> analomyPoints;
+        public ChartValues<ObservablePoint> AnalomyPoints
+        {
+            get => analomyPoints; set
+            {
+                analomyPoints = value;
+                INotifyPropertyChanged("AnalomyPoints");
+            }
+        }
+
         private double xMax;
         public double XMax
         {
@@ -33,17 +35,6 @@ namespace Flight_Inspection.controls
             {
                 this.xMax = value;
                 INotifyPropertyChanged("XMax");
-            }
-        }
-
-        private double xMin;
-        public double XMin
-        {
-            get => this.xMin;
-            set
-            {
-                this.xMin = value;
-                INotifyPropertyChanged("XMin");
             }
         }
 
@@ -236,7 +227,6 @@ namespace Flight_Inspection.controls
                 
             }
             XMax = vs.Count;
-            XMin = 0;
             XMaxAttach = attach.Max();
             XMinAttach = attach.Min();
             XMaxThird = vs.Max();

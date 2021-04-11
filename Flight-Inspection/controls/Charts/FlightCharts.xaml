@@ -56,8 +56,8 @@
             DisableAnimations="True" 
             FontSize="14" 
             Unit="1"
-            MaxValue="{Binding XMax}"
-            MinValue="{Binding XMin}" />
+            MaxValue="{Binding CurrentTime}"
+            MinValue="0" />
             </lvc1:CartesianChart.AxisX>
         </lvc1:CartesianChart>
 
@@ -93,8 +93,8 @@
             DisableAnimations="True" 
             FontSize="14" 
             Unit="1"
-            MaxValue="{Binding XMax}"
-            MinValue="{Binding XMin}" />
+            MaxValue="{Binding CurrentTime}"
+            MinValue="0" />
             </lvc1:CartesianChart.AxisX>
         </lvc1:CartesianChart>
 
