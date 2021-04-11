@@ -52,7 +52,7 @@ namespace Flight_Inspection.controls.Video
 
         }
 
-        private int currentTime;
+        private volatile int currentTime;
 
         public int Time
         {
