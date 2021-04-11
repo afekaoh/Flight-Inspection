@@ -34,6 +34,8 @@ namespace Flight_Inspection.controls
         public void OnReady(object sender, EventArgs e)
         {
             lbTodoList.ItemsSource = vm.GetNames();
+            chartXAnomaly.Separator.StrokeThickness = 0;
+            chartYAnomaly.Separator.StrokeThickness = 0;
             vm.Current = vm.GetNames()[0];
             vm.updateSeries();
         }

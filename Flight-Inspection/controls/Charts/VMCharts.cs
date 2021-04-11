@@ -6,8 +6,10 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Shapes;
+using Flight_Inspection.controls.Charts1;
+using System.Windows.Input;
 
 namespace Flight_Inspection.controls
 {
@@ -19,7 +21,7 @@ namespace Flight_Inspection.controls
 
         public Func<double, string> LabelFormatter => value => value.ToString("F");
 
-        private double xMax=1000;
+        private double xMax = 1000;
         public double XMax
         {
             get => this.xMax;
@@ -30,7 +32,7 @@ namespace Flight_Inspection.controls
             }
         }
 
-        private double xMin =0;
+        private double xMin = 0;
         public double XMin
         {
             get => this.xMin;
@@ -96,10 +98,13 @@ namespace Flight_Inspection.controls
         }
 
         ChartValues<ObservablePoint> chartVal;
-        public ChartValues<ObservablePoint> ChartValues { get => chartVal; set { 
+        public ChartValues<ObservablePoint> ChartValues
+        {
+            get => chartVal; set
+            {
                 chartVal = value;
                 OnPropertyChanged("ChartValues");
-            } 
+            }
         }
 
         private object dataMapperAttach;
@@ -153,7 +158,17 @@ namespace Flight_Inspection.controls
                 OnPropertyChanged("ChartValuesCurrentAndAttach");
             }
         }
-        public Property Current {
+        ChartValues<ObservablePoint> test;
+        public ChartValues<ObservablePoint> Test
+        {
+            get => test; set
+            {
+                test = value;
+                OnPropertyChanged("Test");
+            }
+        }
+        public Property Current
+        {
             get => current; set
             {
                 current = value;
@@ -170,7 +185,13 @@ namespace Flight_Inspection.controls
         public VMCharts()
         {
             charts = new ChartsModel();
-            charts.PropertyChanged += delegate (Object sender, PropertyChangedEventArgs e) {
+            Test = new ChartValues<ObservablePoint>()
+            {
+                new ObservablePoint(0,1),
+                new ObservablePoint(1,1)
+            };
+            charts.PropertyChanged += delegate (Object sender, PropertyChangedEventArgs e)
+            {
                 switch (e.PropertyName)
                 {
                     case "XMax":
@@ -230,11 +251,14 @@ namespace Flight_Inspection.controls
         public void updateSeries()
         {
             charts.updateSeries(current.Name);
+            
         }
 
         internal override void setTime(int time)
         {
             throw new NotImplementedException();
         }
+
+        
     }
 }

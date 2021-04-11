@@ -15,6 +15,7 @@ using LiveCharts.Defaults;
 using System.Drawing;
 using LiveCharts.Configurations;
 using static Flight_Inspection.controls.AnalomyDetectorClass;
+using System.Threading;
 
 namespace Flight_Inspection.controls
 {
@@ -232,6 +233,7 @@ namespace Flight_Inspection.controls
                 points[i] = new ObservablePoint(i, vs[i]);
                 points2[i] = new ObservablePoint(i, attach[i]);
                 points3[i] = new ObservablePoint(vs[i], attach[i]);
+                
             }
             XMax = vs.Count;
             XMin = 0;
@@ -262,9 +264,6 @@ namespace Flight_Inspection.controls
             float x2 = vs.Max(), y2 = line.b + x2 * line.a;
             LinearRegVal.Add(new ObservablePoint(x1, y1));
             LinearRegVal.Add(new ObservablePoint(x2, y2));
-            
         }
-       
-        
     }
 }
