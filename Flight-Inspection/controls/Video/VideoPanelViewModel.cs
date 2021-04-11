@@ -52,6 +52,11 @@ namespace Flight_Inspection.controls.Video
             throw new NotImplementedException();
         }
 
+        internal override void setTime(int time)
+        {
+            throw new NotImplementedException();
+        }
+
         private int currentTime;
 
         public int CurrentTime

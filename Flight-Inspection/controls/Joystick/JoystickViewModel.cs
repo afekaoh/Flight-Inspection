@@ -108,5 +108,10 @@ namespace Flight_Inspection.controls.Joystick
         internal override void setTime(int time)
         {
         }
+
+        internal override void setTime(int time)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
