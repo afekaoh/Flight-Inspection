@@ -19,6 +19,7 @@ namespace Flight_Inspection.controls.Video
             this.model = new VideoPanelModel();
             model.PropertyChanged += UpdateCurrentTime;
             model.PropertyChanged += MaxSliderUpdate;
+            model.PropertyChanged += UpdateStop;
         }
 
         public int MaxSlider
@@ -91,6 +92,23 @@ namespace Flight_Inspection.controls.Video
                 this.Time = model.CurrentTime;
         }
 
+        public void UpdateStop(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName is "Stop")
+                this.Stop = model.Stop;
+        }
+
+        private bool stop;
+
+        public bool Stop
+        {
+            get { return stop; }
+            set
+            {
+                stop = value;
+                OnPropertyChanged(value);
+            }
+        }
 
     }
 

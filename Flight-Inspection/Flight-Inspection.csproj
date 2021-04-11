@@ -185,7 +185,9 @@
       <DependentUpon>JoystickView.xaml</DependentUpon>
     </Compile>
     <Compile Include="controls\Joystick\JoystickViewModel.cs" />
+    <Compile Include="controls\Video\TimeConverterToString.cs" />
     <Compile Include="IViewModel.cs" />
+    <Compile Include="Pages\FlightGear\SetStopEventArgs.cs" />
     <Compile Include="Pages\IPagesViewModel.cs" />
     <Compile Include="controls\SettingsArgs.cs" />
     <Compile Include="controls\Video\VideoPanelModel.cs" />
@@ -286,6 +288,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="plugins\AnlomalyDetectoionConverter.dll" />
     <Content Include="plugins\anomaly_detection_util.dll" />
     <Content Include="plugins\anomaly_detec_linear_reg.dll" />
     <Resource Include="Pages\Settings\FG_Data\playback_small.xml" />

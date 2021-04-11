@@ -1,5 +1,6 @@
 ﻿using Flight_Inspection.controls;
 using Flight_Inspection.controls.Video;
+using Flight_Inspection.Pages.FlightGear;
 using Flight_Inspection.Pages.Settings;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,7 @@ namespace Flight_Inspection.Windows.FligthData
     {
         public event PropertyChangedEventHandler PropertyChanged;
         public event EventHandler<SetTimeEventArgs> SetTimeEvent;
+        public event EventHandler<SetStopEventArgs> SetStopEvent;
         private readonly List<IControlViewModel> viewModels;
         private TimeSeries ts;
 
@@ -39,6 +41,16 @@ namespace Flight_Inspection.Windows.FligthData
             {
                 var ea = e as SetTimeEventArgs;
                 viewModels.ForEach(vm => vm.setTime(ea.Time));
+                SetTimeEvent?.Invoke(this, ea);
+            }
+        }
+
+        public void SetStop(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName is "Stop")
+            {
+                var ea = e as SetStopEventArgs;
+                SetStopEvent?.Invoke(this, ea);
             }
         }
 
@@ -60,7 +72,13 @@ namespace Flight_Inspection.Windows.FligthData
 
         public void addEvent()
         {
-            viewModels.ForEach(vm => vm.PropertyChanged += SetTime);
+            viewModels.ForEach(vm =>
+            {
+                vm.PropertyChanged += SetTime;
+                vm.PropertyChanged += SetStop;
+
+            });
         }
+
     }
 }
