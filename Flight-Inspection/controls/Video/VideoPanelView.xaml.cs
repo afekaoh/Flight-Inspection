@@ -43,5 +43,15 @@ namespace Flight_Inspection.controls.Video
         {
             videoPanelViewModel.Pause();
         }
+
+        private void Button_Stop(object sender, RoutedEventArgs e)
+        {
+            videoPanelViewModel.Pause();
+        }
+
+        private void onSpeedChange(object sender, ContextMenuEventArgs e)
+        {
+            
+        }
     }
 }

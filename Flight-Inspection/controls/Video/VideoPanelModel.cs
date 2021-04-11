@@ -32,7 +32,7 @@ namespace Flight_Inspection.controls.Video
             }
         }
 
-        private bool stop;
+        private bool stop = true;
 
         public bool Stop
         {
@@ -74,21 +74,27 @@ namespace Flight_Inspection.controls.Video
             }
         }
 
+        //play after stoping!!!
         internal void StartPlay()
         {
-            t.Start();
+            Stop = false;
+            if (!t.IsAlive)
+            {
+                t.Start();
+            }
         }
 
-        //todo -> play after stop!!!
         private void play()
         {
-            while (true) {
-                if(!stop && currentTime != maxSlider)
+            while (true)
             {
+                if (!stop && CurrentTime != MaxSlider)
+                {
                     CurrentTime++;
                     Thread.Sleep(100);
                 }
             }
+
         }
 
         internal void Pause()
@@ -101,6 +107,8 @@ namespace Flight_Inspection.controls.Video
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
+
+
 
 
     }
