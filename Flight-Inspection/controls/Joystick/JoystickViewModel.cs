@@ -14,7 +14,6 @@ namespace Flight_Inspection.controls.Joystick
         List<JoyStickData> datas;
         private JoystickModel model;
         public event EventHandler Ready;
-        private 
 
         private void OnReady()
         {
@@ -103,10 +102,6 @@ namespace Flight_Inspection.controls.Joystick
             {
                 VM_Elevator = model.Elevator;
             }
-        }
-
-        internal override void setTime(int time)
-        {
         }
 
         internal override void setTime(int time)

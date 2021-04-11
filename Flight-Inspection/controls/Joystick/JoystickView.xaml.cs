@@ -27,7 +27,7 @@ namespace Flight_Inspection.controls.Joystick
             this.DataContext = new JoystickViewModel();
             this.JoystickViewModel = this.DataContext as JoystickViewModel;
             InitializeComponent();
-            joyStickCanvas.SizeChanged += JoyStickCanvas_SizeChanged;
+            //joyStickCanvas.SizeChanged += JoyStickCanvas_SizeChanged;
             JoystickViewModel.Ready += addFeatures;
 
         }
@@ -39,10 +39,10 @@ namespace Flight_Inspection.controls.Joystick
 
         public void addFeatures(object sender, EventArgs e)
         {
-            JoystickViewModel.addData("aileron", (float)joyStickCanvas.ActualWidth);
-            JoystickViewModel.addData("elevator", (float)joyStickCanvas.ActualHeight);
-            JoystickViewModel.addData("throttle", (float)joyStickCanvas.ActualHeight);
-            JoystickViewModel.addData("rudder", (float)joyStickCanvas.ActualWidth);
+            //JoystickViewModel.addData("aileron", (float)joyStickCanvas.ActualWidth);
+            //JoystickViewModel.addData("elevator", (float)joyStickCanvas.ActualHeight);
+            //JoystickViewModel.addData("throttle", (float)joyStickCanvas.ActualHeight);
+            //JoystickViewModel.addData("rudder", (float)joyStickCanvas.ActualWidth);
 
         }
 

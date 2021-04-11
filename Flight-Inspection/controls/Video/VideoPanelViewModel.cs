@@ -43,13 +43,8 @@ namespace Flight_Inspection.controls.Video
 
         public override void SetSettings(SettingsArgs settingsArgs)
         {
-            model.TimeSeries = settingsArgs.ts;
-            model.MaxSlider = settingsArgs.ts.Rows.Count;
-        }
-
-        internal override void setTime(int time)
-        {
-            throw new NotImplementedException();
+            model.TimeSeries = settingsArgs.Ts;
+            model.MaxSlider = settingsArgs.Ts.Rows.Count;
         }
 
         internal override void setTime(int time)
