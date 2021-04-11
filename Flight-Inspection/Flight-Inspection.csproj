@@ -152,6 +152,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="controls\DataWindow\DataWindow.xaml.cs">
+      <DependentUpon>DataWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="controls\DataWindow\DataWindowModel.cs" />
+    <Compile Include="controls\DataWindow\DataWindowVM.cs" />
     <Compile Include="controls\Joystick\JoyStickData.cs" />
     <Compile Include="controls\Joystick\JoystickModel.cs" />
     <Compile Include="controls\IControlView.cs" />
@@ -179,6 +184,10 @@
     <Compile Include="Pages\IViewPages.cs" />
     <Compile Include="Windows\FligthData\SetTimeEventArgs.cs" />
     <Compile Include="Windows\MainWindow\MainWindowViewModel.cs" />
+    <Page Include="controls\DataWindow\DataWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="controls\Joystick\JoystickView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -264,5 +273,6 @@
     <Content Include="plugins\anomaly_detection_util.dll" />
     <Resource Include="Pages\Settings\FG_Data\playback_small.xml" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

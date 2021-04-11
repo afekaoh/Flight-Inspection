@@ -52,7 +52,7 @@
                 </Polygon.Stroke>
             </Polygon>
             <TextBox HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="Aileron" VerticalAlignment="Top" Width="100" Canvas.Left="264" Canvas.Top="13" />
-            <Canvas Height="138" Canvas.Left="220" Canvas.Top="83" Width="193">
+            <Canvas x:Name="joyStickCanvas"  Height="138" Canvas.Left="220" Canvas.Top="83" Width="193">
                 <Ellipse Width="50" Height="50" Canvas.Left= "{Binding VM_Aileron}" Canvas.Top="{Binding VM_Elevator}" HorizontalAlignment="Center" VerticalAlignment="Center" Fill="Yellow" />
             </Canvas>
         </Canvas>

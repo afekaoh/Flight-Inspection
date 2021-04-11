@@ -90,7 +90,6 @@ namespace Flight_Inspection.controls.Joystick
                 Rudder = ts.getFeatureData("rudder").ElementAt(counter);
                 Elevator = ts.getFeatureData("elevator").ElementAt(counter);
                 Throttle = ts.getFeatureData("throttle").ElementAt(counter);
-                Console.WriteLine($"{aileron} {rudder}  {elevator} {throttle}");
                 Thread.Sleep(10);
                 counter++;
             }

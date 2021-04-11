@@ -13,8 +13,7 @@ namespace Flight_Inspection.controls.Joystick
     {
         List<JoyStickData> datas;
         private JoystickModel model;
-        public event EventHandler Ready;
-        private 
+        public event EventHandler Ready; 
 
         private void OnReady()
         {
