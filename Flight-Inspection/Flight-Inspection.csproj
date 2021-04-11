@@ -259,6 +259,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="plugins\.dll" />
     <Content Include="plugins\anomaly_detection_util.dll" />
     <Resource Include="Pages\Settings\FG_Data\playback_small.xml" />
   </ItemGroup>
