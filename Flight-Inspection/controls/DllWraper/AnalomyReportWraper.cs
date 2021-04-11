@@ -11,6 +11,7 @@ namespace Flight_Inspection.controls.DllWraper
     class AnalomyReportWraper
     {
         [DllImport("anom_detec_conv.dll", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Unicode)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool loadDLL([MarshalAs(UnmanagedType.LPStr)] string path);
 
         [DllImport("anom_detec_conv.dll", CallingConvention = CallingConvention.Cdecl)]
@@ -76,7 +77,7 @@ namespace Flight_Inspection.controls.DllWraper
             {
                 IntPtr intPtr = getAnalomyReport();
                 AnomalyReportArray wraper = (AnomalyReportArray)Marshal.PtrToStructure(intPtr, typeof(AnomalyReportArray));
-                for(int i = 0; i < wraper.size; i++)
+                for (int i = 0; i < wraper.size; i++)
                 {
                     AnomalyReportSafe a = new AnomalyReportSafe();
                     a.first = new string(wraper.anomalyReports[i].first);

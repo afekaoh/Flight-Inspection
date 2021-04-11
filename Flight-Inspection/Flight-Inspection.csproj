@@ -288,6 +288,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="plugins\AnlomalyDetectoionConverter.dll" />
     <Content Include="plugins\anomaly_detection_util.dll" />
     <Content Include="plugins\anomaly_detec_linear_reg.dll" />
     <Content Include="plugins\anom_detec_conv.dll" />

@@ -20,11 +20,19 @@ namespace Flight_Inspection.controls.Charts
 
         public List<AnomalyReportSafe> GetAnomalyReport(List<string> properties)
         {
-            LoadDll(pathDll);
-            LoadTimeSriesNormal(pathCsv, properties);
-            string detect = "C:\\Users\\avri2\\OneDrive\\Desktop\\exersice\\anomaly_flight.csv";
-            LoadTimeSriesTest(detect, properties);
-            return GetAnomalyReports();
+            var a = LoadDll(pathDll);
+            if (a)
+            {
+                LoadTimeSriesNormal(pathCsv, properties);
+                string detect = "C:\\Users\\avri2\\OneDrive\\Desktop\\exersice\\anomaly_flight.csv";
+                LoadTimeSriesTest(detect, properties);
+                return GetAnomalyReports();
+            }
+            else
+            {
+                Console.WriteLine("oof");
+                return null;
+            }
         }
 
     }
