@@ -29,7 +29,6 @@ namespace Flight_Inspection
         private readonly FlightDataViewModel flight;
         private readonly List<IControlView> views;
         private readonly List<Frame> frames;
-        public event EventHandler<SetTimeEventArgs> SetTimeEvent;
 
         public FlightData()
         {
@@ -41,15 +40,16 @@ namespace Flight_Inspection
             {
                 new FlightCharts(),
                 new VideoPanelView(),
-                new JoystickView()
+               // new JoystickView()
             };
 
             views.ForEach(v => flight.AddViewModel(v.GetViewModel()));
+            flight.addEvent();
             frames = new List<Frame>
             {
                 Charts,
                 VideoPanel,
-                Joystick,
+                //Joystick,
                 MoreInfo
             };
         }

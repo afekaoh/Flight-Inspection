@@ -20,6 +20,14 @@ namespace Flight_Inspection.Pages.FlightGear
         private readonly Process FG;
         private readonly Thread t;
 
+        private bool play;
+
+        public bool Play
+        {
+            get { return play; }
+            set { play = value; }
+        }
+
         public FlightGearModel()
         {
             FG = new Process();
@@ -49,26 +57,26 @@ namespace Flight_Inspection.Pages.FlightGear
             {
                 soc.Connect(remoteEP);
                 var rows = TS.Rows;
-                if (soc.Connected)
+                while (soc.Connected)
                 {
-                    foreach (var buffer in from string r in rows
-                                           let buffer = Encoding.ASCII.GetBytes(r + "\n")
-                                           select buffer)
-                    {
-                        stopwatch.Start();
-                        soc.Send(buffer);
-                        stopwatch.Stop();
-                        int sleepTime = (int)Math.Max(0, 100 - stopwatch.ElapsedMilliseconds);
-                        Thread.Sleep(sleepTime);
-                    }
+                    /*                    foreach (var buffer in from string r in rows
+                                                               let buffer = Encoding.ASCII.GetBytes(r + "\n")
+                                                               select buffer)
+                                        {
+                                            stopwatch.Start();
+                                            soc.Send(buffer);
+                                            stopwatch.Stop();
+                                            int sleepTime = (int)Math.Max(0, 100 - stopwatch.ElapsedMilliseconds);
+                                            Thread.Sleep(sleepTime);
+                                        }*/
 
-                    /*    while (true)
-                        {
-                            var line = rows[Time] + "\n";
-                            var buffer = Encoding.ASCII.GetBytes(line);
-                            soc.Send(buffer);
-                            Thread.Sleep(1);
-                        }*/
+                    if (play)
+                    {
+                        var line = rows[Time] + "\n";
+                        var buffer = Encoding.ASCII.GetBytes(line);
+                        soc.Send(buffer);
+                        Thread.Sleep(10);
+                    }
                     /*for (; speed < rows.Count; speed++)
                     {
                         var buffer = Encoding.ASCII.GetBytes(rows[speed] + "\n");
