@@ -58,7 +58,7 @@ namespace Flight_Inspection.controls.DllWraper
             try
             {
                 return loadDLL(path);
-            } 
+            }
             catch (Exception)
             {
                 Console.WriteLine("error");
@@ -94,27 +94,29 @@ namespace Flight_Inspection.controls.DllWraper
             List<AnomalyReports> list = new List<AnomalyReports>();
             unsafe
             {
-                try
-                {
-                    IntPtr intPtr = getAnomalyReport();
-                    AnomalyReportArray wraper = (AnomalyReportArray)Marshal.PtrToStructure(intPtr, typeof(AnomalyReportArray));
-                    for (int i = 0; i < wraper.size; i++)
-                    {
-                        AnomalyReportSafe a = new AnomalyReportSafe();
-                        a.first = new string(wraper.anomalyReports[i].first);
-                        a.second = new string(wraper.anomalyReports[i].second);
-                        a.time = wraper.anomalyReports[i].time;
-                        list.Add(a);
-                    }
-                    deleteAnomalyReports(intPtr);
-                }
-                catch (Exception)
-                {
-                    Console.WriteLine("error");
-                }
-                
+                /*          try
+                          {
+                              IntPtr intPtr = getAnomalyReport();
+                              AnomalyReportArray wraper = (AnomalyReportArray)Marshal.PtrToStructure(intPtr, typeof(AnomalyReportArray));
+                              for (int i = 0; i < wraper.size; i++)
+                              {
+                                  AnomalyReportSafe a = new AnomalyReportSafe();
+                                  a.first = new string(wraper.anomalyReports[i].first);
+                                  a.second = new string(wraper.anomalyReports[i].second);
+                                  a.time = wraper.anomalyReports[i].time;
+                                  list.Add(a);
+                              }
+                              deleteAnomalyReports(intPtr);
+                          }
+                          catch (Exception)
+                          {
+                              Console.WriteLine("error");
+                          }
+
+                      }
+                      return list;*/
+                return null;
             }
-            return list;
         }
 
         public static void SetCorralationThreshhold(float threshold)

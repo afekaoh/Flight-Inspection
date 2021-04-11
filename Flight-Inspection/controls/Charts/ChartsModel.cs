@@ -207,14 +207,14 @@ namespace Flight_Inspection.controls
             //}
             //else
             //{
-                foreach (AnomalyReportSafe anomaly in lsReports)
+     /*           foreach (AnomalyReportSafe anomaly in lsReports)
                 {
                     var data = TimeSeries.getFeatureData(anomaly.first);
                     var data2 = TimeSeries.getFeatureData(anomaly.second);
                     AnalomyPoints.Add(new ObservablePoint() { X = data[(int)anomaly.time], Y = data2[(int)anomaly.time] });
-                }
-            AnalomyPoints.Add(new ObservablePoint() { X = 0.5,Y=0.5 });
-            INotifyPropertyChanged("AnalomyPoints");
+                }*/
+            //AnalomyPoints.Add(new ObservablePoint() { X = 0.5,Y=0.5 });
+            //INotifyPropertyChanged("AnalomyPoints");
             //}
         }
         public Property getData(string property)
