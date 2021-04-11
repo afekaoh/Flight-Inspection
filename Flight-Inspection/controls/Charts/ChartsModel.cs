@@ -175,8 +175,8 @@ namespace Flight_Inspection.controls
             if (e.PropertyName != "TimeSeries")
                 return;
             List<string> ls = timeSeries.getFeatureNames();
-            AnalomyDetector analomyDetector = new AnalomyDetector();
-            List<AnomalyReportSafe> lsReports = analomyDetector.GetAnomalyReport(timeSeries.getFeatureNames());
+            /*AnalomyDetector analomyDetector = new AnalomyDetector();
+            List<AnomalyReportSafe> lsReports = analomyDetector.GetAnomalyReport(timeSeries.getFeatureNames());*/
             LinearRegVal = new ChartValues<ObservablePoint>();
             ChartValues = new ChartValues<ObservablePoint>();
             ChartValuesAttach = new ChartValues<ObservablePoint>();

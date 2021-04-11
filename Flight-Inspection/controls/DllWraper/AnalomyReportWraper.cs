@@ -21,7 +21,7 @@ namespace Flight_Inspection.controls.DllWraper
         public static extern void loadTimeSeriesTest([MarshalAs(UnmanagedType.LPStr)] string path, [MarshalAs(UnmanagedType.LPArray)] string[] fetursName, int numOfFeatures);
 
         [DllImport("anom_detec_conv.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern IntPtr getAnalomyReport();
+        public static extern IntPtr getAnomalyReport();
 
         [DllImport("anom_detec_conv.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void setCorralationThreshhold(float threshold);
@@ -52,7 +52,7 @@ namespace Flight_Inspection.controls.DllWraper
 
         unsafe struct AnomalyReportArray
         {
-            public AnomalyReports* anomalyReports;
+            public IntPtr anomalyReports;
             public int size;
         };
 
@@ -72,22 +72,27 @@ namespace Flight_Inspection.controls.DllWraper
 
         public static List<AnomalyReportSafe> GetAnomalyReports()
         {
-            List<AnomalyReportSafe> list = new List<AnomalyReportSafe>();
+            List<AnomalyReports> list = new List<AnomalyReports>();
             unsafe
             {
-                IntPtr intPtr = getAnalomyReport();
+                IntPtr intPtr = getAnomalyReport();
                 AnomalyReportArray wraper = (AnomalyReportArray)Marshal.PtrToStructure(intPtr, typeof(AnomalyReportArray));
+                AnomalyReports anomaly;
+                IntPtr ptr = wraper.anomalyReports;
                 for (int i = 0; i < wraper.size; i++)
                 {
-                    AnomalyReportSafe a = new AnomalyReportSafe();
-                    a.first = new string(wraper.anomalyReports[i].first);
-                    a.second = new string(wraper.anomalyReports[i].second);
-                    a.time = wraper.anomalyReports[i].time;
-                    list.Add(a);
+                    anomaly = (AnomalyReports)Marshal.PtrToStructure(ptr, typeof(AnomalyReports));
+                    //AnomalyReportSafe a = new AnomalyReportSafe();
+                    /*a.first = new string(anomaly.first);
+                    a.second = new string(anomaly.second);
+                    a.time = anomaly.time;*/
+                    list.Add(anomaly);
+                    ptr = new IntPtr(ptr.ToInt32() + sizeof(AnomalyReports));
                 }
                 deleteAnomalyReports(intPtr);
             }
-            return list;
+            Console.WriteLine("lal");
+            return null;
         }
 
         public static void SetCorralationThreshhold(float threshold)

@@ -62,8 +62,12 @@ namespace Flight_Inspection.controls.Video
             }
             set
             {
-                currentTime = value;
-                OnPropertyChanged(value);
+                if (currentTime != value)
+                {
+                    currentTime = value;
+                    model.CurrentTime = value;
+                    OnPropertyChanged(value);
+                }
             }
         }
 
