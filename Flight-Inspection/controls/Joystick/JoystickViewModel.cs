@@ -130,10 +130,12 @@ namespace Flight_Inspection.controls.Joystick
                     VM_Elevator = model.Elevator;
                     break;
             }
+
         }
 
         internal override void setTime(int time)
         {
+
         }
     }
 }

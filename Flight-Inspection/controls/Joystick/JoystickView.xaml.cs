@@ -42,7 +42,6 @@ namespace Flight_Inspection.controls.Joystick
             JoystickViewModel.addData("elevator", (float)JoyStickCanvas.ActualHeight);
             JoystickViewModel.addData("throttle", (float)ThrotteleCanvas.ActualHeight);
             JoystickViewModel.addData("rudder", (float)RudderCanvas.ActualWidth);
-
         }
 
         public IControlViewModel GetViewModel()

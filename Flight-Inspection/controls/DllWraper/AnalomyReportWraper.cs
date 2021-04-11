@@ -22,6 +22,19 @@ namespace Flight_Inspection.controls.DllWraper
         [DllImport("anom_detec_conv.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern IntPtr getAnalomyReport();
 
+        [DllImport("anom_detec_conv.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void setCorralationThreshhold(float threshold);
+
+        [DllImport("anom_detec_conv.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern float getCorralationThreshhold();
+
+        [DllImport("anom_detec_conv.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void deleteAnomalyReports(IntPtr anomalyDetector);
+
+        [DllImport("anom_detec_conv.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void releaseMemory();
+
+
         unsafe struct AnomalyReports
         {
             public char* first;
@@ -29,7 +42,7 @@ namespace Flight_Inspection.controls.DllWraper
             public long time;
         };
 
-        public struct AnomalyReportsSafe
+        public struct AnomalyReportSafe
         {
             public string first;
             public string second;
@@ -56,22 +69,39 @@ namespace Flight_Inspection.controls.DllWraper
             loadTimeSeriesTest(path, featureNames.ToArray(), featureNames.Count);
         }
 
-        public static List<AnomalyReportsSafe> GetAnomalyReports()
+        public static List<AnomalyReportSafe> GetAnomalyReports()
         {
-            List<AnomalyReportsSafe> list = new List<AnomalyReportsSafe>();
+            List<AnomalyReportSafe> list = new List<AnomalyReportSafe>();
             unsafe
             {
-                AnomalyReportArray wraper = (AnomalyReportArray)Marshal.PtrToStructure(getAnalomyReport(), typeof(AnomalyReportArray));
+                IntPtr intPtr = getAnalomyReport();
+                AnomalyReportArray wraper = (AnomalyReportArray)Marshal.PtrToStructure(intPtr, typeof(AnomalyReportArray));
                 for(int i = 0; i < wraper.size; i++)
                 {
-                    AnomalyReportsSafe a = new AnomalyReportsSafe();
+                    AnomalyReportSafe a = new AnomalyReportSafe();
                     a.first = new string(wraper.anomalyReports[i].first);
                     a.second = new string(wraper.anomalyReports[i].second);
                     a.time = wraper.anomalyReports[i].time;
                     list.Add(a);
                 }
+                deleteAnomalyReports(intPtr);
             }
             return list;
+        }
+
+        public static void SetCorralationThreshhold(float threshold)
+        {
+            setCorralationThreshhold(threshold);
+        }
+
+        public static float GetCorralationThreshhold()
+        {
+            return getCorralationThreshhold();
+        }
+
+        public static void Release()
+        {
+            releaseMemory();
         }
     }
 }

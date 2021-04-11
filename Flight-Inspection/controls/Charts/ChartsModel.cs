@@ -7,6 +7,8 @@ using LiveCharts;
 using LiveCharts.Defaults;
 using LiveCharts.Configurations;
 using static Flight_Inspection.controls.AnalomyDetectorClass;
+using Flight_Inspection.controls.Charts;
+using static Flight_Inspection.controls.DllWraper.AnalomyReportWraper;
 
 namespace Flight_Inspection.controls
 {
@@ -172,7 +174,9 @@ namespace Flight_Inspection.controls
          
             if (e.PropertyName != "TimeSeries")
                 return;
-            ReadOnlyCollection<string> ls = timeSeries.getFeatureNames().AsReadOnly();
+            List<string> ls = timeSeries.getFeatureNames();
+            AnalomyDetector analomyDetector = new AnalomyDetector();
+            List<AnomalyReportSafe> lsReports = analomyDetector.GetAnomalyReport(timeSeries.getFeatureNames());
             LinearRegVal = new ChartValues<ObservablePoint>();
             ChartValues = new ChartValues<ObservablePoint>();
             ChartValuesAttach = new ChartValues<ObservablePoint>();

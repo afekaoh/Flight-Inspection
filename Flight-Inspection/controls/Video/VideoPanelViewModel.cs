@@ -48,6 +48,7 @@ namespace Flight_Inspection.controls.Video
 
         internal override void setTime(int time)
         {
+
         }
 
         private int currentTime;
