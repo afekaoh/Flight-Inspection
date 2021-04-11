@@ -183,7 +183,6 @@
     <Compile Include="controls\Charts\MyCommand.cs" />
     <Compile Include="controls\DllWraper\AnalomyDetectorClass.cs" />
     <Compile Include="controls\DllWraper\AnalomyReportWraper.cs" />
-    <Compile Include="controls\Joystick\JoyStickData.cs" />
     <Compile Include="controls\Joystick\JoystickModel.cs" />
     <Compile Include="controls\IControlView.cs" />
     <Compile Include="controls\IControlViewModel.cs" />
