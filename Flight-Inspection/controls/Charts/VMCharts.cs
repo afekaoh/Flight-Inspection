@@ -8,7 +8,6 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Flight_Inspection.controls.Charts1;
 using System.Windows.Input;
 
 namespace Flight_Inspection.controls
@@ -253,9 +252,5 @@ namespace Flight_Inspection.controls
              this.CurrentTime = time;
         }
         
-        internal override void setTime(int time)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

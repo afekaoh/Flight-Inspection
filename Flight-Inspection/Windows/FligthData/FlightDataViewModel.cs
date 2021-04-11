@@ -1,4 +1,5 @@
 ﻿using Flight_Inspection.controls;
+using Flight_Inspection.controls.Video;
 using Flight_Inspection.Pages.Settings;
 using System;
 using System.Collections.Generic;
@@ -32,10 +33,13 @@ namespace Flight_Inspection.Windows.FligthData
             }
         }
 
-        public void SetTime(object sender, SetTimeEventArgs e)
+        public void SetTime(object sender, PropertyChangedEventArgs e)
         {
-            viewModels.ForEach(vm => vm.setTime(e.Time));
-            SetTimeEvent?.Invoke(this, e);
+            if (e.PropertyName is "Time")
+            {
+                var ea = e as SetTimeEventArgs;
+                viewModels.ForEach(vm => vm.setTime(ea.Time));
+            }
         }
 
         public void AddViewModel(IControlViewModel viewModel)
@@ -52,6 +56,11 @@ namespace Flight_Inspection.Windows.FligthData
         internal void UpdateSettings(SettingsArgs settingsArgs)
         {
             viewModels.ForEach(vm => vm.SetSettings(settingsArgs));
+        }
+
+        public void addEvent()
+        {
+            viewModels.ForEach(vm => vm.PropertyChanged += SetTime);
         }
     }
 }

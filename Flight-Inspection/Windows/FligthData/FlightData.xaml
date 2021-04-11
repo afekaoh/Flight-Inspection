@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Flight_Inspection" 
         mc:Ignorable="d"
         Title="FlightData" Height="450" Width="800">
-    <WrapPanel>
+    <StackPanel>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"></RowDefinition>
@@ -22,5 +22,5 @@
         <Frame x:Name="Joystick" Grid.Row="1" Grid.Column="1"></Frame>
         <Frame x:Name="MoreInfo" Grid.Row="1"></Frame>
     </Grid>
-    </WrapPanel>
+    </StackPanel>
 </Window>
