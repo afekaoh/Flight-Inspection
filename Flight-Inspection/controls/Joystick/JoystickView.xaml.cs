@@ -34,6 +34,7 @@ namespace Flight_Inspection.controls.Joystick
 
         private void JoyStickCanvas_SizeChanged(object sender, SizeChangedEventArgs e)
         {
+
         }
 
         public void addFeatures(object sender, EventArgs e)
