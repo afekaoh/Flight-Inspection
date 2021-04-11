@@ -50,5 +50,10 @@ namespace Flight_Inspection.controls
             charts.TimeSeries = settingsArgs.Ts;
             OnReady();
         }
+
+        internal override void setTime(int time)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

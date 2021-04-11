@@ -47,6 +47,11 @@ namespace Flight_Inspection.controls.Video
             model.MaxSlider = settingsArgs.ts.Rows.Count;
         }
 
+        internal override void setTime(int time)
+        {
+            throw new NotImplementedException();
+        }
+
         private int currentTime;
 
         public int CurrentTime
