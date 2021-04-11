@@ -66,7 +66,7 @@ namespace Flight_Inspection.controls.Video
                 {
                     currentTime = value;
                     model.CurrentTime = value;
-                    OnPropertyChanged();
+                    OnPropertyChanged(value);
                 }
             }
         }
