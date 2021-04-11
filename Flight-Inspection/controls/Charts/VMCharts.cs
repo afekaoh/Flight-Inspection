@@ -251,6 +251,5 @@ namespace Flight_Inspection.controls
         {
              this.CurrentTime = time;
         }
-        
     }
 }
