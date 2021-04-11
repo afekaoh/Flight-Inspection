@@ -157,7 +157,7 @@
     </Compile>
     <Compile Include="controls\DataWindow\DataWindowModel.cs" />
     <Compile Include="controls\DataWindow\DataWindowVM.cs" />
-    <Compile Include="controls\Joystick\JoyStickData.cs" />
+    <Compile Include="controls\Joystick\NormelaizedData.cs" />
     <Compile Include="controls\Joystick\JoystickModel.cs" />
     <Compile Include="controls\IControlView.cs" />
     <Compile Include="controls\IControlViewModel.cs" />

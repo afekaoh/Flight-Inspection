@@ -11,7 +11,7 @@ namespace Flight_Inspection.controls.Joystick
 {
     class JoystickViewModel : IControlViewModel
     {
-        List<JoyStickData> datas;
+        List<NormelaizedData> datas;
         private JoystickModel model;
         public event EventHandler Ready; 
 
@@ -22,8 +22,9 @@ namespace Flight_Inspection.controls.Joystick
         public float VM_Aileron
         {
             get { return findData("aileron").Data; }
-            set {
-                findData("aileron").Data = value*300+ 300;
+            set
+            {
+                findData("aileron").Data = value * 300 + 300;
                 OnPropertyChanged();
             }
         }
@@ -33,7 +34,7 @@ namespace Flight_Inspection.controls.Joystick
             get { return findData("rudder").Data; }
             set
             {
-                findData("rudder").Data =330+ value*400;
+                findData("rudder").Data = 330 + value * 400;
                 OnPropertyChanged();
             }
         }
@@ -59,7 +60,7 @@ namespace Flight_Inspection.controls.Joystick
         public JoystickViewModel()
         {
             model = new JoystickModel();
-            datas = new List<JoyStickData>();
+            datas = new List<NormelaizedData>();
             model.PropertyChanged += TheModlePropertyChanged;
         }
         public override void SetSettings(SettingsArgs settingsArgs)
@@ -68,11 +69,11 @@ namespace Flight_Inspection.controls.Joystick
             this.OnReady();
         }
 
-        public JoyStickData findData (string name) { return (JoyStickData)datas.Find(JoyStickData => JoyStickData.Name == name); }
+        public NormelaizedData findData (string name) { return (NormelaizedData)datas.Find(JoyStickData => JoyStickData.Name == name); }
 
         public void addData (string name,float CanvasDim)
         {
-            datas.Add(new JoyStickData(name, CanvasDim, model.maxAbs(name)));
+            datas.Add(new NormelaizedData(name, CanvasDim, model.maxAbs(name)));
         }
 
         public void start()

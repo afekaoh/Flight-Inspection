@@ -76,7 +76,7 @@ namespace Flight_Inspection.controls.DataWindow
 
         }
 
-        public float Airspeed
+        public float AirSpeed
         {
             get => airspeed;
             private set
@@ -110,7 +110,7 @@ namespace Flight_Inspection.controls.DataWindow
                 Yaw = ts.getFeatureData("heading-deg").ElementAt(counter);
                 Pitch = ts.getFeatureData("pitch-deg").ElementAt(counter);
                 Roll = ts.getFeatureData("roll-deg").ElementAt(counter);
-                Airspeed = ts.getFeatureData("airspeed-kt").ElementAt(counter);
+                AirSpeed = ts.getFeatureData("airspeed-kt").ElementAt(counter);
                 Altimeter = ts.getFeatureData("altitude-ft").ElementAt(counter);
                 Direction = ts.getFeatureData("magnetic-compass_indicated-heading-deg").ElementAt(counter);
 
@@ -118,6 +118,20 @@ namespace Flight_Inspection.controls.DataWindow
                 Thread.Sleep(10);
                 counter++;
             }
+        }
+        public float maxAbs(String feature)
+        {
+            float minVal = (float)Math.Abs(ts.getFeatureData(feature).Min());
+            float maxVal = Math.Abs(ts.getFeatureData(feature).Max());
+            if (minVal >= maxVal)
+            {
+                return minVal;
+            }
+            if (minVal < maxVal)
+            {
+                return maxVal;
+            }
+            return 0;
         }
     }
 }
