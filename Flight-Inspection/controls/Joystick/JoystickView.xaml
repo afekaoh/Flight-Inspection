@@ -20,12 +20,10 @@
             <Rectangle Width="10" Height="200" Fill="Gray" Canvas.Left="100" Canvas.Top="40" />
             <Rectangle Width="10" Height="20" Fill="Red" Canvas.Left="100" Canvas.Top="{Binding VM_Throttle}" />
         </Canvas>
-        <TextBlock Text="{Binding VM_Aileron}" FontSize="64" ></TextBlock>
         <Button Content="Button" Height="100" Width="254" Margin="495,234,51,35" Click="Button_Click"/>
         <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top"><Run Text="TextBlock"/><InlineUIContainer>
                 <TextBlock TextWrapping="Wrap" Text="TextBlock"/>
             </InlineUIContainer></TextBlock>
-        <TextBox Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="264.4,10,0,0" TextWrapping="Wrap" Text="Aileron" VerticalAlignment="Top" Width="100" />
         <TextBox HorizontalAlignment="Left" Height="23" Margin="-33,162,0,0" TextWrapping="Wrap" Text="Throttle" VerticalAlignment="Top" Background="Gray" Width="120" RenderTransformOrigin="0.5,0.5">
             <TextBox.RenderTransform>
                 <TransformGroup>
@@ -36,7 +34,25 @@
                 </TransformGroup>
             </TextBox.RenderTransform>
         </TextBox>
-        <Canvas Grid.Column="1" Grid.Row="0">
+        <Canvas Name="joyStickCanvas" Grid.Row="0" Grid.Column="1" Margin="124,37,10,52.6">
+            <Polygon Points="8,0 0,5, 8,10" Fill="Black" Margin="250,15" RenderTransformOrigin="0.515,1.799">
+                <Polygon.Stroke>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="Black" Offset="0"/>
+                        <GradientStop Color="White" Offset="1"/>
+                    </LinearGradientBrush>
+                </Polygon.Stroke>
+            </Polygon>
+            <Polygon Points="0,0 8,5, 0,10" Fill="Black" Margin="370,15" RenderTransformOrigin="0.455,1.983">
+                <Polygon.Stroke>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="Black" Offset="0"/>
+                        <GradientStop Color="White" Offset="1"/>
+                    </LinearGradientBrush>
+                </Polygon.Stroke>
+            </Polygon>
+            <TextBox Grid.Column="1" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="Aileron" VerticalAlignment="Top" Width="100" Canvas.Left="264" Canvas.Top="13" />
+
             <Ellipse Width="50" Height="50" Canvas.Left= "{Binding VM_Aileron}" Canvas.Top="{Binding VM_Elevator}" HorizontalAlignment="Center" VerticalAlignment="Center" Fill="Yellow" />
         </Canvas>
         <Canvas Grid.Column="1" Grid.Row="1">
@@ -44,6 +60,5 @@
             <Rectangle Height="20" Width="400" Fill="Gray" Margin="150,20"></Rectangle>
             <Rectangle Fill="Black" Canvas.Left="{Binding VM_Rudder}" Height="20" Width="50" Canvas.Top="20"></Rectangle>
         </Canvas>
-
     </Grid>
 </UserControl>

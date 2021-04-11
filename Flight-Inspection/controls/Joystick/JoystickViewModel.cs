@@ -6,65 +6,78 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
+
 namespace Flight_Inspection.controls.Joystick
 {
     class JoystickViewModel : IControlViewModel
     {
-        private float VM_aileron;
-        private float VM_rudder;
-        private float VM_elevator;
-        private float VM_throttle;
+        List<JoyStickData> datas;
+        private JoystickModel model;
+        public event EventHandler Ready;
+
+        private void OnReady()
+        {
+            Ready?.Invoke(this, EventArgs.Empty);
+        }
         public float VM_Aileron
         {
-            get { return VM_aileron; }
-            set { 
-                VM_aileron = value*250+ 300 ;
+            get { return findData("aileron").Data; }
+            set {
+                findData("aileron").Data = value*300+ 300;
                 OnPropertyChanged();
             }
         }
 
         public float VM_Rudder
         {
-            get { return VM_rudder; }
+            get { return findData("rudder").Data; }
             set
             {
-                VM_rudder =330+ value*400;
+                findData("rudder").Data =330+ value*400;
                 OnPropertyChanged();
             }
         }
         public float VM_Elevator
         {
-            get { return VM_elevator; }
+            get { return findData("elevator").Data; }
             set
             {
-                VM_elevator = value * 100 + 150;
+                findData("elevator").Data = value * 100 + 150;
                 OnPropertyChanged();
             }
         }
         public float VM_Throttle
         {
-            get { return VM_throttle; }
+            get { return findData("throttle").Data; }
             set
             {
-                VM_throttle = 230 - value * 100;
-                OnPropertyChanged("VM_throttle");
+                findData("throttle").Data = 230 - value * 100;
+                OnPropertyChanged();
 
             }
         }
-        private JoystickModel model;
         public JoystickViewModel()
         {
             model = new JoystickModel();
+            datas = new List<JoyStickData>();
             model.PropertyChanged += TheModlePropertyChanged;
         }
         public override void SetSettings(SettingsArgs settingsArgs)
         {
             model.SetSettings(settingsArgs);
+            this.OnReady();
+        }
+
+        public JoyStickData findData (string name) { return (JoyStickData)datas.Find(JoyStickData => JoyStickData.Name == name); }
+
+        public void addData (string name,float CanvasDim)
+        {
+            datas.Add(new JoyStickData(name, CanvasDim, model.maxAbs(name)));
         }
 
         public void start()
         {
-            Thread t = new Thread(model.start)
+            Thread t = new Thread(model.sendData)
             {
                 IsBackground = true
             };
