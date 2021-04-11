@@ -252,7 +252,10 @@ namespace Flight_Inspection.controls
         {
              this.CurrentTime = time;
         }
-
         
+        internal override void setTime(int time)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -176,6 +176,7 @@
     <Compile Include="controls\Charts\MyCommand.cs" />
     <Compile Include="controls\DllWraper\AnalomyDetectorClass.cs" />
     <Compile Include="controls\DllWraper\AnalomyReportWraper.cs" />
+    <Compile Include="controls\Joystick\JoyStickData.cs" />
     <Compile Include="controls\Joystick\JoystickModel.cs" />
     <Compile Include="controls\IControlView.cs" />
     <Compile Include="controls\IControlViewModel.cs" />
@@ -284,7 +285,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="plugins\.dll" />
     <Content Include="plugins\anomaly_detection_util.dll" />
+    <Content Include="plugins\anomaly_detec_linear_reg.dll" />
+    <Content Include="plugins\anom_detec_conv.dll" />
     <Resource Include="Pages\Settings\FG_Data\playback_small.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
