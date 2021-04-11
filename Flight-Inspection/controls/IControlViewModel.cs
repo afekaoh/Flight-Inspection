@@ -18,5 +18,6 @@ namespace Flight_Inspection.controls
         }
 
         public abstract void SetSettings(SettingsArgs settingsArgs);
+        internal abstract void setTime(int time);
     }
 }

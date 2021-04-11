@@ -59,7 +59,7 @@ namespace Flight_Inspection
 
         private void Settings_OnReady(object sender, OnReadyEventArgs e)
         {
-            mainWindowViewModel.Settings = new SettingsArgs { ts = new TimeSeries(e.CSV.Content, e.XML.Content), procPath = e.PATH.Content };
+            mainWindowViewModel.Settings = new SettingsArgs { Ts = new TimeSeries(e.CSV.Content, e.XML.Content), ProcPath = e.PATH.Content };
         }
 
         private void Move_Page(object sender, RoutedEventArgs e)
