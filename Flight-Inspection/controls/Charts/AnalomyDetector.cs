@@ -10,8 +10,25 @@ namespace Flight_Inspection.controls.Charts
     class AnalomyDetector
     {
         private string pathDll = "C:\\Users\\avri2\\source\\repos\\Flight-Inspection_\\Flight-Inspection\\plugins\\anomaly_detec_linear_reg.dll";
+        public string PathDll
+        {
+            get => pathDll;
+            set
+            {
+                pathDll = value;
+            }
+        }
+        
         private string pathCsv = "C:\\Users\\avri2\\source\\repos\\Flight-Inspection_\\Flight-Inspection\\Pages\\Settings\\FG_Data\\reg_flight.csv";
 
+        public string PathCsv
+        {
+            get => pathCsv;
+            set
+            {
+                pathCsv = value;
+            }
+        }
 
         public AnalomyDetector()
         {
@@ -34,6 +51,5 @@ namespace Flight_Inspection.controls.Charts
                 return null;
             }
         }
-
     }
 }

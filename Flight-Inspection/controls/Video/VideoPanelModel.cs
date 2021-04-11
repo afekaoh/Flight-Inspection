@@ -84,7 +84,7 @@ namespace Flight_Inspection.controls.Video
         {
             while (true) {
                 if(!stop && currentTime != maxSlider)
-            {
+                {
                     CurrentTime++;
                     Thread.Sleep(100);
                 }

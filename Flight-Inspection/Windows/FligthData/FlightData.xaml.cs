@@ -40,7 +40,7 @@ namespace Flight_Inspection
             {
                 new FlightCharts(),
                 new VideoPanelView(),
-               // new JoystickView()
+               new JoystickView()
             };
 
             views.ForEach(v => flight.AddViewModel(v.GetViewModel()));
@@ -49,7 +49,7 @@ namespace Flight_Inspection
             {
                 Charts,
                 VideoPanel,
-                //Joystick,
+                Joystick,
                 MoreInfo
             };
         }
