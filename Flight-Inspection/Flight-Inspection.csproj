@@ -289,7 +289,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="plugins\AnlomalyDetectoionConverter.dll" />
     <Content Include="plugins\anomaly_detection_util.dll" />
     <Content Include="plugins\anomaly_detec_linear_reg.dll" />
     <Resource Include="Pages\Settings\FG_Data\playback_small.xml" />

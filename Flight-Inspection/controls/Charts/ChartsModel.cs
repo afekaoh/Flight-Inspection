@@ -175,34 +175,47 @@ namespace Flight_Inspection.controls
             if (e.PropertyName != "TimeSeries")
                 return;
             List<string> ls = timeSeries.getFeatureNames();
-            /*AnalomyDetector analomyDetector = new AnalomyDetector();
-            List<AnomalyReportSafe> lsReports = analomyDetector.GetAnomalyReport(timeSeries.getFeatureNames());*/
-            LinearRegVal = new ChartValues<ObservablePoint>();
-            ChartValues = new ChartValues<ObservablePoint>();
-            ChartValuesAttach = new ChartValues<ObservablePoint>();
-            ChartValuesCurrentAndAttach = new ChartValues<ObservablePoint>();
-            int sizeTable = TimeSeries.getFeatureData(ls[0]).Count;
-            for (int i = 0; i < ls.Count; i++)
-            {
-                float maxVal = 0;
-                string maxCor = "";
-                float[] data = TimeSeries.getFeatureData(ls[i]).ToArray();
-                for (int j = 0; j < ls.Count; j++)
+            AnalomyDetector analomyDetector = new AnalomyDetector();
+            List<AnomalyReportSafe> lsReports = analomyDetector.GetAnomalyReport(ls);
+            //if (lsReports == null)
+            //{
+                LinearRegVal = new ChartValues<ObservablePoint>();
+                ChartValues = new ChartValues<ObservablePoint>();
+                ChartValuesAttach = new ChartValues<ObservablePoint>();
+                ChartValuesCurrentAndAttach = new ChartValues<ObservablePoint>();
+                int sizeTable = TimeSeries.getFeatureData(ls[0]).Count;
+                for (int i = 0; i < ls.Count; i++)
                 {
-                    if (i == j)
-                        continue;
-                    float[] data2 = TimeSeries.getFeatureData(ls[j]).ToArray();
-                    float val = pearson(data,data2, sizeTable, sizeTable);
-                    val = Math.Abs(val);
-                    if (maxVal <= val)
+                    float maxVal = 0;
+                    string maxCor = "";
+                    float[] data = TimeSeries.getFeatureData(ls[i]).ToArray();
+                    for (int j = 0; j < ls.Count; j++)
                     {
-                        maxVal = val;
-                        maxCor = ls[j];
+                        if (i == j)
+                            continue;
+                        float[] data2 = TimeSeries.getFeatureData(ls[j]).ToArray();
+                        float val = pearson(data, data2, sizeTable, sizeTable);
+                        val = Math.Abs(val);
+                        if (maxVal <= val)
+                        {
+                            maxVal = val;
+                            maxCor = ls[j];
+                        }
                     }
+                    properties.Add(new Property() { Name = ls[i], Attach = maxCor, Data = data.ToList(), LinearReg = getLinearReg(data.ToList(), TimeSeries.getFeatureData(maxCor)) });
                 }
-                properties.Add(new Property() { Name = ls[i], Attach = maxCor, Data = data.ToList() ,LinearReg = getLinearReg(data.ToList(), TimeSeries.getFeatureData(maxCor)) });
-            }
-            
+            //}
+            //else
+            //{
+                foreach (AnomalyReportSafe anomaly in lsReports)
+                {
+                    var data = TimeSeries.getFeatureData(anomaly.first);
+                    var data2 = TimeSeries.getFeatureData(anomaly.second);
+                    AnalomyPoints.Add(new ObservablePoint() { X = data[(int)anomaly.time], Y = data2[(int)anomaly.time] });
+                }
+            AnalomyPoints.Add(new ObservablePoint() { X = 0.5,Y=0.5 });
+            INotifyPropertyChanged("AnalomyPoints");
+            //}
         }
         public Property getData(string property)
         {
