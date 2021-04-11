@@ -277,6 +277,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="Pages\Settings\FG_Data\anomaly_flight.csv" />
     <None Include="Pages\Settings\FG_Data\reg_flight.csv" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

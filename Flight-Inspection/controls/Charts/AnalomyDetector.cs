@@ -41,7 +41,7 @@ namespace Flight_Inspection.controls.Charts
             if (a)
             {
                 LoadTimeSriesNormal(pathCsv, properties);
-                string detect = "C:\\Users\\avri2\\OneDrive\\Desktop\\exersice\\anomaly_flight.csv";
+                string detect = "C:\\Users\\afeka\\OneDrive - Bar-Ilan University\\Code projects\\Advance-Programming-2\\Flight-Inspection\\Flight-Inspection\\Pages\\Settings\\FG_Data\\anomaly_flight.csv";
                 LoadTimeSriesTest(detect, properties);
                 return GetAnomalyReports();
             }

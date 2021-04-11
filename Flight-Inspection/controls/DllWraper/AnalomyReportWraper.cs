@@ -49,7 +49,7 @@ namespace Flight_Inspection.controls.DllWraper
 
         unsafe struct AnomalyReportArray
         {
-            public AnomalyReports* anomalyReports;
+            public IntPtr anomalyReports;
             public int size;
         };
 
@@ -91,7 +91,7 @@ namespace Flight_Inspection.controls.DllWraper
 
         public static List<AnomalyReportSafe> GetAnomalyReports()
         {
-            List<AnomalyReportSafe> list = new List<AnomalyReportSafe>();
+            List<AnomalyReports> list = new List<AnomalyReports>();
             unsafe
             {
                 try
