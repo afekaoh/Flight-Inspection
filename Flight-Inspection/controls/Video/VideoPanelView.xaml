@@ -13,7 +13,7 @@
         <Button Name ="Pause" Content="pause" HorizontalAlignment="Left" Height="29" VerticalAlignment="Top" Width="75"  Margin="142,33,0,0" Click="Button_Pause"/>
         <Button Content="Stop" HorizontalAlignment="Left" Height="29" VerticalAlignment="Top" Width="75"  Margin="251,34,0,0" Click="Button_Stop" RenderTransformOrigin="0.893,0.609"/>
         <Slider HorizontalAlignment="Left" Name ="Time" VerticalAlignment="Top"  Width="142"  Margin="478,34,0,0" Height="24" Value="{Binding Path=CurrentTime, Mode=TwoWay}" Maximum="{Binding MaxSlider}"/>
-        <TextBox Text="{Binding CurrentTime}" HorizontalAlignment="Left" Height="28" Margin="371,35,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="69"/>
+        <TextBox Text="{Binding Time, Converter={StaticResource TimeConverterString}" HorizontalAlignment="Left" Height="28" Margin="371,35,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="69"/>
         <ComboBox Name="speed" Width="75" Height="29" Margin="646,33,29,26" ContextMenuClosing="onSpeedChange">
             <ComboBoxItem>x0.5</ComboBoxItem>
             <ComboBoxItem>x0.75</ComboBoxItem>

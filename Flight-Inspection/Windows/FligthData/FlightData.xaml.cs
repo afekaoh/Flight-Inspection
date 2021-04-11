@@ -16,6 +16,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Flight_Inspection.controls.Video;
 using Flight_Inspection.controls.Joystick;
+using Flight_Inspection.Pages.Settings;
+using System.ComponentModel;
 
 namespace Flight_Inspection
 {
@@ -38,31 +40,24 @@ namespace Flight_Inspection
             {
                 new FlightCharts(),
                 new VideoPanelView(),
-                new JoystickView()
+               // new JoystickView()
             };
+
             views.ForEach(v => flight.AddViewModel(v.GetViewModel()));
+            flight.addEvent();
             frames = new List<Frame>
             {
                 Charts,
                 VideoPanel,
-                Joystick,
+                //Joystick,
                 MoreInfo
             };
         }
 
-        public void OnReady(object sender, EventArgs e)
+        public void OnReady(object sender, PropertyChangedEventArgs e)
         {
-            flight.UpdateSettings(new SettingsArgs { ts = TS });
+            flight.UpdateSettings(new SettingsArgs {Ts = (e as OnReadyEventArgs).TS });
             frames.ForEach(f => f.Navigate(views.Find(v => v.Name == f.Name)));
-        }
-
-        internal TimeSeries TS
-        {
-            get { return flight.Ts; }
-            set
-            {
-                flight.Ts = value;
-            }
         }
     }
 }

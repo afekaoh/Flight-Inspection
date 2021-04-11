@@ -19,7 +19,7 @@ namespace Flight_Inspection.controls.Video
             this.model = new VideoPanelModel();
             model.PropertyChanged += UpdateCurrentTime;
             model.PropertyChanged += MaxSliderUpdate;
-            model.CurrentTime++;
+            model.PropertyChanged += UpdateStop;
         }
 
         public int MaxSlider
@@ -43,13 +43,18 @@ namespace Flight_Inspection.controls.Video
 
         public override void SetSettings(SettingsArgs settingsArgs)
         {
-            model.TimeSeries = settingsArgs.ts;
-            model.MaxSlider = settingsArgs.ts.Rows.Count;
+            model.TimeSeries = settingsArgs.Ts;
+            model.MaxSlider = settingsArgs.Ts.Rows.Count;
+        }
+
+        internal override void setTime(int time)
+        {
+
         }
 
         private volatile int currentTime;
 
-        public int CurrentTime
+        public int Time
         {
             get
             {
@@ -57,7 +62,7 @@ namespace Flight_Inspection.controls.Video
             }
             set
             {
-                if (CurrentTime != value)
+                if (currentTime != value)
                 {
                     currentTime = value;
                     model.CurrentTime = value;
@@ -65,6 +70,7 @@ namespace Flight_Inspection.controls.Video
                 }
             }
         }
+
 
         internal void StartPlay()
         {
@@ -87,9 +93,27 @@ namespace Flight_Inspection.controls.Video
         public void UpdateCurrentTime(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName is "CurrentTime")
-                this.CurrentTime = model.CurrentTime;
-                
+                this.Time = model.CurrentTime;
         }
+
+        public void UpdateStop(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName is "Stop")
+                this.Stop = model.Stop;
+        }
+
+        private bool stop;
+
+        public bool Stop
+        {
+            get { return stop; }
+            set
+            {
+                stop = value;
+                OnPropertyChanged(value);
+            }
+        }
+
     }
 
 }

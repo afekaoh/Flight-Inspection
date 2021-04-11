@@ -2,21 +2,31 @@
 using Flight_Inspection.Pages.Settings;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Flight_Inspection.Pages.FlightGear
 {
-    class FlightGearModel
+    class FlightGearModel : INotifyPropertyChanged
     {
         private TimeSeries TS;
         private readonly Process FG;
         private readonly Thread t;
+
+        private bool play;
+
+        public bool Play
+        {
+            get { return play; }
+            set { play = value; }
+        }
 
         public FlightGearModel()
         {
@@ -47,19 +57,26 @@ namespace Flight_Inspection.Pages.FlightGear
             {
                 soc.Connect(remoteEP);
                 var rows = TS.Rows;
-                if (soc.Connected)
+                while (soc.Connected)
                 {
-                    foreach (var buffer in from string r in rows
-                                           let buffer = Encoding.ASCII.GetBytes(r + "\n")
-                                           select buffer)
-                    {
-                        stopwatch.Start();
-                        soc.Send(buffer);
-                        stopwatch.Stop();
-                        int sleepTime = (int)Math.Max(0, 100 - stopwatch.ElapsedMilliseconds);
-                        Thread.Sleep(sleepTime);
-                    }
+                    /*                    foreach (var buffer in from string r in rows
+                                                               let buffer = Encoding.ASCII.GetBytes(r + "\n")
+                                                               select buffer)
+                                        {
+                                            stopwatch.Start();
+                                            soc.Send(buffer);
+                                            stopwatch.Stop();
+                                            int sleepTime = (int)Math.Max(0, 100 - stopwatch.ElapsedMilliseconds);
+                                            Thread.Sleep(sleepTime);
+                                        }*/
 
+                    if (play)
+                    {
+                        var line = rows[Time] + "\n";
+                        var buffer = Encoding.ASCII.GetBytes(line);
+                        soc.Send(buffer);
+                        Thread.Sleep(10);
+                    }
                     /*for (; speed < rows.Count; speed++)
                     {
                         var buffer = Encoding.ASCII.GetBytes(rows[speed] + "\n");
@@ -99,6 +116,23 @@ namespace Flight_Inspection.Pages.FlightGear
             // the process hasn't been initialized 
             catch (Exception e) when (e is ArgumentException || e is ArgumentNullException) { return false; }
             return true;
+        }
+        int time;
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        virtual public void OnPropertyChanged([CallerMemberName] string name = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        }
+
+        public int Time
+        {
+            get => time;
+            set
+            {
+                time = value;
+            }
         }
     }
 }
