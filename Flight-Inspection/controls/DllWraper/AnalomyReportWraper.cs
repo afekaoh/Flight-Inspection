@@ -10,29 +10,30 @@ namespace Flight_Inspection.controls.DllWraper
 {
     class AnalomyReportWraper
     {
-        [DllImport("anom_detec_conv.dll", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Unicode)]
+
+        [DllImport("AnlomalyDetectoionConverter.dll", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Unicode)]
         [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool loadDLL([MarshalAs(UnmanagedType.LPStr)] string path);
 
-        [DllImport("anom_detec_conv.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport("AnlomalyDetectoionConverter.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void loadTimeSeriesNormal([MarshalAs(UnmanagedType.LPStr)] string path, [MarshalAs(UnmanagedType.LPArray)] string[] fetursName, int numOfFeatures);
 
-        [DllImport("anom_detec_conv.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport("AnlomalyDetectoionConverter.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void loadTimeSeriesTest([MarshalAs(UnmanagedType.LPStr)] string path, [MarshalAs(UnmanagedType.LPArray)] string[] fetursName, int numOfFeatures);
 
-        [DllImport("anom_detec_conv.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport("AnlomalyDetectoionConverter.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern IntPtr getAnalomyReport();
 
-        [DllImport("anom_detec_conv.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport("AnlomalyDetectoionConverter.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void setCorralationThreshhold(float threshold);
 
-        [DllImport("anom_detec_conv.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport("AnlomalyDetectoionConverter.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern float getCorralationThreshhold();
 
-        [DllImport("anom_detec_conv.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport("AnlomalyDetectoionConverter.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void deleteAnomalyReports(IntPtr anomalyDetector);
 
-        [DllImport("anom_detec_conv.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport("AnlomalyDetectoionConverter.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void releaseMemory();
 
 
