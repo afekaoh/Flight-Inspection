@@ -21,7 +21,14 @@ namespace Flight_Inspection.controls.Joystick
         }
         public float VM_Aileron
         {
-            get { return findData("aileron").Data; }
+            get
+            {
+                var data = findData("aileron");
+                if (data != null)
+                    return data.Data;
+                else
+                    return 0;
+            }
             set
             {
                 findData("aileron").Data = value * 300 + 300;
@@ -31,7 +38,14 @@ namespace Flight_Inspection.controls.Joystick
 
         public float VM_Rudder
         {
-            get { return findData("rudder").Data; }
+            get
+            {
+                var data = findData("rudder");
+                if (data != null)
+                    return data.Data;
+                else
+                    return 0;
+            }
             set
             {
                 findData("rudder").Data = 330 + value * 400;
@@ -40,7 +54,14 @@ namespace Flight_Inspection.controls.Joystick
         }
         public float VM_Elevator
         {
-            get { return findData("elevator").Data; }
+            get
+            {
+                var data = findData("elevator");
+                if (data != null)
+                    return data.Data;
+                else
+                    return 0;
+            }
             set
             {
                 findData("elevator").Data = value * 100 + 150;
@@ -49,7 +70,14 @@ namespace Flight_Inspection.controls.Joystick
         }
         public float VM_Throttle
         {
-            get { return findData("throttle").Data; }
+            get
+            {
+                var data = findData("throttle");
+                if (data != null)
+                    return data.Data;
+                else
+                    return 0;
+            }
             set
             {
                 findData("throttle").Data = 230 - value * 100;
@@ -71,7 +99,7 @@ namespace Flight_Inspection.controls.Joystick
 
         public NormelaizedData findData (string name) { return (NormelaizedData)datas.Find(JoyStickData => JoyStickData.Name == name); }
 
-        public void addData (string name,float CanvasDim)
+        public void addData(string name, float CanvasDim)
         {
             datas.Add(new NormelaizedData(name, CanvasDim, model.maxAbs(name)));
         }
@@ -85,28 +113,29 @@ namespace Flight_Inspection.controls.Joystick
             t.Start();
         }
 
-        public void TheModlePropertyChanged(object sender , PropertyChangedEventArgs e)
+        public void TheModlePropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if(e.PropertyName == "aileron")
+            switch (e.PropertyName)
             {
-                VM_Aileron = model.Aileron;
+                case "aileron":
+                    VM_Aileron = model.Aileron;
+                    break;
+                case "rudder":
+                    VM_Rudder = model.Rudder;
+                    break;
+                case "throttle":
+                    VM_Throttle = model.Throttle;
+                    break;
+                case "elevator":
+                    VM_Elevator = model.Elevator;
+                    break;
             }
-            if (e.PropertyName == "rudder")
-            {
-                VM_Rudder = model.Rudder;
-            }
-            if (e.PropertyName == "throttle")
-            {
-                VM_Throttle = model.Throttle;
-            }
-            if (e.PropertyName == "elevator")
-            {
-                VM_Elevator = model.Elevator;
-            }
+
         }
 
         internal override void setTime(int time)
         {
+
         }
     }
 }

@@ -1,11 +1,12 @@
 ﻿using System;
+using System.ComponentModel;
 
 namespace Flight_Inspection
 {
-    public class SetTimeEventArgs : EventArgs
+    public class SetTimeEventArgs : PropertyChangedEventArgs
     {
         public int Time { get; set; }
-        public SetTimeEventArgs(int time)
+        public SetTimeEventArgs(int time, string name) : base(name)
         {
             Time = time;
         }

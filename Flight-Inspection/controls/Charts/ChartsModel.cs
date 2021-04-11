@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Shapes;
-using Flight_Inspection.Pages.Settings;
-using Flight_Inspection.Settings;
-using System.Windows.Forms.DataVisualization.Charting;
+using System.Collections.ObjectModel;
+using LiveCharts;
+using LiveCharts.Defaults;
+using LiveCharts.Configurations;
+using static Flight_Inspection.controls.AnalomyDetectorClass;
+using Flight_Inspection.controls.Charts;
+using static Flight_Inspection.controls.DllWraper.AnalomyReportWraper;
 
 namespace Flight_Inspection.controls
 {
@@ -18,7 +18,135 @@ namespace Flight_Inspection.controls
         public event PropertyChangedEventHandler PropertyChanged;
         private TimeSeries timeSeries;
         private List<Property> properties = new List<Property>();
-        
+
+        ChartValues<ObservablePoint> analomyPoints;
+        public ChartValues<ObservablePoint> AnalomyPoints
+        {
+            get => analomyPoints; set
+            {
+                analomyPoints = value;
+                INotifyPropertyChanged("AnalomyPoints");
+            }
+        }
+
+        private double xMax;
+        public double XMax
+        {
+            get => this.xMax;
+            set
+            {
+                this.xMax = value;
+                INotifyPropertyChanged("XMax");
+            }
+        }
+
+        private double xMaxThird;
+        public double XMaxThird
+        {
+            get => this.xMaxThird;
+            set
+            {
+                this.xMaxThird = value;
+                INotifyPropertyChanged("XMaxThird");
+            }
+        }
+
+        private double xMinThird;
+        public double XMinThird
+        {
+            get => this.xMinThird;
+            set
+            {
+                this.xMinThird = value;
+                INotifyPropertyChanged("XMinThird");
+            }
+        }
+        private double xMaxAttach = 1000;
+        public double XMaxAttach
+        {
+            get => this.xMaxAttach;
+            set
+            {
+                this.xMaxAttach = value;
+                INotifyPropertyChanged("XMaxAttach");
+            }
+        }
+
+        private double xMinAttach = 0;
+        public double XMinAttach
+        {
+            get => this.xMinAttach;
+            set
+            {
+                this.xMinAttach = value;
+                INotifyPropertyChanged("XMinAttach");
+            }
+        }
+        private object dataMapper;
+        public object DataMapper
+        {
+            get => this.dataMapper;
+            set
+            {
+                this.dataMapper = value;
+                INotifyPropertyChanged("DataMapper");
+            }
+        }
+
+        private object dataMapperAttach;
+        public object DataMapperAttach
+        {
+            get => this.dataMapperAttach;
+            set
+            {
+                this.dataMapperAttach = value;
+                INotifyPropertyChanged("DataMapperAttach");
+            }
+        }
+        ChartValues<ObservablePoint> chartVal;
+        public ChartValues<ObservablePoint> ChartValues { get => chartVal; set
+            {
+                INotifyPropertyChanged("ChartValues");
+                chartVal= value;
+            }
+        }
+
+        ChartValues<ObservablePoint> chartValAttch;
+        public ChartValues<ObservablePoint> ChartValuesAttach { get => chartValAttch; set {
+                INotifyPropertyChanged("ChartValuesAttach");
+                chartValAttch = value; 
+            }
+        }
+
+        ChartValues<ObservablePoint> chartValCurrentAndAttach;
+        public ChartValues<ObservablePoint> ChartValuesCurrentAndAttach
+        {
+            get => chartValCurrentAndAttach; set
+            {
+                chartValCurrentAndAttach = value;
+                INotifyPropertyChanged("ChartValuesCurrentAndAttach");
+            }
+        }
+
+        private object dataMapperCurrentAndAttach;
+        public object DataMapperCurrentAndAttach
+        {
+            get => this.dataMapperCurrentAndAttach;
+            set
+            {
+                this.dataMapperCurrentAndAttach = value;
+                INotifyPropertyChanged("DataMapperCurrentAndAttach");
+            }
+        }
+        ChartValues<ObservablePoint> linearRegVal;
+        public ChartValues<ObservablePoint> LinearRegVal
+        {
+            get => linearRegVal; set
+            {
+                linearRegVal = value;
+                INotifyPropertyChanged("LinearRegVal");
+            }
+        }
         public TimeSeries TimeSeries
         {
             get => timeSeries; set
@@ -36,21 +164,6 @@ namespace Flight_Inspection.controls
             }
         }
 
-        [DllImport("anomaly_detection_util.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern float pearson([MarshalAs(UnmanagedType.LPArray)] float[] x, [MarshalAs(UnmanagedType.LPArray)] float[] y, int sizeX, int sizeY);
-
-        [DllImport("anomaly_detection_util.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern IntPtr linear_reg([MarshalAs(UnmanagedType.LPArray)] float[] x, [MarshalAs(UnmanagedType.LPArray)] float[] y, int size);
-
-        [DllImport("anomaly_detection_util.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void freeLine2(IntPtr l);
-
-        [StructLayout(LayoutKind.Sequential)]
-        unsafe struct Line2
-        {
-            public float a, b;
-        }
-
         public ChartsModel()
         {
             PropertyChanged += updateProperties;
@@ -58,37 +171,38 @@ namespace Flight_Inspection.controls
 
         private void updateProperties(object sender, PropertyChangedEventArgs e)
         {
+         
             if (e.PropertyName != "TimeSeries")
                 return;
             List<string> ls = timeSeries.getFeatureNames();
+            AnalomyDetector analomyDetector = new AnalomyDetector();
+            List<AnomalyReportSafe> lsReports = analomyDetector.GetAnomalyReport(timeSeries.getFeatureNames());
+            LinearRegVal = new ChartValues<ObservablePoint>();
+            ChartValues = new ChartValues<ObservablePoint>();
+            ChartValuesAttach = new ChartValues<ObservablePoint>();
+            ChartValuesCurrentAndAttach = new ChartValues<ObservablePoint>();
             int sizeTable = TimeSeries.getFeatureData(ls[0]).Count;
             for (int i = 0; i < ls.Count; i++)
             {
                 float maxVal = 0;
                 string maxCor = "";
                 float[] data = TimeSeries.getFeatureData(ls[i]).ToArray();
-                for (int j = i + 1; j < ls.Count; j++)
+                for (int j = 0; j < ls.Count; j++)
                 {
-                    float val = pearson(data,
-                    TimeSeries.getFeatureData(ls[j]).ToArray(), sizeTable, sizeTable);
+                    if (i == j)
+                        continue;
+                    float[] data2 = TimeSeries.getFeatureData(ls[j]).ToArray();
+                    float val = pearson(data,data2, sizeTable, sizeTable);
                     val = Math.Abs(val);
-                    if (maxVal < val)
+                    if (maxVal <= val)
                     {
                         maxVal = val;
                         maxCor = ls[j];
                     }
                 }
-                if (maxCor != "")
-                {
-                    unsafe
-                    {
-                        Line2* l = (Line2*)linear_reg(data, TimeSeries.getFeatureData(maxCor).ToArray(), data.Length);
-                        Console.WriteLine($"{l->a} {l->b}");
-                        freeLine2((IntPtr)l);
-                    }
-                }
-                properties.Add(new Property() { Name = ls[i], Attach = maxCor, Data = data.ToList() });
+                properties.Add(new Property() { Name = ls[i], Attach = maxCor, Data = data.ToList() ,LinearReg = getLinearReg(data.ToList(), TimeSeries.getFeatureData(maxCor)) });
             }
+            
         }
         public Property getData(string property)
         {
@@ -99,33 +213,51 @@ namespace Flight_Inspection.controls
         {
             return properties;
         }
-        public Dictionary<int, float> getDataContent(string content)
+        public void updateSeries(string content)
         {
             if (content == "")
-                return null;
-            List<float> vs = getData(content).Data;
-            Dictionary<int, float> value = new Dictionary<int, float>();
-            for (int i = 150; i < 300; i++)
-            {
-                value.Add(i, vs[i]);
-            }
-            return value;
-        }
-        public List<(float, float)> getDataContentCor(string content)
-        {
-            if (content == "")
-                return null;
+                return;
             Property property = getData(content);
             List<float> vs = property.Data;
-            List<float> sec = getData(property.Attach).Data;
-            List<(float, float)> value = new List<(float, float)>();
-            int size = Math.Min(vs.Count, sec.Count); ;
-            for (int i = 0; i < size; i++)
+            List<float> attach = getData(property.Attach).Data;
+            ObservablePoint[] points = new ObservablePoint[vs.Count];
+            ObservablePoint[] points2 = new ObservablePoint[vs.Count];
+            ObservablePoint[] points3 = new ObservablePoint[vs.Count];
+            for (int i = 0; i < vs.Count; i++)
             {
-                value.Add((vs[i], sec[i]));
+                points[i] = new ObservablePoint(i, vs[i]);
+                points2[i] = new ObservablePoint(i, attach[i]);
+                points3[i] = new ObservablePoint(vs[i], attach[i]);
+                
             }
-            return value;            
+            XMax = vs.Count;
+            XMaxAttach = attach.Max();
+            XMinAttach = attach.Min();
+            XMaxThird = vs.Max();
+            XMinThird = vs.Min();
+            if (XMaxThird == XMinThird)
+            {
+                XMaxThird += 1;
+                XMinThird -= 1;
+            }
+            ChartValues.Clear();
+            ChartValues.AddRange(points);
+            INotifyPropertyChanged("ChartValues");
+            DataMapper = new CartesianMapper<ObservablePoint>().X(point => point.X).Y(point => point.Y);
+            ChartValuesAttach.Clear();
+            ChartValuesAttach.AddRange(points2);
+            INotifyPropertyChanged("ChartValuesAttach");
+            DataMapperAttach = new CartesianMapper<ObservablePoint>().X(point => point.X).Y(point => point.Y);
+            ChartValuesCurrentAndAttach.Clear();
+            ChartValuesCurrentAndAttach.AddRange(points3);
+            INotifyPropertyChanged("ChartValuesCurrentAndAttach");
+            DataMapperCurrentAndAttach = new CartesianMapper<ObservablePoint>().X(point => point.X).Y(point => point.Y);
+            LineSafe line = getLinearReg(vs, attach);
+            LinearRegVal.Clear();
+            float x1 = vs.Min(), y1 = line.b + x1 * line.a;
+            float x2 = vs.Max(), y2 = line.b + x2 * line.a;
+            LinearRegVal.Add(new ObservablePoint(x1, y1));
+            LinearRegVal.Add(new ObservablePoint(x2, y2));
         }
-
     }
 }
