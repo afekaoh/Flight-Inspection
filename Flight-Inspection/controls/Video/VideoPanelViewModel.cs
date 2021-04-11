@@ -19,7 +19,6 @@ namespace Flight_Inspection.controls.Video
             this.model = new VideoPanelModel();
             model.PropertyChanged += UpdateCurrentTime;
             model.PropertyChanged += MaxSliderUpdate;
-            model.CurrentTime++;
         }
 
         public int MaxSlider
@@ -49,12 +48,12 @@ namespace Flight_Inspection.controls.Video
 
         internal override void setTime(int time)
         {
-            throw new NotImplementedException();
+
         }
 
         private int currentTime;
 
-        public int CurrentTime
+        public int Time
         {
             get
             {
@@ -63,9 +62,10 @@ namespace Flight_Inspection.controls.Video
             set
             {
                 currentTime = value;
-                OnPropertyChanged();
+                OnPropertyChanged(value);
             }
         }
+
 
         internal void StartPlay()
         {
@@ -88,7 +88,7 @@ namespace Flight_Inspection.controls.Video
         public void UpdateCurrentTime(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName is "CurrentTime")
-                this.CurrentTime = model.CurrentTime;
+                this.Time = model.CurrentTime;
         }
 
 
