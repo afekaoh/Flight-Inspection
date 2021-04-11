@@ -52,7 +52,7 @@ namespace Flight_Inspection.controls.Video
 
         }
 
-        private int currentTime;
+        private volatile int currentTime;
 
         public int Time
         {
@@ -66,7 +66,7 @@ namespace Flight_Inspection.controls.Video
                 {
                     currentTime = value;
                     model.CurrentTime = value;
-                    OnPropertyChanged(value);
+                    OnPropertyChanged();
                 }
             }
         }
