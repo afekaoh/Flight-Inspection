@@ -179,6 +179,7 @@ namespace Flight_Inspection.controls
             List<AnomalyReportSafe> lsReports = analomyDetector.GetAnomalyReport(ls);
             //if (lsReports == null)
             //{
+            AnalomyPoints = new ChartValues<ObservablePoint>();
                 LinearRegVal = new ChartValues<ObservablePoint>();
                 ChartValues = new ChartValues<ObservablePoint>();
                 ChartValuesAttach = new ChartValues<ObservablePoint>();
@@ -213,8 +214,8 @@ namespace Flight_Inspection.controls
                     var data2 = TimeSeries.getFeatureData(anomaly.second);
                     AnalomyPoints.Add(new ObservablePoint() { X = data[(int)anomaly.time], Y = data2[(int)anomaly.time] });
                 }*/
-            //AnalomyPoints.Add(new ObservablePoint() { X = 0.5,Y=0.5 });
-            //INotifyPropertyChanged("AnalomyPoints");
+            AnalomyPoints.Add(new ObservablePoint() { X = 0.5,Y=0.5 });
+            INotifyPropertyChanged("AnalomyPoints");
             //}
         }
         public Property getData(string property)
@@ -271,6 +272,9 @@ namespace Flight_Inspection.controls
             float x2 = vs.Max(), y2 = line.b + x2 * line.a;
             LinearRegVal.Add(new ObservablePoint(x1, y1));
             LinearRegVal.Add(new ObservablePoint(x2, y2));
+            AnalomyPoints.Clear();
+            AnalomyPoints.Add(new ObservablePoint() { X = 0.5, Y = 0.5 });
+            INotifyPropertyChanged("AnalomyPoints");
         }
     }
 }

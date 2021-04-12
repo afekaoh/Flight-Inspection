@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Flight_Inspection.controls.Video;
 
 namespace Flight_Inspection.controls
 {
@@ -20,11 +21,18 @@ namespace Flight_Inspection.controls
 
         public Func<double, string> LabelFormatter => value => value.ToString("F");
 
-        private int currentTime;
+        public Func<double,string> LabelTime => value => {
+                int max = (int)value;
+                float sec = (float)max / 10.0f;
+                TimeSpan time = TimeSpan.FromSeconds(sec);
+                return time.ToString(@"mm\:ss");
+            };
+
+        private int currentTime = 100;
 
         public int CurrentTime
         {
-            get => currentTime = 100;
+            get => currentTime;
             set
             {
                 if (value <= xMax)

@@ -56,6 +56,7 @@
             DisableAnimations="True" 
             FontSize="14" 
             Unit="1"
+            LabelFormatter="{Binding LabelTime}"
             MaxValue="{Binding CurrentTime}"
             MinValue="0" />
             </lvc1:CartesianChart.AxisX>
@@ -93,6 +94,7 @@
             DisableAnimations="True" 
             FontSize="14" 
             Unit="1"
+            LabelFormatter="{Binding LabelTime}"
             MaxValue="{Binding CurrentTime}"
             MinValue="0" />
             </lvc1:CartesianChart.AxisX>
@@ -148,16 +150,16 @@
             </lvc1:CartesianChart.AxisX>
         </lvc1:CartesianChart>
 
-        <lvc1:CartesianChart Name="Series4" Margin="4" Grid.Column="1"  DataTooltip="{x:Null}" Grid.Row="1" Grid.ColumnSpan="2" DisableAnimations="True" 
+        <lvc1:CartesianChart Name="Series4" Margin="4" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" DisableAnimations="False" 
                            DataClick="onChoosePoint"  
                            Background="Transparent" 
                              BorderThickness="0">
             <lvc1:CartesianChart.Series>
                 <lvc1:ScatterSeries
-                      MaxPointShapeDiameter="5"
-                      MinPointShapeDiameter="5"
+                      MaxPointShapeDiameter="7"
+                      MinPointShapeDiameter="7"
                       Title="Attach Property"
-                      Values="{Binding Test}"
+                      Values="{Binding AnalomyPoints}"
                    />
                 <lvc1:ScatterSeries/>
             </lvc1:CartesianChart.Series>

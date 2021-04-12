@@ -62,7 +62,7 @@ namespace Flight_Inspection.controls.Video
             }
             set
             {
-                if (currentTime != value)
+                if (currentTime != value && value<maxSlider)
                 {
                     currentTime = value;
                     model.CurrentTime = value;
