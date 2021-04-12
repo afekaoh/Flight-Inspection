@@ -83,23 +83,6 @@ namespace Flight_Inspection.controls
             }
         }
 
-        int currentTime;
-        public int CurrentTime
-        {
-            get
-            {
-                return currentTime;
-            }
-            set
-            {
-                if (value < xMax)
-                {
-                    currentTime = value;
-                    INotifyPropertyChanged("CurrentTime");
-                }
-            }
-        }
-
         ChartValues<ObservablePoint> lastThirty;
         public ChartValues<ObservablePoint> LastThirty
         {
