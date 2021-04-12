@@ -30,9 +30,8 @@ namespace Flight_Inspection.controls
             set
             {
                 if (currentTime != value && value < xMax)
-                {
+                {           
                     currentTime = value;
-                    charts.CurrentTime = value;
                     OnPropertyChanged(value);
                 }
             }
@@ -162,7 +161,6 @@ namespace Flight_Inspection.controls
         public VMCharts()
         {
             charts = new ChartsModel();
-            charts.PropertyChanged += UpdateCurrentTime;
             charts.PropertyChanged += delegate (Object sender, PropertyChangedEventArgs e)
             {
                 switch (e.PropertyName)
@@ -200,9 +198,6 @@ namespace Flight_Inspection.controls
                     case "AnalomyPoints":
                         AnalomyPoints = charts.AnalomyPoints;
                         break;
-                    case "CurrentTime":
-                        Time = charts.CurrentTime;
-                        break;
                 }
             };
 
@@ -220,19 +215,14 @@ namespace Flight_Inspection.controls
 
         public void updateSeries()
         {
-            charts.updateSeries(current.Name); 
+            if (current != null)
+                charts.updateSeries(current.Name);
         }
 
         internal override void setTime(int time)
         {
              this.Time = time;
             charts.setLastThirty(Time);
-        }
-
-        public void UpdateCurrentTime(object sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName is "CurrentTime")
-                this.Time = charts.CurrentTime;
         }
     }
 }
