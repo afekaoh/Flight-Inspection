@@ -18,11 +18,32 @@ namespace Flight_Inspection.controls.DataWindow
     /// <summary>
     /// Interaction logic for DataWindow.xaml
     /// </summary>
-    public partial class DataWindow : UserControl
+    public partial class DataWindow : UserControl, IControlView
     {
+        DataWindowVM Vm;
         public DataWindow()
         {
-            InitializeComponent();
+            DataContext = new DataWindowVM();
+            this.Vm = this.DataContext as DataWindowVM;
+/*            Vm.Ready += addFeatures;
+*/            InitializeComponent();
         }
-    }
+
+
+        public IControlViewModel GetViewModel()
+        {
+            return this.Vm;
+        }
+
+/*        private void addFeatures(object sender, EventArgs e)
+        {
+            JoystickViewModel.addData("aileron", (float)JoyStickCanvas.Width);
+            JoystickViewModel.addData("elevator", (float)JoyStickCanvas.Height);
+            JoystickViewModel.addData("throttle", (float)ThrotteleRange.Height);
+            JoystickViewModel.addData("rudder", (float)RudderRange.Width);
+            Console.WriteLine($"Hello {JoyStickCanvas.Width}");
+            Console.WriteLine($"Hello {JoyStickCanvas.Height}");
+
+        }
+*/    }
 }

@@ -11,25 +11,31 @@ namespace Flight_Inspection.controls.DataWindow
     class DataWindowVM : IControlViewModel
     {
         DataWindowModel model;
-        List<NormelaizedData> datas;
+        Dictionary<string, float> datas;
         public event EventHandler Ready;
 
 
-        DataWindowVM()
+        public DataWindowVM()
         {
             model = new DataWindowModel();
+            datas = new Dictionary<string, float>();
+            datas.Add("yaw", model.Yaw);
+            datas.Add("pitch", model.Pitch);
+            datas.Add("roll", model.Roll);
+            datas.Add("altimeter", model.Altimeter);
+            datas.Add("airSpeed", model.AirSpeed);
+            datas.Add("direction", model.Direction);
             model.PropertyChanged += TheModlePropertyChanged;
         }
         public override void SetSettings(SettingsArgs settingsArgs)
         {
             model.SetSettings(settingsArgs);
-            throw new NotImplementedException();
+            this.OnReady();
         }
 
         internal override void setTime(int time)
         {
             model.CurrentTime = time;
-            throw new NotImplementedException();
         }
         private void OnReady()
         {
@@ -37,38 +43,38 @@ namespace Flight_Inspection.controls.DataWindow
         }
         public float VM_Yaw
         {
-            get { return findData("yaw").Data; }
+            get { return datas["yaw"]; }
             set
             {
-                findData("yaw").Data = value * 300 + 300;
+                datas["yaw"] = value;
                 OnPropertyChanged();
             }
         }
 
         public float VM_Pitch
         {
-            get { return findData("pitch").Data; }
+            get { return datas["pitch"]; }
             set
             {
-                findData("pitch").Data = 330 + value * 400;
+                datas["pitch"] =  value;
                 OnPropertyChanged();
             }
         }
         public float VM_Roll
         {
-            get { return findData("roll").Data; }
+            get { return datas["roll"]; }
             set
             {
-                findData("roll").Data = value * 100 + 150;
+                datas["roll"] = value;
                 OnPropertyChanged();
             }
         }
         public float VM_Airspeed
         {
-            get { return findData("airspeed").Data; }
+            get { return datas["airSpeed"]; }
             set
             {
-                findData("airspeed").Data = 230 - value * 100;
+                datas["airSpeed"] = value;
                 OnPropertyChanged();
 
             }
@@ -76,29 +82,23 @@ namespace Flight_Inspection.controls.DataWindow
 
         public float VM_Altimeter
         {
-            get { return findData("altimeter").Data; }
+            get { return datas["altimeter"]; }
             set
             {
-                findData("altimeter").Data = 230 - value * 100;
+                datas["altimeter"] =  value;
                 OnPropertyChanged();
             }
         }
         public float VM_Direction
         {
-            get { return findData("direction").Data; }
+            get { return datas["direction"]; }
             set
             {
-                findData("direction").Data = 230 - value * 100;
+                datas["direction"] = value;
                 OnPropertyChanged();
             }
         }
 
-        public NormelaizedData findData(string name) { return (NormelaizedData)datas.Find(JoyStickData => JoyStickData.Name == name); }
-
-        public void addData(string name, float CanvasDim)
-        {
-            datas.Add(new NormelaizedData(name, CanvasDim, model.maxAbs(name)));
-        }
         public void TheModlePropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == "yaw")
@@ -125,7 +125,6 @@ namespace Flight_Inspection.controls.DataWindow
             {
                 VM_Direction = model.Direction;
             }
-
         }
     }
 }
