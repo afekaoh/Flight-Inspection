@@ -4,12 +4,6 @@ using LiveCharts.Wpf;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using Flight_Inspection.controls.Video;
 
 namespace Flight_Inspection.controls
 {
@@ -30,14 +24,17 @@ namespace Flight_Inspection.controls
 
         private int currentTime = 100;
 
-        public int CurrentTime
+        public int Time
         {
             get => currentTime;
             set
             {
-                if (value <= xMax)
+                if (currentTime != value && value < xMax)
+                {
                     currentTime = value;
-                OnPropertyChanged("CurrentTime");
+                    charts.CurrentTime = value;
+                    OnPropertyChanged(value);
+                }
             }
         }
 
@@ -165,11 +162,7 @@ namespace Flight_Inspection.controls
         public VMCharts()
         {
             charts = new ChartsModel();
-            AnalomyPoints = new ChartValues<ObservablePoint>()
-            {
-                new ObservablePoint(0,1),
-                new ObservablePoint(1,1)
-            };
+            charts.PropertyChanged += UpdateCurrentTime;
             charts.PropertyChanged += delegate (Object sender, PropertyChangedEventArgs e)
             {
                 switch (e.PropertyName)
@@ -189,7 +182,6 @@ namespace Flight_Inspection.controls
                     case "XMinAttach":
                         XMinAttach = charts.XMinAttach;
                         break;
-                        break;
                     case "ChartValues":
                         ChartValues = charts.ChartValues;
                         break;
@@ -207,6 +199,9 @@ namespace Flight_Inspection.controls
                         break;
                     case "AnalomyPoints":
                         AnalomyPoints = charts.AnalomyPoints;
+                        break;
+                    case "CurrentTime":
+                        Time = charts.CurrentTime;
                         break;
                 }
             };
@@ -230,8 +225,14 @@ namespace Flight_Inspection.controls
 
         internal override void setTime(int time)
         {
-             this.CurrentTime = time;
-            charts.setLastThirty(CurrentTime);
+             this.Time = time;
+            charts.setLastThirty(Time);
+        }
+
+        public void UpdateCurrentTime(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName is "CurrentTime")
+                this.Time = charts.CurrentTime;
         }
     }
 }

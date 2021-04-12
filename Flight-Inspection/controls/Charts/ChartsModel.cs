@@ -83,6 +83,23 @@ namespace Flight_Inspection.controls
             }
         }
 
+        int currentTime;
+        public int CurrentTime
+        {
+            get
+            {
+                return currentTime;
+            }
+            set
+            {
+                if (value < xMax)
+                {
+                    currentTime = value;
+                    INotifyPropertyChanged("CurrentTime");
+                }
+            }
+        }
+
         ChartValues<ObservablePoint> lastThirty;
         public ChartValues<ObservablePoint> LastThirty
         {
@@ -258,7 +275,7 @@ namespace Flight_Inspection.controls
         public void setLastThirty(int time)
         {
             LastThirty.Clear();
-            for (int i = time - 30 < 0 ? 0 : time - 30; i < time; i++)
+            for (int i = time - 300 < 0 ? 0 : time - 300; i < time; i++)
             {
                 LastThirty.Add(ChartValuesCurrentAndAttach.ElementAt(i));
             }

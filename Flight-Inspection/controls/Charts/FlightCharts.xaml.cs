@@ -9,6 +9,7 @@ using System.Windows.Shapes;
 using LiveCharts.Wpf;
 using LiveCharts;
 using LiveCharts.Defaults;
+using System.ComponentModel;
 
 namespace Flight_Inspection.controls
 {
@@ -24,6 +25,7 @@ namespace Flight_Inspection.controls
             vm = new VMCharts();
             DataContext = vm;
             vm.Ready += OnReady;
+
         }
 
         public IControlViewModel GetViewModel()
@@ -52,7 +54,7 @@ namespace Flight_Inspection.controls
 
         private void onChoosePoint(object sender, ChartPoint chartPoint)
         {
-            Console.WriteLine(chartPoint.X + " " + chartPoint.Y);
+            vm.Time = (int)chartPoint.X;
         }
     }
 }
