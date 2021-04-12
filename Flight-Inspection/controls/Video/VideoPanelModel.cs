@@ -73,7 +73,7 @@ namespace Flight_Inspection.controls.Video
                 OnPropertyChanged();
             }
         }
-
+        //speed property
         private float speed;
 
         public float Speed
@@ -110,7 +110,7 @@ namespace Flight_Inspection.controls.Video
                 if (!stop && CurrentTime != MaxSlider)
                 {
                     CurrentTime++;
-                    Thread.Sleep(100 / Speed);
+                    Thread.Sleep((int)(100 / Speed));
                 }
             }
 
