@@ -31,8 +31,7 @@
                      PointGeometry="{x:Null}"
                       Title="First Property"
                       Fill="Transparent"
-                      Values="{Binding ChartValues}"
-                      Configuration="{Binding DataMapper}"/>
+                      Values="{Binding ChartValues}"/>
             </lvc1:CartesianChart.Series>
 
             <lvc1:CartesianChart.CacheMode>
@@ -68,8 +67,7 @@
                      PointGeometry="{x:Null}"
                       Title="Attach Property"
                       Values="{Binding ChartValuesAttach}"
-                      Fill="Transparent"
-                      Configuration="{Binding DataMapperAttach}"/>
+                      Fill="Transparent"/>
          
             </lvc1:CartesianChart.Series>
 
@@ -109,6 +107,13 @@
                       MinPointShapeDiameter="3"
                       Title="Attach Property"
                       Values="{Binding ChartValuesCurrentAndAttach}"
+                   />
+
+                <lvc1:ScatterSeries
+                      MaxPointShapeDiameter="3"
+                      MinPointShapeDiameter="3"
+                      Title="Attach Property"
+                      Values="{Binding LastThirty}"
                    />
 
                 <lvc1:LineSeries

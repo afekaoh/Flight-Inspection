@@ -86,17 +86,17 @@ namespace Flight_Inspection.controls
                 OnPropertyChanged("XMinAttach");
             }
         }
-        private object dataMapper;
-        public object DataMapper
+        
+
+        ChartValues<ObservablePoint> lastThirty;
+        public ChartValues<ObservablePoint> LastThirty
         {
-            get => this.dataMapper;
-            set
+            get => lastThirty; set
             {
-                this.dataMapper = value;
-                OnPropertyChanged("DataMapper");
+                lastThirty = value;
+                OnPropertyChanged("LastThirty");
             }
         }
-
 
 
         ChartValues<ObservablePoint> chartVal;
@@ -109,17 +109,6 @@ namespace Flight_Inspection.controls
             }
         }
 
-        private object dataMapperAttach;
-        public object DataMapperAttach
-        {
-            get => this.dataMapperAttach;
-            set
-            {
-                this.dataMapperAttach = value;
-                OnPropertyChanged("DataMapperAttach");
-            }
-        }
-
         ChartValues<ObservablePoint> chartValAttach;
         public ChartValues<ObservablePoint> ChartValuesAttach
         {
@@ -127,17 +116,6 @@ namespace Flight_Inspection.controls
             {
                 chartValAttach = value;
                 OnPropertyChanged("ChartValuesAttach");
-            }
-        }
-
-        private object dataMapperCurrentAndAttach;
-        public object DataMapperCurrentAndAttach
-        {
-            get => this.dataMapperCurrentAndAttach;
-            set
-            {
-                this.dataMapperCurrentAndAttach = value;
-                OnPropertyChanged("DataMapperCurrentAndAttach");
             }
         }
 
@@ -211,14 +189,9 @@ namespace Flight_Inspection.controls
                     case "XMinAttach":
                         XMinAttach = charts.XMinAttach;
                         break;
-                    case "DataMapper":
-                        DataMapper = charts.DataMapper;
                         break;
                     case "ChartValues":
                         ChartValues = charts.ChartValues;
-                        break;
-                    case "DataMapperAttach":
-                        DataMapperAttach = charts.DataMapperAttach;
                         break;
                     case "ChartValuesAttach":
                         ChartValuesAttach = charts.ChartValuesAttach;
@@ -226,11 +199,11 @@ namespace Flight_Inspection.controls
                     case "LinearRegVal":
                         LinearRegVal = charts.LinearRegVal;
                         break;
+                    case "LastThirty":
+                        lastThirty = charts.LastThirty;
+                        break;
                     case "ChartValuesCurrentAndAttach":
                         ChartValuesCurrentAndAttach = charts.ChartValuesCurrentAndAttach;
-                        break;
-                    case "DataMapperCurrentAndAttach":
-                        DataMapperCurrentAndAttach = charts.DataMapperCurrentAndAttach;
                         break;
                     case "AnalomyPoints":
                         AnalomyPoints = charts.AnalomyPoints;
@@ -258,6 +231,7 @@ namespace Flight_Inspection.controls
         internal override void setTime(int time)
         {
              this.CurrentTime = time;
+            charts.setLastThirty(CurrentTime);
         }
     }
 }

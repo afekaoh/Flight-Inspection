@@ -82,25 +82,14 @@ namespace Flight_Inspection.controls
                 INotifyPropertyChanged("XMinAttach");
             }
         }
-        private object dataMapper;
-        public object DataMapper
-        {
-            get => this.dataMapper;
-            set
-            {
-                this.dataMapper = value;
-                INotifyPropertyChanged("DataMapper");
-            }
-        }
 
-        private object dataMapperAttach;
-        public object DataMapperAttach
+        ChartValues<ObservablePoint> lastThirty;
+        public ChartValues<ObservablePoint> LastThirty
         {
-            get => this.dataMapperAttach;
-            set
+            get => lastThirty; set
             {
-                this.dataMapperAttach = value;
-                INotifyPropertyChanged("DataMapperAttach");
+                lastThirty = value;
+                INotifyPropertyChanged("LastThirty");
             }
         }
         ChartValues<ObservablePoint> chartVal;
@@ -128,16 +117,6 @@ namespace Flight_Inspection.controls
             }
         }
 
-        private object dataMapperCurrentAndAttach;
-        public object DataMapperCurrentAndAttach
-        {
-            get => this.dataMapperCurrentAndAttach;
-            set
-            {
-                this.dataMapperCurrentAndAttach = value;
-                INotifyPropertyChanged("DataMapperCurrentAndAttach");
-            }
-        }
         ChartValues<ObservablePoint> linearRegVal;
         public ChartValues<ObservablePoint> LinearRegVal
         {
@@ -180,7 +159,8 @@ namespace Flight_Inspection.controls
             //if (lsReports == null)
             //{
             AnalomyPoints = new ChartValues<ObservablePoint>();
-                LinearRegVal = new ChartValues<ObservablePoint>();
+            LastThirty = new ChartValues<ObservablePoint>();
+            LinearRegVal = new ChartValues<ObservablePoint>();
                 ChartValues = new ChartValues<ObservablePoint>();
                 ChartValuesAttach = new ChartValues<ObservablePoint>();
                 ChartValuesCurrentAndAttach = new ChartValues<ObservablePoint>();
@@ -216,6 +196,7 @@ namespace Flight_Inspection.controls
                 }*/
             AnalomyPoints.Add(new ObservablePoint() { X = 0.5,Y=0.5 });
             INotifyPropertyChanged("AnalomyPoints");
+            
             //}
         }
         public Property getData(string property)
@@ -257,15 +238,12 @@ namespace Flight_Inspection.controls
             ChartValues.Clear();
             ChartValues.AddRange(points);
             INotifyPropertyChanged("ChartValues");
-            DataMapper = new CartesianMapper<ObservablePoint>().X(point => point.X).Y(point => point.Y);
             ChartValuesAttach.Clear();
             ChartValuesAttach.AddRange(points2);
             INotifyPropertyChanged("ChartValuesAttach");
-            DataMapperAttach = new CartesianMapper<ObservablePoint>().X(point => point.X).Y(point => point.Y);
             ChartValuesCurrentAndAttach.Clear();
             ChartValuesCurrentAndAttach.AddRange(points3);
             INotifyPropertyChanged("ChartValuesCurrentAndAttach");
-            DataMapperCurrentAndAttach = new CartesianMapper<ObservablePoint>().X(point => point.X).Y(point => point.Y);
             LineSafe line = getLinearReg(vs, attach);
             LinearRegVal.Clear();
             float x1 = vs.Min(), y1 = line.b + x1 * line.a;
@@ -275,6 +253,16 @@ namespace Flight_Inspection.controls
             AnalomyPoints.Clear();
             AnalomyPoints.Add(new ObservablePoint() { X = 0.5, Y = 0.5 });
             INotifyPropertyChanged("AnalomyPoints");
+        }
+
+        public void setLastThirty(int time)
+        {
+            LastThirty.Clear();
+            for (int i = time - 30 < 0 ? 0 : time - 30; i < time; i++)
+            {
+                LastThirty.Add(ChartValuesCurrentAndAttach.ElementAt(i));
+            }
+            INotifyPropertyChanged("LastThirty");
         }
     }
 }
