@@ -1,18 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Flight_Inspection.controls.Joystick
 {
@@ -24,27 +12,23 @@ namespace Flight_Inspection.controls.Joystick
         JoystickViewModel JoystickViewModel;
         public JoystickView()
         {
+            InitializeComponent();
             this.DataContext = new JoystickViewModel();
             this.JoystickViewModel = this.DataContext as JoystickViewModel;
             JoystickViewModel.Ready += addFeatures;
-            InitializeComponent();
-
-        }
-
-        private void JoyStickCanvas_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-
         }
 
         private void addFeatures(object sender, EventArgs e)
         {
-            JoystickViewModel.addData("aileron", (float)JoyStickCanvas.Width);
-            JoystickViewModel.addData("elevator", (float)JoyStickCanvas.Height);
-            JoystickViewModel.addData("throttle", (float)ThrotteleCanvas.ActualHeight);
-            JoystickViewModel.addData("rudder", (float)RudderCanvas.Width);
+            JoystickViewModel.addData("aileron", (float)InnerCanvas.ActualWidth);
+            JoystickViewModel.addData("elevator", (float)InnerCanvas.ActualWidth);
+            Console.WriteLine(InnerCanvas.ActualWidth);
+            ThrotteleCanvas.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
+            ThrotteleCanvas.Arrange(new Rect(0, 0, ThrotteleCanvas.DesiredSize.Width, ThrotteleCanvas.DesiredSize.Height));
+            JoystickViewModel.addData("throttle", 200);
+            JoystickViewModel.addData("rudder", 200);
             Console.WriteLine($"Hello {JoyStickCanvas.Width}");
-            Console.WriteLine($"Hello {ThrotteleCanvas.Height}");
-
+            Console.WriteLine($"Hello {GridT.ActualHeight}");
         }
 
         public IControlViewModel GetViewModel()

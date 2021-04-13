@@ -39,7 +39,7 @@ namespace Flight_Inspection.controls.Joystick
             private set
             {
                 aileron = value;
-                OnPropertyChanged("aileron");
+                OnPropertyChanged();
             }
         }
 
@@ -49,7 +49,7 @@ namespace Flight_Inspection.controls.Joystick
             private set
             {
                 rudder = value;
-                OnPropertyChanged("rudder");
+                OnPropertyChanged();
             }
 
         }
@@ -60,7 +60,7 @@ namespace Flight_Inspection.controls.Joystick
             private set
             {
                 elevator = value;
-                OnPropertyChanged("elevator");
+                OnPropertyChanged();
             }
 
         }
@@ -71,7 +71,7 @@ namespace Flight_Inspection.controls.Joystick
             private set
             {
                 throttle = value;
-                OnPropertyChanged("throttle");
+                OnPropertyChanged();
             }
 
         }
@@ -86,7 +86,7 @@ namespace Flight_Inspection.controls.Joystick
                 Rudder = ts.GetFeatureData("rudder").ElementAt(CurrentTime);
                 Elevator = ts.GetFeatureData("elevator").ElementAt(CurrentTime);
                 Throttle = ts.GetFeatureData("throttle").ElementAt(CurrentTime);
-            }
+        }
         
         public float maxAbs (String feature){
 

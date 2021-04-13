@@ -35,7 +35,11 @@ namespace Flight_Inspection.controls.Joystick
                 OnPropertyChanged();
             }
         }
-        public Thickness Margin_Throttle { get => new Thickness(0, System.Convert.ToDouble(VM_Throttle), 0, 0); }
+        public Thickness Margin_Throttle { get {
+                Console.WriteLine(System.Convert.ToDouble(VM_Throttle));
+               return new Thickness(0, System.Convert.ToDouble(VM_Throttle), 0, 0); 
+            } 
+        }
 
         public float VM_Rudder
         {
@@ -75,13 +79,15 @@ namespace Flight_Inspection.controls.Joystick
             {
                 var data = findData("throttle");
                 if (data != null)
+                {
                     return data.Data;
+                }
                 else
                     return 0;
             }
             set
             {
-                findData("throttle").Data = 230 - value * findData("throttle").Normalize;
+                findData("throttle").Data = value * findData("throttle").Normalize;
                 OnPropertyChanged();
 
             }
@@ -109,16 +115,16 @@ namespace Flight_Inspection.controls.Joystick
         {
             switch (e.PropertyName)
             {
-                case "aileron":
+                case "Aileron":
                     VM_Aileron = model.Aileron;
                     break;
-                case "rudder":
+                case "Rudder":
                     VM_Rudder = model.Rudder;
                     break;
-                case "throttle":
+                case "Throttle":
                     VM_Throttle = model.Throttle;
                     break;
-                case "elevator":
+                case "Elevator":
                     VM_Elevator = model.Elevator;
                     break;
             }
