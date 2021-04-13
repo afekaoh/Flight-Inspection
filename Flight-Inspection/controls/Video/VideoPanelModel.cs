@@ -76,6 +76,24 @@ namespace Flight_Inspection.controls.Video
                 }
             }
         }
+        //speed property
+        private float speed;
+
+        public float Speed
+        {
+            get
+
+
+    {
+                return speed;
+            }
+            set
+              {
+                speed = value;
+                OnPropertyChanged();
+            }
+        }
+
 
         //play after stoping!!!
         internal void StartPlay()
@@ -87,6 +105,7 @@ namespace Flight_Inspection.controls.Video
             }
         }
 
+
         private void play()
         {
             while (true)
@@ -94,7 +113,7 @@ namespace Flight_Inspection.controls.Video
                 if (!stop && CurrentTime != MaxSlider)
                 {
                     CurrentTime++;
-                    Thread.Sleep(100);
+                    Thread.Sleep((int)(100 / Speed));
                 }
             }
 
