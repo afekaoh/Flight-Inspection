@@ -21,7 +21,7 @@ namespace Flight_Inspection.controls.Video
             model.PropertyChanged += MaxSliderUpdate;
             model.PropertyChanged += UpdateStop;
         }
-
+        
         public int MaxSlider
         {
             get
@@ -35,6 +35,28 @@ namespace Flight_Inspection.controls.Video
             }
         }
 
+        private float speed;
+
+        public float Speed
+        {
+            get
+
+
+            {
+                return speed;
+            }
+            set
+            {
+                if (speed != value)
+                {
+                    speed = value;
+                    model.Speed = value;
+                    OnPropertyChanged((int)value);
+                }
+            }
+        }
+
+
         public void MaxSliderUpdate(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName is "MaxSlider")
@@ -46,7 +68,7 @@ namespace Flight_Inspection.controls.Video
             model.TimeSeries = settingsArgs.Ts;
             model.MaxSlider = settingsArgs.Ts.Rows.Count;
         }
-
+        
         internal override void setTime(int time)
         {
             Time = time;

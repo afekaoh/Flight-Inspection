@@ -21,12 +21,14 @@ namespace Flight_Inspection.controls.Video
     /// </summary>
     public partial class VideoPanelView : UserControl, IControlView
     {
+        private bool isPlaying;
         VideoPanelViewModel videoPanelViewModel;
         public VideoPanelView()
         {
             InitializeComponent();
             videoPanelViewModel = new VideoPanelViewModel();
             DataContext = videoPanelViewModel;
+            isPlaying = false;
         }
 
         public IControlViewModel GetViewModel()
@@ -36,7 +38,18 @@ namespace Flight_Inspection.controls.Video
 
         private void Button_Play(object sender, RoutedEventArgs e)
         {
-            videoPanelViewModel.StartPlay();
+            if (!isPlaying)
+            {
+                Play.Content = FindResource("Stop");
+                videoPanelViewModel.StartPlay();
+                isPlaying = true;
+            }
+            else
+            {
+                Play.Content = FindResource("Play");
+                videoPanelViewModel.Pause();
+                isPlaying = false;
+            }
         }
 
         private void Button_Pause(object sender, RoutedEventArgs e)

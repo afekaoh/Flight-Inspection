@@ -17,9 +17,11 @@
             <ColumnDefinition Width="*"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <Frame x:Name="Joystick" Grid.Row="0" Grid.ColumnSpan="2"></Frame>
-        <Frame x:Name="MoreInfo" Grid.Row="2" Grid.ColumnSpan="2"></Frame>
-        <Frame x:Name="VideoPanel" Grid.Row="1" Grid.Column="1"></Frame>
-        <Frame x:Name="Charts" Grid.Row="1"></Frame>
+        <Image Grid.RowSpan="3" Grid.ColumnSpan="2" Stretch="Fill" Source="back.jpeg" VerticalAlignment="Center" HorizontalAlignment="Center" />
+        <Frame x:Name="Charts" Grid.Row="0" Grid.ColumnSpan="2"></Frame>
+        <Frame x:Name="VideoPanel" Grid.Row="2" Grid.ColumnSpan="2"></Frame>
+        <Frame x:Name="Joystick" Grid.Row="1" Grid.Column="1"></Frame>
+        <Frame x:Name="MoreInfo" Grid.Row="1"></Frame>
+
     </Grid>
 </Window>

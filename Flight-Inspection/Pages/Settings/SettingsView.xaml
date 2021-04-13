@@ -8,7 +8,7 @@
       d:DataContext="{d:DesignInstance Type=settings:SettingsViewModel}"
       d:DesignHeight="450" d:DesignWidth="800"
       mc:Ignorable="d" 
-      Background="#1f2933"
+      Background="Transparent"
       
       Title="Settings" >
     <Grid>
