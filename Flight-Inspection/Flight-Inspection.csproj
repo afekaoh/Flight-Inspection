@@ -289,6 +289,15 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Windows\FligthData\back.jpeg" />
+    <Resource Include="Windows\MainWindow\back4.jpg" />
+    <Resource Include="Windows\MainWindow\back3.jpg" />
+    <Resource Include="Windows\MainWindow\back2.jpeg" />
+    <Resource Include="Windows\MainWindow\back.jpeg" />
+    <Resource Include="Photos\back.jpeg" />
+    <Resource Include="Photos\back2.jpeg" />
+    <Resource Include="Photos\back3.jpg" />
+    <Resource Include="Photos\back4.jpg" />
     <Content Include="plugins\anomaly_detection_util.dll" />
     <Content Include="plugins\anomaly_detec_linear_reg.dll" />
     <Resource Include="Pages\Settings\FG_Data\playback_small.xml" />
