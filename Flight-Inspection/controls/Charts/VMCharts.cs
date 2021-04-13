@@ -4,11 +4,6 @@ using LiveCharts.Wpf;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows.Input;
 
 namespace Flight_Inspection.controls
 {
@@ -20,16 +15,25 @@ namespace Flight_Inspection.controls
 
         public Func<double, string> LabelFormatter => value => value.ToString("F");
 
-        private int currentTime;
+        public Func<double,string> LabelTime => value => {
+                int max = (int)value;
+                float sec = (float)max / 10.0f;
+                TimeSpan time = TimeSpan.FromSeconds(sec);
+                return time.ToString(@"mm\:ss");
+            };
 
-        public int CurrentTime
+        private int currentTime = 100;
+
+        public int Time
         {
-            get => currentTime = 100;
+            get => currentTime;
             set
             {
-                if (value <= xMax)
+                if (currentTime != value && value < xMax)
+                {           
                     currentTime = value;
-                OnPropertyChanged("CurrentTime");
+                    OnPropertyChanged(value);
+                }
             }
         }
 
@@ -78,17 +82,17 @@ namespace Flight_Inspection.controls
                 OnPropertyChanged("XMinAttach");
             }
         }
-        private object dataMapper;
-        public object DataMapper
+        
+
+        ChartValues<ObservablePoint> lastThirty;
+        public ChartValues<ObservablePoint> LastThirty
         {
-            get => this.dataMapper;
-            set
+            get => lastThirty; set
             {
-                this.dataMapper = value;
-                OnPropertyChanged("DataMapper");
+                lastThirty = value;
+                OnPropertyChanged("LastThirty");
             }
         }
-
 
 
         ChartValues<ObservablePoint> chartVal;
@@ -101,17 +105,6 @@ namespace Flight_Inspection.controls
             }
         }
 
-        private object dataMapperAttach;
-        public object DataMapperAttach
-        {
-            get => this.dataMapperAttach;
-            set
-            {
-                this.dataMapperAttach = value;
-                OnPropertyChanged("DataMapperAttach");
-            }
-        }
-
         ChartValues<ObservablePoint> chartValAttach;
         public ChartValues<ObservablePoint> ChartValuesAttach
         {
@@ -119,17 +112,6 @@ namespace Flight_Inspection.controls
             {
                 chartValAttach = value;
                 OnPropertyChanged("ChartValuesAttach");
-            }
-        }
-
-        private object dataMapperCurrentAndAttach;
-        public object DataMapperCurrentAndAttach
-        {
-            get => this.dataMapperCurrentAndAttach;
-            set
-            {
-                this.dataMapperCurrentAndAttach = value;
-                OnPropertyChanged("DataMapperCurrentAndAttach");
             }
         }
 
@@ -179,11 +161,6 @@ namespace Flight_Inspection.controls
         public VMCharts()
         {
             charts = new ChartsModel();
-            AnalomyPoints = new ChartValues<ObservablePoint>()
-            {
-                new ObservablePoint(0,1),
-                new ObservablePoint(1,1)
-            };
             charts.PropertyChanged += delegate (Object sender, PropertyChangedEventArgs e)
             {
                 switch (e.PropertyName)
@@ -203,14 +180,8 @@ namespace Flight_Inspection.controls
                     case "XMinAttach":
                         XMinAttach = charts.XMinAttach;
                         break;
-                    case "DataMapper":
-                        DataMapper = charts.DataMapper;
-                        break;
                     case "ChartValues":
                         ChartValues = charts.ChartValues;
-                        break;
-                    case "DataMapperAttach":
-                        DataMapperAttach = charts.DataMapperAttach;
                         break;
                     case "ChartValuesAttach":
                         ChartValuesAttach = charts.ChartValuesAttach;
@@ -218,11 +189,11 @@ namespace Flight_Inspection.controls
                     case "LinearRegVal":
                         LinearRegVal = charts.LinearRegVal;
                         break;
+                    case "LastThirty":
+                        lastThirty = charts.LastThirty;
+                        break;
                     case "ChartValuesCurrentAndAttach":
                         ChartValuesCurrentAndAttach = charts.ChartValuesCurrentAndAttach;
-                        break;
-                    case "DataMapperCurrentAndAttach":
-                        DataMapperCurrentAndAttach = charts.DataMapperCurrentAndAttach;
                         break;
                     case "AnalomyPoints":
                         AnalomyPoints = charts.AnalomyPoints;
@@ -244,12 +215,14 @@ namespace Flight_Inspection.controls
 
         public void updateSeries()
         {
-            charts.updateSeries(current.Name); 
+            if (current != null)
+                charts.updateSeries(current.Name);
         }
 
         internal override void setTime(int time)
         {
-             this.CurrentTime = time;
+             this.Time = time;
+            charts.setLastThirty(Time);
         }
     }
 }

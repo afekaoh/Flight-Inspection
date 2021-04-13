@@ -21,7 +21,7 @@ namespace Flight_Inspection.controls.Video
             model.PropertyChanged += MaxSliderUpdate;
             model.PropertyChanged += UpdateStop;
         }
-
+        
         public int MaxSlider
         {
             get
@@ -51,7 +51,7 @@ namespace Flight_Inspection.controls.Video
                 {
                     speed = value;
                     model.Speed = value;
-                    OnPropertyChanged((int)value);
+                    OnPropertyChanged();
                 }
             }
         }
@@ -71,7 +71,7 @@ namespace Flight_Inspection.controls.Video
         
         internal override void setTime(int time)
         {
-
+            Time = time;
         }
 
         private volatile int currentTime;
@@ -84,7 +84,7 @@ namespace Flight_Inspection.controls.Video
             }
             set
             {
-                if (currentTime != value)
+                if (currentTime != value && value<maxSlider)
                 {
                     currentTime = value;
                     model.CurrentTime = value;

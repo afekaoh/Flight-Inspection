@@ -8,22 +8,49 @@
              mc:Ignorable="d" 
              d:DesignHeight="88" d:DesignWidth="750">
     <UserControl.Resources>
-        <local:TimeConverterToString x:Key="TimeConverterString"/>
+        <ResourceDictionary >
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="ResorceDictionary.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <local:TimeConverterToString x:Key="TimeConverterString"/>
+            <Image x:Key="Play" Source="play-button-png-12808.png" Height="50" Width="50" />
+            <Image x:Key="Stop" Source="pause.png" Height="50" Width="50"/>
+            
+        </ResourceDictionary>
     </UserControl.Resources>
-    <Grid>
-        <Rectangle HorizontalAlignment="Left" Height="88" Stroke="Black" VerticalAlignment="Top" Width="750" Fill="#FF5B5B5D"/>
-        <Button Name ="Play" Content="Play" HorizontalAlignment="Left" Height="29" VerticalAlignment="Top" Margin="30,33,0,0" Width="75" Click="Button_Play"/>
-        <Button Name ="Pause" Content="pause" HorizontalAlignment="Left" Height="29" VerticalAlignment="Top" Width="75"  Margin="142,33,0,0" Click="Button_Pause"/>
-        <Button Content="Stop" HorizontalAlignment="Left" Height="29" VerticalAlignment="Top" Width="75"  Margin="251,34,0,0" Click="Button_Stop" RenderTransformOrigin="0.893,0.609"/>
-        <Slider HorizontalAlignment="Left" Name ="Time" VerticalAlignment="Top"  Width="142"  Margin="478,34,0,0" Height="24" Value="{Binding Path=Time, Mode=TwoWay}" Maximum="{Binding MaxSlider}"/>
-        <TextBox Text="{Binding Time, Converter={StaticResource TimeConverterString}}" HorizontalAlignment="Left" Height="28" Margin="371,35,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="69"/>
-        <ComboBox Name="speed" Width="75" Height="29" Margin="646,33,29,26" ContextMenuClosing="onSpeedChange">
+    
+    <Grid Margin="0,0,0,0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="3*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <Rectangle Margin="1,1,1,1" Grid.RowSpan="3" Grid.ColumnSpan="6" Height="Auto" Stroke="Black" Width="Auto" Fill="#FF5B5B5D"/>
+
+        <Button Name ="Play" Background="Transparent" Style="{StaticResource buttonStyle}" Grid.Row="1"  Grid.Column="2" Margin="2,2,2,2" HorizontalAlignment="Center" Height="50" VerticalAlignment="Center" Width="50" Click="Button_Play">
+            <DynamicResource ResourceKey="Play"/>
+            
+        </Button>
+        <Button Content="Stop" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" Margin="2,2,2,2" Height="29" VerticalAlignment="Center" Width="75"  Click="Button_Stop" RenderTransformOrigin="0.893,0.609"/>
+        <Slider Name ="Time" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" Width="auto" Height="Auto" Margin="10,0,0,0" Value="{Binding Path=Time, Mode=TwoWay}" Maximum="{Binding MaxSlider}"/>
+        <TextBlock Text="{Binding Time, Converter={StaticResource TimeConverterString}}" Grid.Row="0" Grid.Column="5" HorizontalAlignment="Center" Height="28" TextWrapping="Wrap" VerticalAlignment="Center" Width="69"/>
+        <ComboBox Name="speed" Margin="2,2,2,2" Width="75" Height="29" Grid.Row="1" Grid.Column="4" ContextMenuClosing="onSpeedChange" SelectedItem="{Binding Speed}">
             <ComboBoxItem>x0.5</ComboBoxItem>
             <ComboBoxItem>x0.75</ComboBoxItem>
-            <ComboBoxItem>x1</ComboBoxItem>
+            <ComboBoxItem IsSelected="True">x1</ComboBoxItem>
             <ComboBoxItem>x1.25</ComboBoxItem>
             <ComboBoxItem>x1.5</ComboBoxItem>
             <ComboBoxItem>x2</ComboBoxItem>
         </ComboBox>
+        <TextBlock Grid.Row="2" Height="Auto" Text=" "/>
     </Grid>
+    
 </UserControl>

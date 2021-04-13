@@ -36,22 +36,20 @@ namespace Flight_Inspection.controls.Joystick
 
         }
 
-        public void addFeatures(object sender, EventArgs e)
+        private void addFeatures(object sender, EventArgs e)
         {
-            JoystickViewModel.addData("aileron", (float)JoyStickCanvas.ActualWidth);
-            JoystickViewModel.addData("elevator", (float)JoyStickCanvas.ActualHeight);
-            JoystickViewModel.addData("throttle", (float)ThrotteleCanvas.ActualHeight);
-            JoystickViewModel.addData("rudder", (float)RudderCanvas.ActualWidth);
+            JoystickViewModel.addData("aileron", (float)JoyStickCanvas.Width);
+            JoystickViewModel.addData("elevator", (float)JoyStickCanvas.Height);
+            JoystickViewModel.addData("throttle", (float)ThrotteleCanvas.Height);
+            JoystickViewModel.addData("rudder", (float)RudderCanvas.Width);
+            Console.WriteLine($"Hello {JoyStickCanvas.Width}");
+            Console.WriteLine($"Hello {JoyStickCanvas.Height}");
+
         }
 
         public IControlViewModel GetViewModel()
         {
             return this.JoystickViewModel;
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            JoystickViewModel.start();
         }
     }
 }

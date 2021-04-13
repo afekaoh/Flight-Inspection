@@ -8,6 +8,8 @@
       d:DataContext="{d:DesignInstance Type=settings:SettingsViewModel}"
       d:DesignHeight="450" d:DesignWidth="800"
       mc:Ignorable="d" 
+      Background="Transparent"
+      
       Title="Settings" >
     <Grid>
         <ItemsControl ItemsSource="{Binding SettingItems}">
@@ -18,8 +20,9 @@
                             <ColumnDefinition Width="auto"/>
                             <ColumnDefinition Width="auto"/>
                         </Grid.ColumnDefinitions>
-                        <Button Margin="10,10,10,10" Width="100" Content="{Binding Name}" Click="On_Click" />
-                        <CheckBox Content="{Binding Name}" IsChecked="{Binding Checked}" Grid.Column="1" Margin="10" IsEnabled="False"/>
+                        <CheckBox IsChecked="{Binding Checked}" Grid.Column="0" Margin="10" IsEnabled="False"/>
+                        <Button Margin="10,10,10,10" Grid.Column="1" Width="100" Content="{Binding Name}" BorderThickness="0" Background="#44555c" Click="On_Click" />
+                        
                     </Grid>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>

@@ -173,11 +173,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="controls\DataWindow\DataWindow.xaml.cs">
+      <DependentUpon>DataWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="controls\DataWindow\DataWindowModel.cs" />
+    <Compile Include="controls\DataWindow\DataWindowVM.cs" />
+    <Compile Include="controls\Joystick\NormelaizedData.cs" />
     <Compile Include="controls\Charts\AnalomyDetector.cs" />
     <Compile Include="controls\Charts\MyCommand.cs" />
     <Compile Include="controls\DllWraper\AnalomyDetectorClass.cs" />
     <Compile Include="controls\DllWraper\AnalomyReportWraper.cs" />
-    <Compile Include="controls\Joystick\JoyStickData.cs" />
     <Compile Include="controls\Joystick\JoystickModel.cs" />
     <Compile Include="controls\IControlView.cs" />
     <Compile Include="controls\IControlViewModel.cs" />
@@ -206,9 +211,17 @@
     <Compile Include="Pages\IViewPages.cs" />
     <Compile Include="Windows\FligthData\SetTimeEventArgs.cs" />
     <Compile Include="Windows\MainWindow\MainWindowViewModel.cs" />
+    <Page Include="controls\DataWindow\DataWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="controls\Joystick\JoystickView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="controls\Video\ResorceDictionary.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Pages\FlightGear\FlightGearView.xaml">
       <SubType>Designer</SubType>
@@ -219,6 +232,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="controls\Video\VideoPanelView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ResorceDictionary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -289,9 +306,22 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Windows\FligthData\back.jpeg" />
+    <Resource Include="Windows\MainWindow\back.jpeg" />
+    <Resource Include="Photos\back.jpeg" />
+    <Resource Include="Photos\back2.jpeg" />
+    <Resource Include="Photos\back3.jpg" />
+    <Resource Include="Photos\back4.jpg" />
+    <Resource Include="Photos\play.jpg" />
+    <Resource Include="controls\Video\play.jpg" />
+    <Resource Include="Photos\play-button-png-12808.png" />
+    <Resource Include="controls\Video\play-button-png-12808.png" />
+    <Resource Include="Photos\pause.png" />
+    <Resource Include="controls\Video\pause.png" />
     <Content Include="plugins\anomaly_detection_util.dll" />
     <Content Include="plugins\anomaly_detec_linear_reg.dll" />
     <Resource Include="Pages\Settings\FG_Data\playback_small.xml" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
