@@ -73,16 +73,6 @@ namespace Flight_Inspection.controls
                 OnPropertyChanged("XMaxAttach");
             }
         }
-        private CartesianMapper<ObservablePoint> dataMapper;
-        public CartesianMapper<ObservablePoint> DataMapper
-        {
-            get => this.dataMapper;
-            set
-            {
-                this.dataMapper = value;
-                OnPropertyChanged("DataMapper");
-            }
-        }
 
         private double xMinAttach = 0;
         public double XMinAttach
@@ -94,7 +84,7 @@ namespace Flight_Inspection.controls
                 OnPropertyChanged("XMinAttach");
             }
         }
-        
+
 
         ChartValues<ObservablePoint> lastThirty;
         public ChartValues<ObservablePoint> LastThirty
@@ -173,11 +163,7 @@ namespace Flight_Inspection.controls
         public VMCharts()
         {
             charts = new ChartsModel();
-            DataMapper = new CartesianMapper<ObservablePoint>()
-      .X(point => point.X)
-      .Y(point => point.Y)
-      .Stroke(point => charts.isInRange(Time,point)? Brushes.Red:Brushes.Blue)
-      .Fill(point => charts.isInRange(Time, point) ? Brushes.Red : Brushes.Blue);
+            LastThirty = new ChartValues<ObservablePoint>();
             charts.PropertyChanged += delegate (Object sender, PropertyChangedEventArgs e)
             {
                 switch (e.PropertyName)
@@ -206,17 +192,14 @@ namespace Flight_Inspection.controls
                     case "LinearRegVal":
                         LinearRegVal = charts.LinearRegVal;
                         break;
-                    case "LastThirty":
-                        lastThirty = charts.LastThirty;
-                        break;
                     case "ChartValuesCurrentAndAttach":
                         ChartValuesCurrentAndAttach = charts.ChartValuesCurrentAndAttach;
                         break;
                     case "AnalomyPoints":
                         AnalomyPoints = charts.AnalomyPoints;
                         break;
-                    case "DataMapper":
-                        //DataMapper = charts.DataMapper;
+                    case "LastThirty":
+                        LastThirty = charts.LastThirty;
                         break;
 
                 }
@@ -237,17 +220,18 @@ namespace Flight_Inspection.controls
         public void updateSeries()
         {
             if (current != null)
-                charts.updateSeries(current.Name);
+                charts.updateSeries(current.Name, Time);
         }
 
         internal override void setTime(int time)
         {
-             this.Time = time;
-            ChartValuesCurrentAndAttach = ChartValuesCurrentAndAttach;
-            /*DataMapper = DataMapper.X(point => point.X)
-            .Y(point => point.Y)
-            .Stroke(point => charts.isInRange(Time, point) ? Brushes.Red : Brushes.Blue)
-            .Fill(point => charts.isInRange(Time, point) ? Brushes.Red : Brushes.Blue);*/
+            int num = time + 1 < (int)xMax ? time + 1 : (int)xMax;
+            for (int i = Time; i < num; i++)
+            {
+                LastThirty.RemoveAt(0);
+                LastThirty.Add(ChartValuesCurrentAndAttach[i]);
+            }
+            this.Time = time;
         }
     }
 }

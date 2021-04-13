@@ -173,11 +173,8 @@ namespace Flight_Inspection.controls
             List<string> ls = timeSeries.GetFeatureNames();
             AnalomyDetector analomyDetector = new AnalomyDetector();
             List<AnomalyReportSafe> lsReports = analomyDetector.GetAnomalyReport(ls);
-            //if (lsReports == null)
-            //{
             AnalomyPoints = new ChartValues<ObservablePoint>();
-            //LastThirty = new ChartValues<ObservablePoint>();
-            //LastThirty.CollectionReset += LastThirty_CollectionReset;
+            LastThirty = new ChartValues<ObservablePoint>();
             LinearRegVal = new ChartValues<ObservablePoint>();
                 ChartValues = new ChartValues<ObservablePoint>();
                 ChartValuesAttach = new ChartValues<ObservablePoint>();
@@ -203,29 +200,8 @@ namespace Flight_Inspection.controls
                     }
                     properties.Add(new Property() { Name = ls[i], Attach = maxCor, Data = data.ToList(), LinearReg = getLinearReg(data.ToList(), TimeSeries.GetFeatureData(maxCor)) });
                 }
-            //}
-            //else
-            //{
-     /*           foreach (AnomalyReportSafe anomaly in lsReports)
-                {
-                    var data = TimeSeries.getFeatureData(anomaly.first);
-                    var data2 = TimeSeries.getFeatureData(anomaly.second);
-                    AnalomyPoints.Add(new ObservablePoint() { X = data[(int)anomaly.time], Y = data2[(int)anomaly.time] });
-                }*/
             AnalomyPoints.Add(new ObservablePoint() { X = 0.5,Y=0.5 });
             INotifyPropertyChanged("AnalomyPoints");
-            
-            //}
-        }
-        private int time =0;
-        private void LastThirty_CollectionReset()
-        {
-            int size = ChartValuesCurrentAndAttach.Count;
-            int finalSize = (time < size ? time : size);
-            for (int i = time - 300 < 0 ? 0 : time - 300; i < finalSize; i++)
-            {
-                LastThirty.Add(ChartValuesCurrentAndAttach.ElementAt(i));
-            }
         }
 
         public Property getData(string property)
@@ -237,7 +213,7 @@ namespace Flight_Inspection.controls
         {
             return properties;
         }
-        public void updateSeries(string content)
+        public void updateSeries(string content, int time)
         {
             if (content == "")
                 return;
@@ -273,6 +249,11 @@ namespace Flight_Inspection.controls
             ChartValuesCurrentAndAttach.Clear();
             ChartValuesCurrentAndAttach.AddRange(points3);
             INotifyPropertyChanged("ChartValuesCurrentAndAttach");
+            LastThirty.Clear();
+            for (int i = time - 200 < 0 ? 0 : time - 200; i < (time < xMax ? time : xMax); i++)
+            {
+                LastThirty.Add(ChartValuesCurrentAndAttach[i]);
+            }
             LineSafe line = getLinearReg(vs, attach);
             LinearRegVal.Clear();
             float x1 = vs.Min(), y1 = line.b + x1 * line.a;
@@ -282,20 +263,6 @@ namespace Flight_Inspection.controls
             AnalomyPoints.Clear();
             AnalomyPoints.Add(new ObservablePoint() { X = 0.5, Y = 0.5 });
             INotifyPropertyChanged("AnalomyPoints");
-        }
-
-        public bool isInRange(int time, ObservablePoint point)
-        {
-            for(int i = 0; i < ChartValuesCurrentAndAttach.Count; i++)
-            {
-                ObservablePoint p1 = chartValCurrentAndAttach[i];
-                if (p1.X == point.X && p1.Y == point.Y)
-                {
-                    if (i > time - 300 && i <= time)
-                        return true;
-                }
-            }
-            return false;
         }
     }
 

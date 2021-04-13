@@ -109,12 +109,11 @@
                     Configuration="{Binding DataMapper}"
                    />
 
-               <!-- <lvc1:ScatterSeries
+                <lvc1:ScatterSeries
                       MaxPointShapeDiameter="3"
                       MinPointShapeDiameter="3"
-                      Title="Attach Property"
                       Values="{Binding LastThirty}"
-                   />-->
+                   />
 
                 <lvc1:LineSeries
                       Fill="Transparent"
