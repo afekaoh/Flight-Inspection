@@ -7,6 +7,13 @@
              d:DataContext="{d:DesignInstance Type=local:JoystickViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+    <ResourceDictionary >
+        <ResourceDictionary.MergedDictionaries>
+            <ResourceDictionary Source="ResorceDictionary.xaml" />
+        </ResourceDictionary.MergedDictionaries>
+    </ResourceDictionary>
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="3*"/>
@@ -17,13 +24,16 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="7*"/>
         </Grid.ColumnDefinitions>
-        <Grid x:Name="ThrotteleCanvas" Grid.Column="0" Grid.Row="0">
-            <Rectangle Width="Auto" Height="Auto" Fill="#272B2A"  Margin="10,10,10,10"/>
-            <Rectangle Width="Auto" Height="20" Fill="#CDB495" Margin="10,5,2,5" Canvas.Top="{Binding VM_Throttle}" />
+        <Grid Grid.Column="0" Grid.Row="0">
+            <Rectangle Name="ThrotteleCanvas" Width="Auto" Height="Auto" Fill="#272B2A"  Margin="10,10,10,10"/>
+            <Rectangle Width="Auto" Height="20" Fill="#CDB495" Margin="{Binding Margin_Throttle}"  />
         </Grid>
         <!--<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top"><Run Text="TextBlock"/><InlineUIContainer>
                 <TextBlock TextWrapping="Wrap" Text="TextBlock"/>
-            </InlineUIContainer></TextBlock>-->
+            </InlineUIContainer></TextBlock>
+        
+        Canvas.Top="{Binding VM_Throttle}"
+        -->
 
         <Grid x:Name="JoyStickCanvas" Grid.Row="0" Grid.Column="1" Margin="10,10,10,10">
 
@@ -60,7 +70,7 @@
                 </Grid.RowDefinitions>
                 <TextBox HorizontalAlignment="Center" Height="Auto" Width="Auto" Margin="10,10,10,10" TextWrapping="Wrap" Text="Aileron" />
                 <Canvas x:Name="InnerCanvas" Grid.Row="1" Height="138" Canvas.Left="220" Canvas.Top="83" Width="138">
-                    <Ellipse Width="50" Height="50" Canvas.Left= "{Binding VM_Aileron}" Canvas.Top="{Binding VM_Elevator}" HorizontalAlignment="Center" VerticalAlignment="Center" Fill="#796E4A" />
+                    <Ellipse Width="50" Height="50" Canvas.Left= "{Binding VM_Aileron}" Canvas.Top="{Binding VM_Elevator}"  Fill="#796E4A" />
                     <Ellipse Canvas.Left="0" Width="138" Height="138" HorizontalAlignment="Center" VerticalAlignment="Center" Stroke="#625939" StrokeThickness="2"/>
                 </Canvas>
             </Grid>

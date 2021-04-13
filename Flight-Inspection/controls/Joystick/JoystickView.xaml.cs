@@ -40,10 +40,10 @@ namespace Flight_Inspection.controls.Joystick
         {
             JoystickViewModel.addData("aileron", (float)JoyStickCanvas.Width);
             JoystickViewModel.addData("elevator", (float)JoyStickCanvas.Height);
-            JoystickViewModel.addData("throttle", (float)ThrotteleCanvas.Height);
+            JoystickViewModel.addData("throttle", (float)ThrotteleCanvas.ActualHeight);
             JoystickViewModel.addData("rudder", (float)RudderCanvas.Width);
             Console.WriteLine($"Hello {JoyStickCanvas.Width}");
-            Console.WriteLine($"Hello {JoyStickCanvas.Height}");
+            Console.WriteLine($"Hello {ThrotteleCanvas.Height}");
 
         }
 

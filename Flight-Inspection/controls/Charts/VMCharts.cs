@@ -1,9 +1,11 @@
 ﻿using LiveCharts;
+using LiveCharts.Configurations;
 using LiveCharts.Defaults;
 using LiveCharts.Wpf;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Windows.Media;
 
 namespace Flight_Inspection.controls
 {
@@ -69,6 +71,16 @@ namespace Flight_Inspection.controls
             {
                 this.xMaxAttach = value;
                 OnPropertyChanged("XMaxAttach");
+            }
+        }
+        private CartesianMapper<ObservablePoint> dataMapper;
+        public CartesianMapper<ObservablePoint> DataMapper
+        {
+            get => this.dataMapper;
+            set
+            {
+                this.dataMapper = value;
+                OnPropertyChanged();
             }
         }
 
@@ -198,6 +210,10 @@ namespace Flight_Inspection.controls
                     case "AnalomyPoints":
                         AnalomyPoints = charts.AnalomyPoints;
                         break;
+                    case "DataMapper":
+                        DataMapper = charts.DataMapper;
+                        break;
+
                 }
             };
 
@@ -222,7 +238,6 @@ namespace Flight_Inspection.controls
         internal override void setTime(int time)
         {
              this.Time = time;
-            charts.setLastThirty(Time);
         }
     }
 }

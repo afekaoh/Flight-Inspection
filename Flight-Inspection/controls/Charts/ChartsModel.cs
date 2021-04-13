@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Collections.ObjectModel;
 using LiveCharts;
 using LiveCharts.Defaults;
 using LiveCharts.Configurations;
 using static Flight_Inspection.controls.AnalomyDetectorClass;
 using Flight_Inspection.controls.Charts;
 using static Flight_Inspection.controls.DllWraper.AnalomyReportWraper;
+using System.Windows.Media;
 
 namespace Flight_Inspection.controls
 {
@@ -126,6 +126,18 @@ namespace Flight_Inspection.controls
                 INotifyPropertyChanged("LinearRegVal");
             }
         }
+
+        private CartesianMapper<ObservablePoint> dataMapper;
+        public CartesianMapper<ObservablePoint> DataMapper
+        {
+            get => this.dataMapper;
+            set
+            {
+                this.dataMapper = value;
+                INotifyPropertyChanged("DataMapper");
+            }
+        }
+
         public TimeSeries TimeSeries
         {
             get => timeSeries; set
@@ -133,6 +145,21 @@ namespace Flight_Inspection.controls
                 timeSeries = value;
                 INotifyPropertyChanged("TimeSeries");
              }
+        }
+
+        private int currentTime = 100;
+
+        public int Time
+        {
+            get => currentTime;
+            set
+            {
+                if (currentTime != value && value < xMax)
+                {
+                    currentTime = value;
+                    INotifyPropertyChanged("Time");
+                }
+            }
         }
 
         private void INotifyPropertyChanged(string v)
@@ -159,7 +186,8 @@ namespace Flight_Inspection.controls
             //if (lsReports == null)
             //{
             AnalomyPoints = new ChartValues<ObservablePoint>();
-            LastThirty = new ChartValues<ObservablePoint>();
+            //LastThirty = new ChartValues<ObservablePoint>();
+            //LastThirty.CollectionReset += LastThirty_CollectionReset;
             LinearRegVal = new ChartValues<ObservablePoint>();
                 ChartValues = new ChartValues<ObservablePoint>();
                 ChartValuesAttach = new ChartValues<ObservablePoint>();
@@ -199,6 +227,17 @@ namespace Flight_Inspection.controls
             
             //}
         }
+        private int time =0;
+        private void LastThirty_CollectionReset()
+        {
+            int size = ChartValuesCurrentAndAttach.Count;
+            int finalSize = (time < size ? time : size);
+            for (int i = time - 300 < 0 ? 0 : time - 300; i < finalSize; i++)
+            {
+                LastThirty.Add(ChartValuesCurrentAndAttach.ElementAt(i));
+            }
+        }
+
         public Property getData(string property)
         {
             return (Property)properties.Find(prop => prop.Name == property);
@@ -244,6 +283,11 @@ namespace Flight_Inspection.controls
             ChartValuesCurrentAndAttach.Clear();
             ChartValuesCurrentAndAttach.AddRange(points3);
             INotifyPropertyChanged("ChartValuesCurrentAndAttach");
+            this.DataMapper = new CartesianMapper<ObservablePoint>()
+      .X(point => point.X)
+      .Y(point => point.Y)
+      .Stroke(point => point.X > Time -300 && point.X < Time ? Brushes.Red : Brushes.LightGreen)
+      .Fill(point => point.X > Time - 300 && point.X < Time ? Brushes.Red : Brushes.LightGreen);
             LineSafe line = getLinearReg(vs, attach);
             LinearRegVal.Clear();
             float x1 = vs.Min(), y1 = line.b + x1 * line.a;
@@ -257,12 +301,17 @@ namespace Flight_Inspection.controls
 
         public void setLastThirty(int time)
         {
-            LastThirty.Clear();
-            for (int i = time - 300 < 0 ? 0 : time - 300; i < time; i++)
-            {
-                LastThirty.Add(ChartValuesCurrentAndAttach.ElementAt(i));
-            }
-            INotifyPropertyChanged("LastThirty");
+            this.time = time;
+            /*LastThirty.Clear();*/
+        }
+    }
+
+    public class TimePoint : ObservablePoint
+    {
+        public int Time { get; set; }
+        public TimePoint(int time, double x, double y) : base(x,y)
+        {
+            Time = time;
         }
     }
 }

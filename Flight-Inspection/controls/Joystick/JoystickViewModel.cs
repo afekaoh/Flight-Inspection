@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-
+using System.Windows;
 
 namespace Flight_Inspection.controls.Joystick
 {
@@ -35,6 +35,7 @@ namespace Flight_Inspection.controls.Joystick
                 OnPropertyChanged();
             }
         }
+        public Thickness Margin_Throttle { get => new Thickness(0, System.Convert.ToDouble(VM_Throttle), 0, 0); }
 
         public float VM_Rudder
         {
