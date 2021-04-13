@@ -17,6 +17,8 @@ namespace Flight_Inspection.controls.Video
         private int maxSlider;
         private Thread t;
 
+
+        //video panel model constructor
         public VideoPanelModel()
         {
             t = new Thread(play);

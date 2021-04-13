@@ -13,7 +13,7 @@ namespace Flight_Inspection.controls.Video
         private int maxSlider;
         private VideoPanelModel model;
 
-
+        //video panel view model constructor
         public VideoPanelViewModel()
         {
             this.model = new VideoPanelModel();
