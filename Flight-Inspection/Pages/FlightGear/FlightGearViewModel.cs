@@ -67,7 +67,7 @@ namespace Flight_Inspection.Pages.FlightGear
 
         public override void SetSettings(SettingsArgs settingsArgs)
         {
-            flightGearModel.setSettings(settingsArgs.Ts, settingsArgs.ProcPath);
+            flightGearModel.SetSettings(settingsArgs.Ts, settingsArgs.ProcPath);
             this.Ts = settingsArgs.Ts;
             this.ready = true;
         }
@@ -80,7 +80,7 @@ namespace Flight_Inspection.Pages.FlightGear
 
         void SetTime(object sender, SetTimeEventArgs e)
         {
-            flightGearModel.Time = e.Time;
+            flightGearModel.CurrentTime = e.Time;
         }
 
         void SetStop(object sender, SetStopEventArgs e)

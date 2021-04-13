@@ -6,13 +6,14 @@ using System.Threading.Tasks;
 
 namespace Flight_Inspection.controls.Joystick
 {
-    class JoyStickData
+    class NormelaizedData
     {
         private string name;
         private float normalize;
         private float data;
+        public event EventHandler Ready;
 
-        public JoyStickData(string name, float CanvasDim, float maxVal)
+        public NormelaizedData(string name, float CanvasDim, float maxVal)
         {
             this.name = name;
             this.normalize = CanvasDim/maxVal;

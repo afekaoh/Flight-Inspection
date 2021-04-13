@@ -22,5 +22,6 @@
         <Frame x:Name="VideoPanel" Grid.Row="2" Grid.ColumnSpan="2"></Frame>
         <Frame x:Name="Joystick" Grid.Row="1" Grid.Column="1"></Frame>
         <Frame x:Name="MoreInfo" Grid.Row="1"></Frame>
+
     </Grid>
 </Window>
