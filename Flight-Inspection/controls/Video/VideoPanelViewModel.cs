@@ -68,7 +68,7 @@ namespace Flight_Inspection.controls.Video
             model.TimeSeries = settingsArgs.Ts;
             model.MaxSlider = settingsArgs.Ts.Rows.Count;
         }
-
+        
         internal override void setTime(int time)
         {
 
