@@ -18,14 +18,14 @@ namespace Flight_Inspection.controls.Video
         private Thread t;
 
 
-        //video panel model constructor
+        //video panel model constructor.
         public VideoPanelModel()
         {
             t = new Thread(play);
             t.IsBackground = true;
             MaxSlider = 10;
         }
-
+        //Time series property.
         public TimeSeries TimeSeries
         {
             get => timeSeries; set
@@ -37,6 +37,7 @@ namespace Flight_Inspection.controls.Video
 
         private bool stop = true;
 
+        //Stop property.
         public bool Stop
         {
             get { return stop; }
@@ -48,7 +49,7 @@ namespace Flight_Inspection.controls.Video
         }
 
 
-
+        //Max slider property.
         public int MaxSlider
         {
             get
@@ -62,6 +63,7 @@ namespace Flight_Inspection.controls.Video
             }
         }
 
+        //Current time property.
         private int currentTime;
 
         public int CurrentTime
@@ -79,14 +81,13 @@ namespace Flight_Inspection.controls.Video
                 }
             }
         }
-        //speed property
+
+        //Speed property.
         private float speed = 1;
 
         public float Speed
         {
             get
-
-
             {
                 return speed;
             }
@@ -98,7 +99,7 @@ namespace Flight_Inspection.controls.Video
         }
 
 
-        //play after stoping!!!
+        //Changing the stop property and starting the video panel.
         internal void StartPlay()
         {
             Stop = false;
@@ -108,7 +109,7 @@ namespace Flight_Inspection.controls.Video
             }
         }
 
-
+        //playing the video panel by changing the stop to false.
         private void play()
         {
             var stopwatch = new Stopwatch();
@@ -123,13 +124,14 @@ namespace Flight_Inspection.controls.Video
             }
 
         }
-
+         
+        //Pause the video panel by changing the stop property to true.
         internal void Pause()
         {
             stop = true;
         }
 
-
+        //Update that were a property change.
         virtual public void OnPropertyChanged([CallerMemberName] string name = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
