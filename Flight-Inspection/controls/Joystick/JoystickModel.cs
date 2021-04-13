@@ -82,10 +82,10 @@ namespace Flight_Inspection.controls.Joystick
         }
         public void sendData()
         {
-                Aileron = ts.getFeatureData("aileron").ElementAt(CurrentTime);
-                Rudder = ts.getFeatureData("rudder").ElementAt(CurrentTime);
-                Elevator = ts.getFeatureData("elevator").ElementAt(CurrentTime);
-                Throttle = ts.getFeatureData("throttle").ElementAt(CurrentTime);
+                Aileron = ts.GetFeatureData("aileron").ElementAt(CurrentTime);
+                Rudder = ts.GetFeatureData("rudder").ElementAt(CurrentTime);
+                Elevator = ts.GetFeatureData("elevator").ElementAt(CurrentTime);
+                Throttle = ts.GetFeatureData("throttle").ElementAt(CurrentTime);
             }
         
         public float maxAbs (String feature){

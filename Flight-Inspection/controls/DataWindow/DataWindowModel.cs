@@ -103,17 +103,17 @@ namespace Flight_Inspection.controls.DataWindow
         }
         public void sendData()
         {            
-                Yaw = ts.getFeatureData("heading-deg").ElementAt(CurrentTime);
-                Pitch = ts.getFeatureData("pitch-deg").ElementAt(CurrentTime);
-                Roll = ts.getFeatureData("roll-deg").ElementAt(CurrentTime);
-                AirSpeed = ts.getFeatureData("airspeed-kt").ElementAt(CurrentTime);
-                Altimeter = ts.getFeatureData("altitude-ft").ElementAt(CurrentTime);
-                Direction = ts.getFeatureData("magnetic-compass_indicated-heading-deg").ElementAt(CurrentTime);
+                Yaw = ts.GetFeatureData("heading-deg").ElementAt(CurrentTime);
+                Pitch = ts.GetFeatureData("pitch-deg").ElementAt(CurrentTime);
+                Roll = ts.GetFeatureData("roll-deg").ElementAt(CurrentTime);
+                AirSpeed = ts.GetFeatureData("airspeed-kt").ElementAt(CurrentTime);
+                Altimeter = ts.GetFeatureData("altitude-ft").ElementAt(CurrentTime);
+                Direction = ts.GetFeatureData("magnetic-compass_indicated-heading-deg").ElementAt(CurrentTime);
             }
         public float maxAbs(String feature)
         {
-            float minVal = (float)Math.Abs(ts.getFeatureData(feature).Min());
-            float maxVal = Math.Abs(ts.getFeatureData(feature).Max());
+            float minVal = (float)Math.Abs(ts.GetFeatureData(feature).Min());
+            float maxVal = Math.Abs(ts.GetFeatureData(feature).Max());
             if (minVal >= maxVal)
             {
                 return minVal;
