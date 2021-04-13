@@ -80,7 +80,7 @@ namespace Flight_Inspection.controls
             set
             {
                 this.dataMapper = value;
-                OnPropertyChanged();
+                OnPropertyChanged("DataMapper");
             }
         }
 
@@ -173,6 +173,11 @@ namespace Flight_Inspection.controls
         public VMCharts()
         {
             charts = new ChartsModel();
+            DataMapper = new CartesianMapper<ObservablePoint>()
+      .X(point => point.X)
+      .Y(point => point.Y)
+      .Stroke(point => charts.isInRange(Time,point)? Brushes.Red:Brushes.Blue)
+      .Fill(point => charts.isInRange(Time, point) ? Brushes.Red : Brushes.Blue);
             charts.PropertyChanged += delegate (Object sender, PropertyChangedEventArgs e)
             {
                 switch (e.PropertyName)
@@ -211,7 +216,7 @@ namespace Flight_Inspection.controls
                         AnalomyPoints = charts.AnalomyPoints;
                         break;
                     case "DataMapper":
-                        DataMapper = charts.DataMapper;
+                        //DataMapper = charts.DataMapper;
                         break;
 
                 }
@@ -238,6 +243,11 @@ namespace Flight_Inspection.controls
         internal override void setTime(int time)
         {
              this.Time = time;
+            ChartValuesCurrentAndAttach = ChartValuesCurrentAndAttach;
+            /*DataMapper = DataMapper.X(point => point.X)
+            .Y(point => point.Y)
+            .Stroke(point => charts.isInRange(Time, point) ? Brushes.Red : Brushes.Blue)
+            .Fill(point => charts.isInRange(Time, point) ? Brushes.Red : Brushes.Blue);*/
         }
     }
 }

@@ -127,17 +127,7 @@ namespace Flight_Inspection.controls
             }
         }
 
-        private CartesianMapper<ObservablePoint> dataMapper;
-        public CartesianMapper<ObservablePoint> DataMapper
-        {
-            get => this.dataMapper;
-            set
-            {
-                this.dataMapper = value;
-                INotifyPropertyChanged("DataMapper");
-            }
-        }
-
+       
         public TimeSeries TimeSeries
         {
             get => timeSeries; set
@@ -283,11 +273,6 @@ namespace Flight_Inspection.controls
             ChartValuesCurrentAndAttach.Clear();
             ChartValuesCurrentAndAttach.AddRange(points3);
             INotifyPropertyChanged("ChartValuesCurrentAndAttach");
-            this.DataMapper = new CartesianMapper<ObservablePoint>()
-      .X(point => point.X)
-      .Y(point => point.Y)
-      .Stroke(point => point.X > Time -300 && point.X < Time ? Brushes.Red : Brushes.LightGreen)
-      .Fill(point => point.X > Time - 300 && point.X < Time ? Brushes.Red : Brushes.LightGreen);
             LineSafe line = getLinearReg(vs, attach);
             LinearRegVal.Clear();
             float x1 = vs.Min(), y1 = line.b + x1 * line.a;
@@ -299,19 +284,19 @@ namespace Flight_Inspection.controls
             INotifyPropertyChanged("AnalomyPoints");
         }
 
-        public void setLastThirty(int time)
+        public bool isInRange(int time, ObservablePoint point)
         {
-            this.time = time;
-            /*LastThirty.Clear();*/
+            for(int i = 0; i < ChartValuesCurrentAndAttach.Count; i++)
+            {
+                ObservablePoint p1 = chartValCurrentAndAttach[i];
+                if (p1.X == point.X && p1.Y == point.Y)
+                {
+                    if (i > time - 300 && i <= time)
+                        return true;
+                }
+            }
+            return false;
         }
     }
 
-    public class TimePoint : ObservablePoint
-    {
-        public int Time { get; set; }
-        public TimePoint(int time, double x, double y) : base(x,y)
-        {
-            Time = time;
-        }
-    }
 }
