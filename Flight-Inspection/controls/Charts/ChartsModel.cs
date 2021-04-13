@@ -153,7 +153,7 @@ namespace Flight_Inspection.controls
          
             if (e.PropertyName != "TimeSeries")
                 return;
-            List<string> ls = timeSeries.getFeatureNames();
+            List<string> ls = timeSeries.GetFeatureNames();
             AnalomyDetector analomyDetector = new AnalomyDetector();
             List<AnomalyReportSafe> lsReports = analomyDetector.GetAnomalyReport(ls);
             //if (lsReports == null)
@@ -164,17 +164,17 @@ namespace Flight_Inspection.controls
                 ChartValues = new ChartValues<ObservablePoint>();
                 ChartValuesAttach = new ChartValues<ObservablePoint>();
                 ChartValuesCurrentAndAttach = new ChartValues<ObservablePoint>();
-                int sizeTable = TimeSeries.getFeatureData(ls[0]).Count;
+                int sizeTable = TimeSeries.GetFeatureData(ls[0]).Count;
                 for (int i = 0; i < ls.Count; i++)
                 {
                     float maxVal = 0;
                     string maxCor = "";
-                    float[] data = TimeSeries.getFeatureData(ls[i]).ToArray();
+                    float[] data = TimeSeries.GetFeatureData(ls[i]).ToArray();
                     for (int j = 0; j < ls.Count; j++)
                     {
                         if (i == j)
                             continue;
-                        float[] data2 = TimeSeries.getFeatureData(ls[j]).ToArray();
+                        float[] data2 = TimeSeries.GetFeatureData(ls[j]).ToArray();
                         float val = pearson(data, data2, sizeTable, sizeTable);
                         val = Math.Abs(val);
                         if (maxVal <= val)
@@ -183,7 +183,7 @@ namespace Flight_Inspection.controls
                             maxCor = ls[j];
                         }
                     }
-                    properties.Add(new Property() { Name = ls[i], Attach = maxCor, Data = data.ToList(), LinearReg = getLinearReg(data.ToList(), TimeSeries.getFeatureData(maxCor)) });
+                    properties.Add(new Property() { Name = ls[i], Attach = maxCor, Data = data.ToList(), LinearReg = getLinearReg(data.ToList(), TimeSeries.GetFeatureData(maxCor)) });
                 }
             //}
             //else

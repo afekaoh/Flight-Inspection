@@ -82,14 +82,14 @@ namespace Flight_Inspection.controls.Joystick
         }
         public void sendData()
         {
-            int size = ts.getFeatureData("aileron").Count;
+            int size = ts.GetFeatureData("aileron").Count;
             int counter = currentTime;
             while (counter < size)
             {
-                Aileron = ts.getFeatureData("aileron").ElementAt(counter);
-                Rudder = ts.getFeatureData("rudder").ElementAt(counter);
-                Elevator = ts.getFeatureData("elevator").ElementAt(counter);
-                Throttle = ts.getFeatureData("throttle").ElementAt(counter);
+                Aileron = ts.GetFeatureData("aileron").ElementAt(counter);
+                Rudder = ts.GetFeatureData("rudder").ElementAt(counter);
+                Elevator = ts.GetFeatureData("elevator").ElementAt(counter);
+                Throttle = ts.GetFeatureData("throttle").ElementAt(counter);
                 Console.WriteLine($"{aileron} {rudder}  {elevator} {throttle}");
                 Thread.Sleep(10);
                 counter++;
@@ -97,8 +97,8 @@ namespace Flight_Inspection.controls.Joystick
         }
         public float maxAbs (String feature){
 
-            float minVal = (float) Math.Abs(ts.getFeatureData(feature).Min());
-            float maxVal = Math.Abs(ts.getFeatureData(feature).Max());
+            float minVal = (float) Math.Abs(ts.GetFeatureData(feature).Min());
+            float maxVal = Math.Abs(ts.GetFeatureData(feature).Max());
             if(minVal >= maxVal)
             {
                 return minVal;
