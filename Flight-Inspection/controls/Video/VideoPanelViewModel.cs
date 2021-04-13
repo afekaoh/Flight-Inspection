@@ -21,7 +21,7 @@ namespace Flight_Inspection.controls.Video
             model.PropertyChanged += MaxSliderUpdate;
             model.PropertyChanged += UpdateStop;
         }
-
+        
         public int MaxSlider
         {
             get
