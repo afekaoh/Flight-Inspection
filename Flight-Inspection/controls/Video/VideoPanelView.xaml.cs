@@ -42,6 +42,7 @@ namespace Flight_Inspection.controls.Video
         //start the flight inspection with the play button 
         private void Button_Play(object sender, RoutedEventArgs e)
         {
+            //check if the button isn't pressed / if the video isn't working 
             if (!isPlaying)
             {
                 Play.Content = FindResource("Stop");
