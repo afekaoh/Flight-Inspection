@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,29 +13,29 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Flight_Inspection.controls.Joystick
+namespace Flight_Inspection.controls.DataWindow
 {
     /// <summary>
-    /// Interaction logic for JoystickView.xaml
+    /// Interaction logic for DataWindow.xaml
     /// </summary>
-    public partial class JoystickView : UserControl, IControlView
+    public partial class DataWindow : UserControl, IControlView
     {
-        JoystickViewModel JoystickViewModel;
-        public JoystickView()
+        DataWindowVM Vm;
+        public DataWindow()
         {
-            this.DataContext = new JoystickViewModel();
-            this.JoystickViewModel = this.DataContext as JoystickViewModel;
-            JoystickViewModel.Ready += addFeatures;
-            InitializeComponent();
-
+            DataContext = new DataWindowVM();
+            this.Vm = this.DataContext as DataWindowVM;
+/*            Vm.Ready += addFeatures;
+*/            InitializeComponent();
         }
 
-        private void JoyStickCanvas_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
 
+        public IControlViewModel GetViewModel()
+        {
+            return this.Vm;
         }
 
-        private void addFeatures(object sender, EventArgs e)
+/*        private void addFeatures(object sender, EventArgs e)
         {
             JoystickViewModel.addData("aileron", (float)JoyStickCanvas.Width);
             JoystickViewModel.addData("elevator", (float)JoyStickCanvas.Height);
@@ -46,10 +45,5 @@ namespace Flight_Inspection.controls.Joystick
             Console.WriteLine($"Hello {JoyStickCanvas.Height}");
 
         }
-
-        public IControlViewModel GetViewModel()
-        {
-            return this.JoystickViewModel;
-        }
-    }
+*/    }
 }

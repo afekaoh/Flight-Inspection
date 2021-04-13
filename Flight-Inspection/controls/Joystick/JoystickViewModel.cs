@@ -11,9 +11,9 @@ namespace Flight_Inspection.controls.Joystick
 {
     class JoystickViewModel : IControlViewModel
     {
-        List<JoyStickData> datas;
+        List<NormelaizedData> datas;
         private JoystickModel model;
-        public event EventHandler Ready;
+        public event EventHandler Ready; 
 
         private void OnReady()
         {
@@ -31,7 +31,7 @@ namespace Flight_Inspection.controls.Joystick
             }
             set
             {
-                findData("aileron").Data = value * 300 + 300;
+                findData("aileron").Data = value * findData("aileron").Normalize;
                 OnPropertyChanged();
             }
         }
@@ -48,7 +48,7 @@ namespace Flight_Inspection.controls.Joystick
             }
             set
             {
-                findData("rudder").Data = 330 + value * 400;
+                findData("rudder").Data = value * findData("rudder").Normalize/2;
                 OnPropertyChanged();
             }
         }
@@ -64,7 +64,7 @@ namespace Flight_Inspection.controls.Joystick
             }
             set
             {
-                findData("elevator").Data = value * 100 + 150;
+                findData("elevator").Data = value * findData("elevator").Normalize ;
                 OnPropertyChanged();
             }
         }
@@ -80,7 +80,7 @@ namespace Flight_Inspection.controls.Joystick
             }
             set
             {
-                findData("throttle").Data = 230 - value * 100;
+                findData("throttle").Data = 230 - value * findData("throttle").Normalize;
                 OnPropertyChanged();
 
             }
@@ -88,7 +88,7 @@ namespace Flight_Inspection.controls.Joystick
         public JoystickViewModel()
         {
             model = new JoystickModel();
-            datas = new List<JoyStickData>();
+            datas = new List<NormelaizedData>();
             model.PropertyChanged += TheModlePropertyChanged;
         }
         public override void SetSettings(SettingsArgs settingsArgs)
@@ -97,20 +97,11 @@ namespace Flight_Inspection.controls.Joystick
             this.OnReady();
         }
 
-        public JoyStickData findData(string name) { return (JoyStickData)datas.Find(JoyStickData => JoyStickData.Name == name); }
+        public NormelaizedData findData (string name) { return (NormelaizedData)datas.Find(JoyStickData => JoyStickData.Name == name); }
 
         public void addData(string name, float CanvasDim)
         {
-            datas.Add(new JoyStickData(name, CanvasDim, model.maxAbs(name)));
-        }
-
-        public void start()
-        {
-            Thread t = new Thread(model.sendData)
-            {
-                IsBackground = true
-            };
-            t.Start();
+            datas.Add(new NormelaizedData(name, CanvasDim, model.maxAbs(name)));
         }
 
         public void TheModlePropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -130,12 +121,10 @@ namespace Flight_Inspection.controls.Joystick
                     VM_Elevator = model.Elevator;
                     break;
             }
-
         }
-
         internal override void setTime(int time)
         {
-
+            model.CurrentTime = time;
         }
     }
 }
