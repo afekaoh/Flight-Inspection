@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -35,27 +36,33 @@ namespace Flight_Inspection.controls.Video
             }
         }
 
-        private float speed;
+        private double speed=0;
 
-        public float Speed
+        public double Speed
         {
             get
-
-
             {
+                if (speed==0)
+                {
+                    speed = 1;
+                    OnPropertyChanged();
+                }
                 return speed;
             }
             set
             {
+                Console.WriteLine(value);
                 if (speed != value)
                 {
                     speed = value;
                     model.Speed = value;
+                    Console.WriteLine("in"+value);
                     OnPropertyChanged();
                 }
             }
         }
 
+        public ObservableCollection<double> SpeedOptions { get => new ObservableCollection<double>() { 0.5,1,1.25,1.5,2}; }
 
         public void MaxSliderUpdate(object sender, PropertyChangedEventArgs e)
         {
@@ -101,7 +108,7 @@ namespace Flight_Inspection.controls.Video
 
         internal void Pause()
         {
-            model.Pause();
+            model.Pause(); 
         }
 
         private int timeSeries;
