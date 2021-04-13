@@ -51,7 +51,7 @@ namespace Flight_Inspection.controls.Video
                 {
                     speed = value;
                     model.Speed = value;
-                    OnPropertyChanged((int)value);
+                    OnPropertyChanged();
                 }
             }
         }

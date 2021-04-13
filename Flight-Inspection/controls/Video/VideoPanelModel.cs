@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -77,18 +78,18 @@ namespace Flight_Inspection.controls.Video
             }
         }
         //speed property
-        private float speed;
+        private float speed = 1;
 
         public float Speed
         {
             get
 
 
-    {
+            {
                 return speed;
             }
             set
-              {
+            {
                 speed = value;
                 OnPropertyChanged();
             }
@@ -108,12 +109,14 @@ namespace Flight_Inspection.controls.Video
 
         private void play()
         {
+            var stopwatch = new Stopwatch();
             while (true)
             {
                 if (!stop && CurrentTime != MaxSlider)
                 {
                     CurrentTime++;
-                    Thread.Sleep((int)(100 / Speed));
+                    int time = (int)(100 / Speed);
+                    Thread.Sleep(time);
                 }
             }
 
