@@ -82,25 +82,14 @@ namespace Flight_Inspection.controls
                 INotifyPropertyChanged("XMinAttach");
             }
         }
-        private object dataMapper;
-        public object DataMapper
-        {
-            get => this.dataMapper;
-            set
-            {
-                this.dataMapper = value;
-                INotifyPropertyChanged("DataMapper");
-            }
-        }
 
-        private object dataMapperAttach;
-        public object DataMapperAttach
+        ChartValues<ObservablePoint> lastThirty;
+        public ChartValues<ObservablePoint> LastThirty
         {
-            get => this.dataMapperAttach;
-            set
+            get => lastThirty; set
             {
-                this.dataMapperAttach = value;
-                INotifyPropertyChanged("DataMapperAttach");
+                lastThirty = value;
+                INotifyPropertyChanged("LastThirty");
             }
         }
         ChartValues<ObservablePoint> chartVal;
@@ -128,16 +117,6 @@ namespace Flight_Inspection.controls
             }
         }
 
-        private object dataMapperCurrentAndAttach;
-        public object DataMapperCurrentAndAttach
-        {
-            get => this.dataMapperCurrentAndAttach;
-            set
-            {
-                this.dataMapperCurrentAndAttach = value;
-                INotifyPropertyChanged("DataMapperCurrentAndAttach");
-            }
-        }
         ChartValues<ObservablePoint> linearRegVal;
         public ChartValues<ObservablePoint> LinearRegVal
         {
@@ -179,7 +158,9 @@ namespace Flight_Inspection.controls
             List<AnomalyReportSafe> lsReports = analomyDetector.GetAnomalyReport(ls);
             //if (lsReports == null)
             //{
-                LinearRegVal = new ChartValues<ObservablePoint>();
+            AnalomyPoints = new ChartValues<ObservablePoint>();
+            LastThirty = new ChartValues<ObservablePoint>();
+            LinearRegVal = new ChartValues<ObservablePoint>();
                 ChartValues = new ChartValues<ObservablePoint>();
                 ChartValuesAttach = new ChartValues<ObservablePoint>();
                 ChartValuesCurrentAndAttach = new ChartValues<ObservablePoint>();
@@ -213,8 +194,9 @@ namespace Flight_Inspection.controls
                     var data2 = TimeSeries.getFeatureData(anomaly.second);
                     AnalomyPoints.Add(new ObservablePoint() { X = data[(int)anomaly.time], Y = data2[(int)anomaly.time] });
                 }*/
-            //AnalomyPoints.Add(new ObservablePoint() { X = 0.5,Y=0.5 });
-            //INotifyPropertyChanged("AnalomyPoints");
+            AnalomyPoints.Add(new ObservablePoint() { X = 0.5,Y=0.5 });
+            INotifyPropertyChanged("AnalomyPoints");
+            
             //}
         }
         public Property getData(string property)
@@ -256,21 +238,31 @@ namespace Flight_Inspection.controls
             ChartValues.Clear();
             ChartValues.AddRange(points);
             INotifyPropertyChanged("ChartValues");
-            DataMapper = new CartesianMapper<ObservablePoint>().X(point => point.X).Y(point => point.Y);
             ChartValuesAttach.Clear();
             ChartValuesAttach.AddRange(points2);
             INotifyPropertyChanged("ChartValuesAttach");
-            DataMapperAttach = new CartesianMapper<ObservablePoint>().X(point => point.X).Y(point => point.Y);
             ChartValuesCurrentAndAttach.Clear();
             ChartValuesCurrentAndAttach.AddRange(points3);
             INotifyPropertyChanged("ChartValuesCurrentAndAttach");
-            DataMapperCurrentAndAttach = new CartesianMapper<ObservablePoint>().X(point => point.X).Y(point => point.Y);
             LineSafe line = getLinearReg(vs, attach);
             LinearRegVal.Clear();
             float x1 = vs.Min(), y1 = line.b + x1 * line.a;
             float x2 = vs.Max(), y2 = line.b + x2 * line.a;
             LinearRegVal.Add(new ObservablePoint(x1, y1));
             LinearRegVal.Add(new ObservablePoint(x2, y2));
+            AnalomyPoints.Clear();
+            AnalomyPoints.Add(new ObservablePoint() { X = 0.5, Y = 0.5 });
+            INotifyPropertyChanged("AnalomyPoints");
+        }
+
+        public void setLastThirty(int time)
+        {
+            LastThirty.Clear();
+            for (int i = time - 300 < 0 ? 0 : time - 300; i < time; i++)
+            {
+                LastThirty.Add(ChartValuesCurrentAndAttach.ElementAt(i));
+            }
+            INotifyPropertyChanged("LastThirty");
         }
     }
 }

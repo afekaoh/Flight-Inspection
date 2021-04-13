@@ -69,8 +69,11 @@ namespace Flight_Inspection.controls.Video
             }
             set
             {
-                currentTime = value;
-                OnPropertyChanged();
+                if (value < maxSlider)
+                {
+                    currentTime = value;
+                    OnPropertyChanged();
+                }
             }
         }
 
