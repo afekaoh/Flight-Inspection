@@ -35,9 +35,11 @@ namespace Flight_Inspection.Pages.Settings
         {
             SettingItems = new List<SettingItem>
             {
-                {new SettingItem("CSV", ".csv")},
+                {new SettingItem("CSV_Normal", ".csv")},
+                {new SettingItem("CSV_Test", ".csv")},
                 {new SettingItem("XML", ".xml")},
-                {new SettingItem("PATH", "") }
+                {new SettingItem("DLL_PATH", ".dll")},
+                {new SettingItem("Proc_PATH", "") }
             };
             SettingItems.ForEach(t => t.PropertyChanged += SavedEvent);
             save = new Save();
@@ -50,12 +52,23 @@ namespace Flight_Inspection.Pages.Settings
 
         void SavedEvent(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == "Content")
+            if (e.PropertyName is "Content")
             {
                 var si = sender as SettingItem;
                 AddData(si.Name, si.Content);
-
-                Ready = SettingItems.All(t => t.Checked);
+                Ready = SettingItems.All(t => t.Ready);
+            }
+            if (e.PropertyName is "Checked")
+            {
+                var si = sender as SettingItem;
+                switch (si.Name)
+                {
+                    case "CSV_Normal":
+                    case "XML":
+                    case "Proc_PATH":
+                        si.Ready = true;
+                        break;
+                }
             }
         }
 
@@ -71,7 +84,8 @@ namespace Flight_Inspection.Pages.Settings
 
         internal OnReadyEventArgs GetSettings(string name)
         {
-            return new OnReadyEventArgs(name, getSettingItem("CSV"), getSettingItem("XML"), getSettingItem("PATH"), Ready);
+            var settings = settingItems.FindAll(s => s.Checked).ToArray();
+            return new OnReadyEventArgs(name, Ready, settings);
         }
 
         public override void UpdateSettings()

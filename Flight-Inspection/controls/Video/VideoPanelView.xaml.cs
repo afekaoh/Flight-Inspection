@@ -56,5 +56,15 @@ namespace Flight_Inspection.controls.Video
             //TODO
             //closed.Invoke();
         }
+
+        private void speed_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void speed_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }

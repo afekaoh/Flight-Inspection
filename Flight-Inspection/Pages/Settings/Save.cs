@@ -67,7 +67,7 @@ namespace Flight_Inspection.Settings
         {
 
 
-            return new DataPacket() { CSV = getContent("CSV"), XML = getContent("XML"), PATH = getContent("PATH") };
+            return new DataPacket() { CSV_Normal = getContent("CSV_Normal"), XML = getContent("XML"), Proc_PATH = getContent("Proc_PATH") };
         }
 
         public string getContent(string name)
@@ -85,20 +85,26 @@ namespace Flight_Inspection.Settings
 
     public class DataPacket
     {
-        public string CSV { get; set; }
+        public string CSV_Normal { get; set; }
+        public string CSV_Test { get; set; }
         public string XML { get; set; }
-        public string PATH { get; set; }
+        public string Proc_PATH { get; set; }
+        public string DLL_PATH { get; set; }
 
         public string GetArg(string name)
         {
             switch (name)
             {
-                case "CSV":
-                    return CSV;
+                case "CSV_Normal":
+                    return CSV_Normal;
+                case "CSV_Test":
+                    return CSV_Test;
                 case "XML":
                     return XML;
-                case "PATH":
-                    return PATH;
+                case "Proc_PATH":
+                    return Proc_PATH;
+                case "DLL_PATH":
+                    return DLL_PATH;
                 default:
                     return null;
             }

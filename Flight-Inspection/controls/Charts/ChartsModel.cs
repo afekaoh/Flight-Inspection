@@ -173,7 +173,9 @@ namespace Flight_Inspection.controls
                 return;
             List<string> ls = timeSeries.GetFeatureNames();
             AnalomyDetector analomyDetector = new AnalomyDetector();
-            List<AnomalyReportSafe> lsReports = analomyDetector.GetAnomalyReport(ls);
+            List<AnomalyReportSafe> lsReports = analomyDetector.GetAnomalyReport(ls, TimeSeries);
+            //if (lsReports == null)
+            //{
             AnalomyPoints = new ChartValues<ObservablePoint>();
             LastThirty = new ChartValues<ObservablePoint>();
             LinearRegVal = new ChartValues<ObservablePoint>();

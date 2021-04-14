@@ -15,10 +15,10 @@
             <local:TimeConverterToString x:Key="TimeConverterString"/>
             <Image x:Key="Play" Source="play-button-png-12808.png" Height="50" Width="50" />
             <Image x:Key="Stop" Source="pause.png" Height="50" Width="50"/>
-            
+
         </ResourceDictionary>
     </UserControl.Resources>
-    
+
     <Grid Margin="0,0,0,0">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -32,19 +32,20 @@
             <RowDefinition Height="3*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        
-        <Rectangle Margin="1,1,1,1" Grid.RowSpan="3" Grid.ColumnSpan="6" Height="Auto" Stroke="Black" Width="Auto" Fill="#FF5B5B5D"/>
 
-        <Button Name ="Play" Background="Transparent" Style="{StaticResource buttonStyle}" Grid.Row="1"  Grid.Column="2" Margin="2,2,2,2" HorizontalAlignment="Center" Height="50" VerticalAlignment="Center" Width="50" Click="Button_Play">
+        <Rectangle Margin="1,1,1,1" Grid.RowSpan="3" Grid.ColumnSpan="6" Height="Auto" Stroke="Black" Width="Auto" Fill="#FF1F1F21"/>
+
+        <Button Name ="Play" Background="#FFDADADA" Style="{StaticResource buttonStyle}" Grid.Row="1"  Grid.Column="2" Margin="48,2,50,0" HorizontalAlignment="Center" Height="51" VerticalAlignment="Center" Width="52" Click="Button_Play" BorderBrush="Black" Foreground="Black" OpacityMask="Black">
             <DynamicResource ResourceKey="Play"/>
-            
+
         </Button>
         <Button Content="Stop" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" Margin="2,2,2,2" Height="29" VerticalAlignment="Center" Width="75"  Click="Button_Stop" RenderTransformOrigin="0.893,0.609"/>
         <Slider Name ="Time" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" Width="auto" Height="Auto" Margin="10,0,0,0" Value="{Binding Path=Time, Mode=TwoWay}" Maximum="{Binding MaxSlider}"/>
         <TextBlock Text="{Binding Time, Converter={StaticResource TimeConverterString}}" Grid.Row="0" Grid.Column="5" HorizontalAlignment="Center" Height="28" TextWrapping="Wrap" VerticalAlignment="Center" Width="69"/>
         <ComboBox Name="speed" Margin="2,2,2,2" Width="75" Height="29" Grid.Row="1" Grid.Column="4" SelectedItem="{Binding Speed}">
+
         </ComboBox>
         <TextBlock Grid.Row="2" Height="Auto" Text=" "/>
     </Grid>
-    
+
 </UserControl>

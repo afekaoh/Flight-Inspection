@@ -48,5 +48,10 @@ namespace Flight_Inspection.controls.DataWindow
             Vm.addData("side-slip-deg", (int)GridPitch.ActualHeight);
             Vm.addData("altitude-ft", (int)GridAltimeter.ActualHeight);
         }
+
+        private void AngularGauge_SourceUpdated(object sender, DataTransferEventArgs e)
+        {
+
+        }
     }
 }

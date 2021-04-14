@@ -12,21 +12,24 @@ namespace Flight_Inspection.Pages.Settings
     public class OnReadyEventArgs : PropertyChangedEventArgs
     {
 
-        public OnReadyEventArgs(string propertyName, SettingItem cSV, SettingItem xML, SettingItem pATH, bool ready) : base(propertyName)
+        public OnReadyEventArgs(string propertyName, bool ready, params SettingItem[] settingItems) : base(propertyName)
         {
-            CSV = cSV;
-            XML = xML;
-            PATH = pATH;
+            settings = new List<SettingItem>();
+            settings.AddRange(settingItems);
             this.ready = ready;
         }
 
         public OnReadyEventArgs(string propertyName, TimeSeries ts) : base(propertyName) { TS = ts; }
 
 
-        public SettingItem CSV { get; set; }
-        public SettingItem XML { get; set; }
-        public SettingItem PATH { get; set; }
+        public List<SettingItem> settings;
         public bool ready { get; set; }
         public TimeSeries TS { get; }
+
+
+        public SettingItem GetSetting(string str)
+        {
+            return settings.Find(s => s.Name == str);
+        }
     }
 }

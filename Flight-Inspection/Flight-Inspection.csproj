@@ -324,7 +324,12 @@
     <Resource Include="controls\Video\pause.png" />
     <Resource Include="Photos\compass.jpg" />
     <Resource Include="controls\DataWindow\compass.jpg" />
+    <Resource Include="controls\DataWindow\Compass UI new 2.jpg" />
+    <Resource Include="controls\DataWindow\Compass Rose Tattoo - Semi-Permanent Tattoos by inkbox™.png" />
+    <Resource Include="controls\DataWindow\Compass UI new 3.jpg" />
+    <Resource Include="controls\DataWindow\compass.jpeg" />
     <Content Include="plugins\anomaly_detection_util.dll" />
+    <Content Include="plugins\anomaly_detec_circle.dll" />
     <Content Include="plugins\anomaly_detec_linear_reg.dll" />
     <Resource Include="Pages\Settings\FG_Data\playback_small.xml" />
   </ItemGroup>

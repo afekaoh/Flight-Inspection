@@ -15,6 +15,7 @@ namespace Flight_Inspection.Settings
         private string checkVar;
         private string name;
         private bool isChecked;
+        private bool ready;
 
         public SettingItem(string name, string checkVar)
         {
@@ -47,8 +48,7 @@ namespace Flight_Inspection.Settings
         }
 
         public string Name { get => name; set => name = value; }
-
-
+        public bool Ready { get => ready; set => ready = value; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
