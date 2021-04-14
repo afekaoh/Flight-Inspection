@@ -22,41 +22,45 @@ namespace Flight_Inspection.controls.Charts
                 pathDll = value;
             }
         }
-        
-        private string pathCsv;
 
-        public string PathCsv
+        private string pathCsvNormal;
+
+        public string PathCsvNormal
         {
-            get => pathCsv;
+            get => pathCsvNormal;
             set
             {
-                pathCsv = value;
+                pathCsvNormal = value;
             }
         }
         private string pathCsvTest;
 
         public string PathCsvTest
         {
-            get => pathCsv;
+            get => pathCsvTest;
             set
             {
-                pathCsv = value;
+                pathCsvTest = value;
             }
         }
+        public TimeSeries ts { get; set; }
 
-        public AnalomyDetector()
+        public AnalomyDetector(SettingsArgs settingsArgs)
         {
-
+            this.PathCsvNormal = settingsArgs.CSV_Normal;
+            this.PathCsvTest = settingsArgs.CSV_Test;
+            this.PathDll = settingsArgs.DLLPath;
+            this.ts = settingsArgs.Ts;
         }
 
-        public List<AnomalyReportSafe> GetAnomalyReport(List<string> properties, TimeSeries ts)
+        public List<AnomalyReportSafe> GetAnomalyReport()
         {
+            var properties = ts.GetFeatureNames();
             var a = LoadDll(pathDll);
             if (a)
             {
-                LoadTimeSriesNormal(pathCsv, properties);
-                string detect = "C:\\Users\\avri2\\source\\repos\\Flight-Inspection_\\Flight-Inspection\\plugins\\anomaly_detec_linear_reg.dll";
-                LoadTimeSriesTest(detect, properties);
+                LoadTimeSriesNormal(pathCsvNormal, properties);
+                LoadTimeSriesTest(pathCsvTest, properties);
                 var ar = GetAnomalyReports(ts);
                 return ar;
             }

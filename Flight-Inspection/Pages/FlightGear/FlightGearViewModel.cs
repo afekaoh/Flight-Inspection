@@ -14,6 +14,7 @@ namespace Flight_Inspection.Pages.FlightGear
         private bool ready;
 
         FlightDataViewModel dataViewModel;
+        SettingsArgs settings;
         public FlightDataViewModel DataViewModel
         {
             get => dataViewModel;
@@ -68,6 +69,7 @@ namespace Flight_Inspection.Pages.FlightGear
         public override void SetSettings(SettingsArgs settingsArgs)
         {
             flightGearModel.SetSettings(settingsArgs.Ts, settingsArgs.ProcPath);
+            this.settings = settingsArgs;
             this.Ts = settingsArgs.Ts;
             this.ready = true;
         }
@@ -75,7 +77,7 @@ namespace Flight_Inspection.Pages.FlightGear
         public override void UpdateSettings()
         {
             if (!(dataViewModel is null))
-                dataViewModel.Ts = ts;
+                dataViewModel.SetSettings(settings);
         }
 
         void SetTime(object sender, SetTimeEventArgs e)

@@ -32,7 +32,6 @@ namespace Flight_Inspection.controls.Joystick
         public void setCanvasDim(int val)
         {
             canvasDim = val;
-            Console.WriteLine(canvasDim + "lala");
         }
     }
 }

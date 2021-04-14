@@ -62,7 +62,6 @@ namespace Flight_Inspection.controls.DllWraper
             }
             catch (Exception)
             {
-                Console.WriteLine("error");
                 return false;
             }
         }
@@ -83,7 +82,7 @@ namespace Flight_Inspection.controls.DllWraper
             List<AnomalyReportSafe> list = new List<AnomalyReportSafe>();
             unsafe
             {
-                IntPtr intPtr = getAnomalyReport();
+                    IntPtr intPtr = getAnomalyReport();
                 AnomalyReportArray wraper = (AnomalyReportArray)Marshal.PtrToStructure(intPtr, typeof(AnomalyReportArray));
                 //AnomalyReportArray arr = getAnomalyReport();
                 for (int i = 0; i < wraper.size; i++)

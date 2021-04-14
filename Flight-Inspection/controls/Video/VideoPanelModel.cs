@@ -92,7 +92,6 @@ namespace Flight_Inspection.controls.Video
             }
             set
             {
-                Console.WriteLine("mod" + value);
                 speed = value;
                 OnPropertyChanged();
             }

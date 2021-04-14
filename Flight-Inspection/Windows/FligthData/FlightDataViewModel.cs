@@ -78,6 +78,7 @@ namespace Flight_Inspection.Windows.FligthData
         public void SetSettings(SettingsArgs settingsArgs)
         {
             viewModels.ForEach(vm => vm.SetSettings(settingsArgs));
+            this.Ts = settingsArgs.Ts;
         }
     }
 }

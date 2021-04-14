@@ -36,7 +36,7 @@ namespace Flight_Inspection.Pages.Settings
             {
                 var si = sender as SettingItem;
                 AddData(si.Name, si.Content);
-                Ready = SettingItems.All(t => t.Ready);
+                Ready = SettingItems.All(t => (t.Ready || t.Name is "CSV_Test" || t.Name is "DLL_PATH"));
             }
             if (e.PropertyName is "Checked")
             {
@@ -48,11 +48,13 @@ namespace Flight_Inspection.Pages.Settings
                         si.Ready = true;
                         break;
                     case "XML":
+                        si.Ready = true;
+                        break;
                     case "Proc_PATH":
                         si.Ready = true;
                         break;
                     case "CSV_Test":
-                        settingItems.Find(s => s.Name == "DLL_Path").Ready = true;
+                        settingItems.Find(s => s.Name == "DLL_PATH").Ready = true;
                         UpdateSettings();
                         break;
                     case "DLL_Path":
@@ -97,6 +99,7 @@ namespace Flight_Inspection.Pages.Settings
         {
             var s = save.GetSettings();
             settingItems.ForEach(t => t.Content = s.GetArg(t.Name));
+            OnPropertyChanged("settings");
         }
 
         public bool Ready

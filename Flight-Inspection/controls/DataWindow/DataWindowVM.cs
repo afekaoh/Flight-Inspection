@@ -140,7 +140,6 @@ namespace Flight_Inspection.controls.DataWindow
             }
             else if (e.PropertyName == "altimeter")
             {
-                Console.WriteLine(model.Altimeter);
                 VM_Altimeter = model.Altimeter - model.minVal("altitude-ft");
             }
             else if (e.PropertyName == "airSpeed")

@@ -59,7 +59,7 @@ namespace Flight_Inspection
 
         public void OnReady(object sender, PropertyChangedEventArgs e)
         {
-            flight.SetSettings(new SettingsArgs {Ts = (e as OnReadyEventArgs).TS });
+
             frames.ForEach(f => f.Navigate(views.Find(v => v.Name == f.Name)));
         }
     }
