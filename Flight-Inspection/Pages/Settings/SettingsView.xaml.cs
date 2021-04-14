@@ -36,7 +36,8 @@ namespace Flight_Inspection
             name = (e.Source as Button).Content as string;
             switch (name)
             {
-                case "PATH":
+                case "Proc_PATH":
+                case "DLL_PATH":
                     fbd = new System.Windows.Forms.FolderBrowserDialog();
                     break;
                 default:

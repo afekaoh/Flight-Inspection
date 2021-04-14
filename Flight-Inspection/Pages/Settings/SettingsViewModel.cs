@@ -36,9 +36,9 @@ namespace Flight_Inspection.Pages.Settings
             SettingItems = new List<SettingItem>
             {
                 {new SettingItem("CSV_Normal", ".csv")},
-                {new SettingItem("CSV_Test", ".csv")},
+                {new SettingItem("CSV_Test", ".csv") { Ready = true }},
                 {new SettingItem("XML", ".xml")},
-                {new SettingItem("DLL_PATH", ".dll")},
+                {new SettingItem("DLL_PATH", ".dll") {Ready = true}},
                 {new SettingItem("Proc_PATH", "") }
             };
             SettingItems.ForEach(t => t.PropertyChanged += SavedEvent);

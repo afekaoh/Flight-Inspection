@@ -25,12 +25,12 @@
                             <ColumnDefinition Width="auto" MinWidth="145"/>
                         </Grid.ColumnDefinitions>
                         <CheckBox IsChecked="{Binding Checked}" Grid.Column="0" Height="35" Margin="10,10" HorizontalAlignment="Right" IsEnabled="False" RenderTransformOrigin="6.062,7.267" BorderBrush="White" Foreground="White" Background="Black"/>
-                        <Button Margin="0,0,80,25" Grid.Column="1" Width="65" Height="40" HorizontalAlignment="Right" Content="{Binding Name}" BorderThickness="0" Background="Black" Click="On_Click" BorderBrush="Black" Foreground="White" />
+                        <Button Margin="0,0,80,25" Grid.Column="1" Width="auto" Height="40" HorizontalAlignment="Right" Content="{Binding Name}" BorderThickness="0" Background="Black" Click="On_Click" BorderBrush="Black" Foreground="White" />
 
                     </Grid>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
-        <Button x:Name="save" Content="save" HorizontalAlignment="Right" Margin="0,312,74,0" VerticalAlignment="Top" Width="77"  Click="Save_Click" Background="Black" Foreground="White" BorderBrush="Black" Height="35" FontSize="20" FontStyle="Italic" FontWeight="ExtraBlack" FontStretch="Condensed"/>
+        <Button x:Name="save" Content="save" HorizontalAlignment="Right" Margin="0,507,74,0" VerticalAlignment="Top" Width="77"  Click="Save_Click" Background="Black" Foreground="White" BorderBrush="Black" Height="35" FontSize="20" FontStyle="Italic" FontWeight="ExtraBlack" FontStretch="Condensed"/>
     </Grid>
 </Page>
