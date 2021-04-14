@@ -1,12 +1,8 @@
 ﻿using LiveCharts;
-using LiveCharts.Configurations;
 using LiveCharts.Defaults;
-using LiveCharts.Wpf;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Windows.Media;
-
 namespace Flight_Inspection.controls
 {
     /**
