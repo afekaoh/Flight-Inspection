@@ -11,6 +11,7 @@ namespace Flight_Inspection.controls
 {
     /**
      * The View Model that handeles the charts.
+     *  In the charts we used the library of LiveCharts - > https://lvcharts.net/
      */
     class VMCharts : IControlViewModel
     {
