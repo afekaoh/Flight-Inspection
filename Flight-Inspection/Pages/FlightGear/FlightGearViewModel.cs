@@ -61,7 +61,7 @@ namespace Flight_Inspection.Pages.FlightGear
         {
             if (ready)
             {
-                //flightGearModel.StartPlay();
+                flightGearModel.StartPlay();
                 OnStart();
             }
         }

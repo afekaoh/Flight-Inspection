@@ -77,6 +77,7 @@ namespace Flight_Inspection.controls
             if (e.PropertyName != "TimeSeries")
                 return;
             List<string> ls = timeSeries.GetFeatureNames();
+            mapper = new Dictionary<ObservablePoint, int>();
             AnalomyPoints = new ChartValues<ObservablePoint>();
             LastThirty = new ChartValues<ObservablePoint>();
             LinearRegVal = new ChartValues<ObservablePoint>();
