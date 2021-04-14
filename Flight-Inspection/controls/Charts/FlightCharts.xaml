@@ -100,20 +100,19 @@
         </lvc1:CartesianChart>
 
 
-        <lvc1:CartesianChart Name="Series3" Margin="4" Grid.Column="1" Grid.RowSpan="2" Hoverable="False" DataTooltip="{x:Null}" DisableAnimations="True"  
-                            >
+        <lvc1:CartesianChart Name="Series3" Margin="4" Grid.Column="1" Grid.RowSpan="2" Hoverable="False" DataTooltip="{x:Null}" DisableAnimations="True" >
             <lvc1:CartesianChart.Series>
                 <lvc1:ScatterSeries
                       MaxPointShapeDiameter="3"
                       MinPointShapeDiameter="3"
                       Title="Attach Property"
                       Values="{Binding ChartValuesCurrentAndAttach}"
+                    
                    />
 
                 <lvc1:ScatterSeries
                       MaxPointShapeDiameter="3"
                       MinPointShapeDiameter="3"
-                      Title="Attach Property"
                       Values="{Binding LastThirty}"
                    />
 

@@ -1,9 +1,11 @@
 ﻿using LiveCharts;
+using LiveCharts.Configurations;
 using LiveCharts.Defaults;
 using LiveCharts.Wpf;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Windows.Media;
 
 namespace Flight_Inspection.controls
 {
@@ -82,7 +84,7 @@ namespace Flight_Inspection.controls
                 OnPropertyChanged("XMinAttach");
             }
         }
-        
+
 
         ChartValues<ObservablePoint> lastThirty;
         public ChartValues<ObservablePoint> LastThirty
@@ -161,6 +163,7 @@ namespace Flight_Inspection.controls
         public VMCharts()
         {
             charts = new ChartsModel();
+            LastThirty = new ChartValues<ObservablePoint>();
             charts.PropertyChanged += delegate (Object sender, PropertyChangedEventArgs e)
             {
                 switch (e.PropertyName)
@@ -189,15 +192,16 @@ namespace Flight_Inspection.controls
                     case "LinearRegVal":
                         LinearRegVal = charts.LinearRegVal;
                         break;
-                    case "LastThirty":
-                        lastThirty = charts.LastThirty;
-                        break;
                     case "ChartValuesCurrentAndAttach":
                         ChartValuesCurrentAndAttach = charts.ChartValuesCurrentAndAttach;
                         break;
                     case "AnalomyPoints":
                         AnalomyPoints = charts.AnalomyPoints;
                         break;
+                    case "LastThirty":
+                        LastThirty = charts.LastThirty;
+                        break;
+
                 }
             };
 
@@ -216,13 +220,18 @@ namespace Flight_Inspection.controls
         public void updateSeries()
         {
             if (current != null)
-                charts.updateSeries(current.Name);
+                charts.updateSeries(current.Name, Time);
         }
 
         internal override void setTime(int time)
         {
-             this.Time = time;
-            charts.setLastThirty(Time);
+            int num = time + 1 < (int)xMax ? time + 1 : (int)xMax;
+            for (int i = Time; i < num; i++)
+            {
+                LastThirty.RemoveAt(0);
+                LastThirty.Add(ChartValuesCurrentAndAttach[i]);
+            }
+            this.Time = time;
         }
     }
 }

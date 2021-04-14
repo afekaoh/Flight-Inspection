@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -35,28 +36,37 @@ namespace Flight_Inspection.controls.Video
             }
         }
 
-        //The slider's speed.
-        private float speed;
+        private double speed=0;
 
-        public float Speed
+        public double Speed
         {
             get
             {
+                if (speed==0)
+                {
+                    speed = 1;
+                    OnPropertyChanged();
+                }
                 return speed;
             }
             set
             {
+                Console.WriteLine(value);
                 if (speed != value)
                 {
                     //Get the speed valuew from the model.
                     speed = value;
                     model.Speed = value;
+                    Console.WriteLine("in"+value);
                     OnPropertyChanged();
                 }
             }
         }
 
+        public ObservableCollection<double> SpeedOptions { get => new ObservableCollection<double>() { 0.5,1,1.25,1.5,2}; }
+
         //This method is updating the maximum value of the slider.
+
         public void MaxSliderUpdate(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName is "MaxSlider")
@@ -103,7 +113,7 @@ namespace Flight_Inspection.controls.Video
         //get the changed from the model and update the pause button in the view
         internal void Pause()
         {
-            model.Pause();
+            model.Pause(); 
         }
 
         private int timeSeries;

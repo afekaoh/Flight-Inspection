@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Collections.ObjectModel;
 using LiveCharts;
 using LiveCharts.Defaults;
 using LiveCharts.Configurations;
 using static Flight_Inspection.controls.AnalomyDetectorClass;
 using Flight_Inspection.controls.Charts;
 using static Flight_Inspection.controls.DllWraper.AnalomyReportWraper;
+using System.Windows.Media;
 
 namespace Flight_Inspection.controls
 {
@@ -126,6 +126,8 @@ namespace Flight_Inspection.controls
                 INotifyPropertyChanged("LinearRegVal");
             }
         }
+
+       
         public TimeSeries TimeSeries
         {
             get => timeSeries; set
@@ -133,6 +135,21 @@ namespace Flight_Inspection.controls
                 timeSeries = value;
                 INotifyPropertyChanged("TimeSeries");
              }
+        }
+
+        private int currentTime = 100;
+
+        public int Time
+        {
+            get => currentTime;
+            set
+            {
+                if (currentTime != value && value < xMax)
+                {
+                    currentTime = value;
+                    INotifyPropertyChanged("Time");
+                }
+            }
         }
 
         private void INotifyPropertyChanged(string v)
@@ -156,8 +173,6 @@ namespace Flight_Inspection.controls
             List<string> ls = timeSeries.GetFeatureNames();
             AnalomyDetector analomyDetector = new AnalomyDetector();
             List<AnomalyReportSafe> lsReports = analomyDetector.GetAnomalyReport(ls);
-            //if (lsReports == null)
-            //{
             AnalomyPoints = new ChartValues<ObservablePoint>();
             LastThirty = new ChartValues<ObservablePoint>();
             LinearRegVal = new ChartValues<ObservablePoint>();
@@ -185,20 +200,10 @@ namespace Flight_Inspection.controls
                     }
                     properties.Add(new Property() { Name = ls[i], Attach = maxCor, Data = data.ToList(), LinearReg = getLinearReg(data.ToList(), TimeSeries.GetFeatureData(maxCor)) });
                 }
-            //}
-            //else
-            //{
-     /*           foreach (AnomalyReportSafe anomaly in lsReports)
-                {
-                    var data = TimeSeries.getFeatureData(anomaly.first);
-                    var data2 = TimeSeries.getFeatureData(anomaly.second);
-                    AnalomyPoints.Add(new ObservablePoint() { X = data[(int)anomaly.time], Y = data2[(int)anomaly.time] });
-                }*/
             AnalomyPoints.Add(new ObservablePoint() { X = 0.5,Y=0.5 });
             INotifyPropertyChanged("AnalomyPoints");
-            
-            //}
         }
+
         public Property getData(string property)
         {
             return (Property)properties.Find(prop => prop.Name == property);
@@ -208,7 +213,7 @@ namespace Flight_Inspection.controls
         {
             return properties;
         }
-        public void updateSeries(string content)
+        public void updateSeries(string content, int time)
         {
             if (content == "")
                 return;
@@ -244,6 +249,11 @@ namespace Flight_Inspection.controls
             ChartValuesCurrentAndAttach.Clear();
             ChartValuesCurrentAndAttach.AddRange(points3);
             INotifyPropertyChanged("ChartValuesCurrentAndAttach");
+            LastThirty.Clear();
+            for (int i = time - 200 < 0 ? 0 : time - 200; i < (time < xMax ? time : xMax); i++)
+            {
+                LastThirty.Add(ChartValuesCurrentAndAttach[i]);
+            }
             LineSafe line = getLinearReg(vs, attach);
             LinearRegVal.Clear();
             float x1 = vs.Min(), y1 = line.b + x1 * line.a;
@@ -254,15 +264,6 @@ namespace Flight_Inspection.controls
             AnalomyPoints.Add(new ObservablePoint() { X = 0.5, Y = 0.5 });
             INotifyPropertyChanged("AnalomyPoints");
         }
-
-        public void setLastThirty(int time)
-        {
-            LastThirty.Clear();
-            for (int i = time - 300 < 0 ? 0 : time - 300; i < time; i++)
-            {
-                LastThirty.Add(ChartValuesCurrentAndAttach.ElementAt(i));
-            }
-            INotifyPropertyChanged("LastThirty");
-        }
     }
+
 }

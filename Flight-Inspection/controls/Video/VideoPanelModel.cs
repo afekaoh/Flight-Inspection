@@ -81,11 +81,10 @@ namespace Flight_Inspection.controls.Video
                 }
             }
         }
+        //speed property
+        private double speed = 1;
 
-        //Speed property.
-        private float speed = 1;
-
-        public float Speed
+        public double Speed
         {
             get
             {
@@ -93,6 +92,7 @@ namespace Flight_Inspection.controls.Video
             }
             set
             {
+                Console.WriteLine("mod" + value);
                 speed = value;
                 OnPropertyChanged();
             }

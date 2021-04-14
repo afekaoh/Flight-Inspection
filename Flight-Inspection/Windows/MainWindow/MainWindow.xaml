@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Flight_Inspection"
         xmlns:DVC="clr-namespace:System.Windows.Forms.DataVisualization.Charting;assembly=System.Windows.Forms.DataVisualization"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800"
+        Title="MainWindow" Height="600" Width="1000"
         Background="Black">
 
     <Grid>
@@ -16,10 +16,7 @@
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
-            <!--<ColumnDefinition Width="*"/>-->
         </Grid.ColumnDefinitions>
-        <!--<control:FlightGearControl Grid.Column="1"/>-->
-        <!--<control:FlightCharts/>-->
         <Image Grid.RowSpan="2" Stretch="Fill" Source="back.jpeg" VerticalAlignment="Center" HorizontalAlignment="Center" />
         <Frame x:Name="frame" NavigationUIVisibility="Hidden" Grid.Row="1"/>
         <Button x:Name="Settings" Content="Settings"

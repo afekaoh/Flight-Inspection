@@ -102,27 +102,26 @@ namespace Flight_Inspection.controls.DataWindow
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
         public void sendData()
-        {            
-                Yaw = ts.GetFeatureData("heading-deg").ElementAt(CurrentTime);
+        {     
+                Yaw = ts.GetFeatureData("side-slip-deg").ElementAt(CurrentTime);
                 Pitch = ts.GetFeatureData("pitch-deg").ElementAt(CurrentTime);
                 Roll = ts.GetFeatureData("roll-deg").ElementAt(CurrentTime);
                 AirSpeed = ts.GetFeatureData("airspeed-kt").ElementAt(CurrentTime);
                 Altimeter = ts.GetFeatureData("altitude-ft").ElementAt(CurrentTime);
                 Direction = ts.GetFeatureData("magnetic-compass_indicated-heading-deg").ElementAt(CurrentTime);
-            }
-        public float maxAbs(String feature)
+        }
+
+        public float maxVal(String feature)
         {
-            float minVal = (float)Math.Abs(ts.GetFeatureData(feature).Min());
-            float maxVal = Math.Abs(ts.GetFeatureData(feature).Max());
-            if (minVal >= maxVal)
-            {
-                return minVal;
-            }
-            if (minVal < maxVal)
-            {
-                return maxVal;
-            }
-            return 0;
+            if (ts == null)
+                return 0;
+            return (float)ts.GetFeatureData(feature).Max();
+        }
+        public float minVal(String feature)
+        {
+            if (ts == null)
+                return 0;
+            return (float)ts.GetFeatureData(feature).Min();
         }
     } 
 }
