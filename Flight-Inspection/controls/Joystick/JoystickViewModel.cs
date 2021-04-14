@@ -31,7 +31,7 @@ namespace Flight_Inspection.controls.Joystick
             }
             set
             {
-                findData("aileron").Data = value * findData("aileron").Normalize;
+                findData("aileron").Data = value*100; //* findData("aileron").Normalize;
                 OnPropertyChanged();
             }
         }
@@ -48,7 +48,7 @@ namespace Flight_Inspection.controls.Joystick
             }
             set
             {
-                findData("rudder").Data = value * findData("rudder").Normalize/2;
+                findData("rudder").Data = value*100; //* findData("rudder").Normalize/2;
                 OnPropertyChanged();
             }
         }
@@ -64,7 +64,7 @@ namespace Flight_Inspection.controls.Joystick
             }
             set
             {
-                findData("elevator").Data = value * findData("elevator").Normalize ;
+                findData("elevator").Data = value*100;// * findData("elevator").Normalize ;
                 OnPropertyChanged();
             }
         }
@@ -80,7 +80,7 @@ namespace Flight_Inspection.controls.Joystick
             }
             set
             {
-                findData("throttle").Data = 230 - value * findData("throttle").Normalize;
+                findData("throttle").Data = 230 - value*100;// * findData("throttle").Normalize;
                 OnPropertyChanged();
 
             }
@@ -108,16 +108,16 @@ namespace Flight_Inspection.controls.Joystick
         {
             switch (e.PropertyName)
             {
-                case "aileron":
+                case "Aileron":
                     VM_Aileron = model.Aileron;
                     break;
-                case "rudder":
+                case "Rudder":
                     VM_Rudder = model.Rudder;
                     break;
-                case "throttle":
+                case "Throttle":
                     VM_Throttle = model.Throttle;
                     break;
-                case "elevator":
+                case "Elevator":
                     VM_Elevator = model.Elevator;
                     break;
             }

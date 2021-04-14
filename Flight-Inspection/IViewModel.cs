@@ -11,6 +11,6 @@ namespace Flight_Inspection
     // a father Interface for all the ViewModel 
     interface IViewModel : INotifyPropertyChanged
     {
-        void SetSettings(SettingsArgs settingsArgs);
+       void SetSettings(SettingsArgs settingsArgs);
     }
 }

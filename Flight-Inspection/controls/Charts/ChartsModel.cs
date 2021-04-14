@@ -155,7 +155,7 @@ namespace Flight_Inspection.controls
                 return;
             List<string> ls = timeSeries.GetFeatureNames();
             AnalomyDetector analomyDetector = new AnalomyDetector();
-            List<AnomalyReportSafe> lsReports = analomyDetector.GetAnomalyReport(ls);
+            List<AnomalyReportSafe> lsReports = analomyDetector.GetAnomalyReport(ls, TimeSeries);
             //if (lsReports == null)
             //{
             AnalomyPoints = new ChartValues<ObservablePoint>();
@@ -170,7 +170,7 @@ namespace Flight_Inspection.controls
                     float maxVal = 0;
                     string maxCor = "";
                     float[] data = TimeSeries.GetFeatureData(ls[i]).ToArray();
-                    for (int j = 0; j < ls.Count; j++)
+                    for (int j = i+1; j < ls.Count; j++)
                     {
                         if (i == j)
                             continue;

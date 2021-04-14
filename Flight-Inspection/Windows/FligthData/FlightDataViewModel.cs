@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Flight_Inspection.Windows.FligthData
 {
-    public class FlightDataViewModel : INotifyPropertyChanged
+    public class FlightDataViewModel : IViewModel
     {
         public event PropertyChangedEventHandler PropertyChanged;
         public event EventHandler<SetTimeEventArgs> SetTimeEvent;
@@ -65,11 +65,6 @@ namespace Flight_Inspection.Windows.FligthData
             PropertyChanged?.Invoke(this, e);
         }
 
-        internal void UpdateSettings(SettingsArgs settingsArgs)
-        {
-            viewModels.ForEach(vm => vm.SetSettings(settingsArgs));
-        }
-
         public void addEvent()
         {
             viewModels.ForEach(vm =>
@@ -80,5 +75,9 @@ namespace Flight_Inspection.Windows.FligthData
             });
         }
 
+        public void SetSettings(SettingsArgs settingsArgs)
+        {
+            viewModels.ForEach(vm => vm.SetSettings(settingsArgs));
+        }
     }
 }

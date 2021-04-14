@@ -9,7 +9,7 @@ namespace Flight_Inspection.controls.Charts
 {
     class AnalomyDetector
     {
-        private string pathDll = "C:\\Users\\avri2\\source\\repos\\Flight-Inspection_\\Flight-Inspection\\plugins\\anomaly_detec_linear_reg.dll";
+        private string pathDll = "C:\\Users\\afeka\\OneDrive - Bar-Ilan University\\Code projects\\Advance-Programming-2\\Flight-Inspection\\Flight-Inspection\\plugins\\anomaly_detec_linear_reg.dll";
         public string PathDll
         {
             get => pathDll;
@@ -18,8 +18,8 @@ namespace Flight_Inspection.controls.Charts
                 pathDll = value;
             }
         }
-        
-        private string pathCsv = "C:\\Users\\avri2\\source\\repos\\Flight-Inspection_\\Flight-Inspection\\Pages\\Settings\\FG_Data\\reg_flight.csv";
+
+        private string pathCsv = "C:\\Users\\afeka\\OneDrive - Bar-Ilan University\\Code projects\\Advance-Programming-2\\Flight-Inspection\\Flight-Inspection\\Pages\\Settings\\FG_Data\\reg_flight.csv";
 
         public string PathCsv
         {
@@ -35,7 +35,7 @@ namespace Flight_Inspection.controls.Charts
 
         }
 
-        public List<AnomalyReportSafe> GetAnomalyReport(List<string> properties)
+        public List<AnomalyReportSafe> GetAnomalyReport(List<string> properties, TimeSeries ts)
         {
             var a = LoadDll(pathDll);
             if (a)
@@ -43,13 +43,10 @@ namespace Flight_Inspection.controls.Charts
                 LoadTimeSriesNormal(pathCsv, properties);
                 string detect = "C:\\Users\\afeka\\OneDrive - Bar-Ilan University\\Code projects\\Advance-Programming-2\\Flight-Inspection\\Flight-Inspection\\Pages\\Settings\\FG_Data\\anomaly_flight.csv";
                 LoadTimeSriesTest(detect, properties);
-                return GetAnomalyReports();
+                var ar = GetAnomalyReports(ts);
+                return ar;
             }
-            else
-            {
-                Console.WriteLine("oof");
-                return null;
-            }
+            return null;
         }
     }
 }

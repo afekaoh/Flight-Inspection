@@ -319,6 +319,7 @@
     <Resource Include="Photos\pause.png" />
     <Resource Include="controls\Video\pause.png" />
     <Content Include="plugins\anomaly_detection_util.dll" />
+    <Content Include="plugins\anomaly_detec_circle.dll" />
     <Content Include="plugins\anomaly_detec_linear_reg.dll" />
     <Resource Include="Pages\Settings\FG_Data\playback_small.xml" />
   </ItemGroup>
