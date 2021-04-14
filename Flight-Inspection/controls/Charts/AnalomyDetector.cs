@@ -33,6 +33,16 @@ namespace Flight_Inspection.controls.Charts
                 pathCsv = value;
             }
         }
+        private string pathCsvTest;
+
+        public string PathCsvTest
+        {
+            get => pathCsv;
+            set
+            {
+                pathCsv = value;
+            }
+        }
 
         public AnalomyDetector()
         {
@@ -45,7 +55,7 @@ namespace Flight_Inspection.controls.Charts
             if (a)
             {
                 LoadTimeSriesNormal(pathCsv, properties);
-                string detect = "C:\\Users\\afeka\\OneDrive - Bar-Ilan University\\Code projects\\Advance-Programming-2\\Flight-Inspection\\Flight-Inspection\\Pages\\Settings\\FG_Data\\anomaly_flight.csv";
+                string detect = "C:\\Users\\avri2\\source\\repos\\Flight-Inspection_\\Flight-Inspection\\plugins\\anomaly_detec_linear_reg.dll";
                 LoadTimeSriesTest(detect, properties);
                 var ar = GetAnomalyReports(ts);
                 return ar;
