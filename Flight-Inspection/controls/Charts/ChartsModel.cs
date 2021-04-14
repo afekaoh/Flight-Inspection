@@ -22,6 +22,7 @@ namespace Flight_Inspection.controls
         private TimeSeries timeSeries;
         private List<Property> properties = new List<Property>();
         private List<AnomalyReportSafe> lsReports;
+        private Dictionary<ObservablePoint, int> mapper;
 
         //Property that saves all the anomaly points from the dll
         ChartValues<ObservablePoint> analomyPoints;
@@ -240,7 +241,10 @@ namespace Flight_Inspection.controls
             foreach(AnomalyReportSafe reportSafe in lsReports)
             {
                 if (reportSafe.first == content)
+                {
                     AnalomyPoints.Add(points3[reportSafe.time]);
+                    mapper.Add(points3[reportSafe.time], time);
+                }
             }
             INotifyPropertyChanged("AnalomyPoints");
             //update the new data
@@ -280,6 +284,16 @@ namespace Flight_Inspection.controls
             float x2 = vs.Max(), y2 = line.b + x2 * line.a;
             LinearRegVal.Add(new ObservablePoint(x1, y1));
             LinearRegVal.Add(new ObservablePoint(x2, y2));
+        }
+
+        public int returnTimeOfPoint(ChartPoint point)
+        {
+            foreach(var p in mapper)
+            {
+                if (p.Key.X == point.X && p.Key.Y == point.Y)
+                    return p.Value;
+            }
+            return -1;
         }
     }
 

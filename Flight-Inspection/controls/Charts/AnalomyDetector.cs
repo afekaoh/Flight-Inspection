@@ -33,6 +33,16 @@ namespace Flight_Inspection.controls.Charts
                 pathCsv = value;
             }
         }
+        private string pathCsvTest;
+
+        public string PathCsvTest
+        {
+            get => pathCsv;
+            set
+            {
+                pathCsv = value;
+            }
+        }
 
         public AnalomyDetector()
         {

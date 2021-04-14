@@ -217,9 +217,9 @@ namespace Flight_Inspection.controls
 
         }
 
-        public void updateTimeAccordingToPoint(ObservablePoint point)
+        public void updateTimeAccordingToPoint(ChartPoint point)
         {
-
+            Time = charts.returnTimeOfPoint(point);
         }
         // //returns all the properties
         public List<Property> GetNames()
