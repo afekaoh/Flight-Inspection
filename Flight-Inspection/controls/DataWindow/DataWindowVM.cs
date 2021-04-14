@@ -49,7 +49,10 @@ namespace Flight_Inspection.controls.DataWindow
             get { return datas["yaw"]; }
             set
             {
-                datas["yaw"] = value;
+                var data = findData("side-slip-deg");
+                if (data != null)
+                    data.Data = value;
+                datas["yaw"] = data.Normalize;
                 OnPropertyChanged();
             }
         }
@@ -59,7 +62,10 @@ namespace Flight_Inspection.controls.DataWindow
             get { return datas["pitch"]; }
             set
             {
-                datas["pitch"] =  value;
+                var data = findData("pitch-deg");
+                if (data != null)
+                    data.Data = value;
+                datas["pitch"] = data.Normalize;
                 OnPropertyChanged();
             }
         }
@@ -68,7 +74,10 @@ namespace Flight_Inspection.controls.DataWindow
             get { return datas["roll"]; }
             set
             {
-                datas["roll"] = value;
+                var data = findData("roll-deg");
+                if (data != null)
+                    data.Data = value;
+                datas["roll"] = data.Normalize;
                 OnPropertyChanged();
             }
         }
@@ -88,7 +97,10 @@ namespace Flight_Inspection.controls.DataWindow
             get { return datas["altimeter"]; }
             set
             {
-                datas["altimeter"] =  value;
+                var data = findData("altitude-ft");
+                if (data != null)
+                    data.Data = value;
+                datas["altimeter"] = data.Normalize;
                 OnPropertyChanged();
             }
         }
@@ -112,10 +124,6 @@ namespace Flight_Inspection.controls.DataWindow
             dataList.Add(new NormelaizedData(name, CanvasDim, model.maxVal(name), model.minVal(name)));
         }
 
-        string[] lables = { "yaw", "roll", "pitch" };
-        public string[] Labels { get => lables; set => lables = value; }
-        public Func<double, string> Formatter { get => value => value + ""; }
-
         public void TheModlePropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == "yaw")
@@ -132,7 +140,8 @@ namespace Flight_Inspection.controls.DataWindow
             }
             else if (e.PropertyName == "altimeter")
             {
-                VM_Altimeter = model.Altimeter;
+                Console.WriteLine(model.Altimeter);
+                VM_Altimeter = model.Altimeter - model.minVal("altitude-ft");
             }
             else if (e.PropertyName == "airSpeed")
             {

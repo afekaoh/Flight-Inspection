@@ -180,7 +180,6 @@
     <Compile Include="controls\DataWindow\DataWindowVM.cs" />
     <Compile Include="controls\Joystick\NormelaizedData.cs" />
     <Compile Include="controls\Charts\AnalomyDetector.cs" />
-    <Compile Include="controls\Charts\MyCommand.cs" />
     <Compile Include="controls\DllWraper\AnalomyDetectorClass.cs" />
     <Compile Include="controls\DllWraper\AnalomyReportWraper.cs" />
     <Compile Include="controls\Joystick\JoystickModel.cs" />
@@ -264,7 +263,7 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="controls\Charts\ChartsModel.cs" />
-    <Compile Include="controls\Charts\IChartsModel.cs" />
+    <Compile Include="controls\Charts\Property.cs" />
     <Compile Include="controls\Charts\FlightCharts.xaml.cs">
       <DependentUpon>FlightCharts.xaml</DependentUpon>
     </Compile>
