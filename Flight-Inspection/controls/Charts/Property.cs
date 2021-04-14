@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Shapes;
 using static Flight_Inspection.controls.AnalomyDetectorClass;
 
 namespace Flight_Inspection.controls
 {
+    /**
+     * class that saves all the important informations of the given property
+     */
     class Property
     {
         private string name;
@@ -17,6 +15,7 @@ namespace Flight_Inspection.controls
         private List<float> data;
         
         public string Name { get => name; set => name = value; }
+        //the name of the most correlated feature
         public string Attach { get => attach; set => attach = value; }
         public List<float> Data
         {
@@ -29,13 +28,8 @@ namespace Flight_Inspection.controls
 
             }
         }
+        //the linear reg of the 2 features
         public LineSafe LinearReg { get => linearReg; set => linearReg = value; }
        
-    }
-    interface IChartsModel : INotifyPropertyChanged
-    {
-        //void setTimeSeries();
-        Property getData(string property);
-        List<Property> GetProperties();
     }
 }

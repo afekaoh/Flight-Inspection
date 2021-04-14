@@ -36,7 +36,7 @@ namespace Flight_Inspection
             name = (e.Source as Button).Content as string;
             switch (name)
             {
-                case "PATH":
+                case "Proc_PATH":
                     fbd = new System.Windows.Forms.FolderBrowserDialog();
                     break;
                 default:
@@ -50,6 +50,7 @@ namespace Flight_Inspection
                     (fbd as System.Windows.Forms.FileDialog).InitialDirectory + (fbd as System.Windows.Forms.FileDialog).FileName;
                 settings.getSettingItem(name).Content = s;
             }
+            updateSettings();
         }
 
         internal void updateSettings()
@@ -60,7 +61,7 @@ namespace Flight_Inspection
         public void onReadyChanged(object sender, PropertyChangedEventArgs e)
         {
             var settingsViewModel = (sender as SettingsViewModel);
-            if (e.PropertyName == "Ready" && settingsViewModel.Ready)
+            if ((e.PropertyName is "Ready" || e.PropertyName is "settings") && settingsViewModel.Ready)
             {
                 OnReadyEvent(e as OnReadyEventArgs);
             }

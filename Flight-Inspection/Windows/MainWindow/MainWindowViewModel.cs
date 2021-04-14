@@ -16,7 +16,6 @@ namespace Flight_Inspection.Windows.MainWindow
         public MainWindowViewModel()
         {
             PagesViewModels = new List<IPagesViewModel>();
-            this.PropertyChanged += OnSettingsChanged;
         }
 
 
@@ -25,22 +24,14 @@ namespace Flight_Inspection.Windows.MainWindow
             PagesViewModels.Add(controlViewModel);
         }
 
-        internal void SetSettings()
-        {
-            PagesViewModels.ForEach(vm => vm.SetSettings(settings));
-        }
         public void UpdateSettings()
         {
             PagesViewModels.ForEach(vm => vm.UpdateSettings());
         }
 
-        void IViewModel.SetSettings(SettingsArgs settingsArgs)
+        public void SetSettings(SettingsArgs settingsArgs)
         {
-        }
-
-        public void OnSettingsChanged(object Sender, PropertyChangedEventArgs e)
-        {
-            this.SetSettings();
+            PagesViewModels.ForEach(vm => vm.SetSettings(settingsArgs));
         }
 
         private SettingsArgs settings;

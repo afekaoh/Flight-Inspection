@@ -1,0 +1,99 @@
+﻿<UserControl x:Class="Flight_Inspection.controls.DataWindow.DataWindow"
+             x:Name="MoreInfo"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Flight_Inspection.controls.DataWindow"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance Type=local:DataWindowVM}"
+             xmlns:lvc1="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid RenderTransformOrigin="0.5,0.5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="20"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <TextBlock  HorizontalAlignment="Center" Grid.Row="1" Grid.Column="1" Height="23" TextWrapping="Wrap" Text="{Binding Path=VM_Direction, StringFormat='Direction: {0}'}" VerticalAlignment="Top" Width="Auto" Foreground="#939393"/>
+        <TextBlock HorizontalAlignment="Center" Grid.Row="1" Grid.Column="0" Height="23" TextWrapping="Wrap" Text="{Binding Path=VM_Airspeed, StringFormat='Speed: {0}'}" VerticalAlignment="Top" Width="Auto" Foreground="#939393"/>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="1" Name="GridPitch" >
+                <Rectangle Stretch="UniformToFill" Fill="#404040"  Margin="10,10,10,10"/>
+                <Rectangle Width="Auto"  Height="{Binding VM_Yaw}" VerticalAlignment="Bottom"  Fill="#CDB495" Margin="10,10,10,10"  />
+            </Grid>
+            <Grid Grid.Column="2" Name="GridRoll" >
+                <Rectangle Stretch="UniformToFill" Fill="#404040"  Margin="10,10,10,10"/>
+                <Rectangle Width="Auto" Height="{Binding VM_Roll}" VerticalAlignment="Bottom"  Fill="#CDB495" Margin="10,10,10,10"  />
+            </Grid>
+            <Grid Grid.Column="3" Name="GridYaw" >
+                <Rectangle Stretch="UniformToFill" Fill="#404040"  Margin="10,10,10,10"/>
+                <Rectangle Width="Auto" Height="{Binding VM_Pitch}" VerticalAlignment="Bottom" Fill="#CDB495" Margin="10,10,10,10"  />
+            </Grid>
+            </Grid>
+        <!--<TextBox HorizontalAlignment="Left" Grid.Row="1" Height="23" Margin="20,20,0,0" TextWrapping="Wrap" Text="{Binding VM_Yaw}" VerticalAlignment="Top" Width="120"/>
+        <TextBox HorizontalAlignment="Left" Grid.Row="1" Height="23" Margin="20,60,0,0" TextWrapping="Wrap" Text="{Binding VM_Pitch}" VerticalAlignment="Top" Width="120"/>
+        <TextBox HorizontalAlignment="Left" Grid.Row="1" Height="23" Margin="20,100,0,0" TextWrapping="Wrap" Text="{Binding VM_Roll}" VerticalAlignment="Top" Width="120"/>
+        //-->
+        <TextBlock  Grid.Row="3" Grid.Column="0" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="{Binding Path=VM_Yaw, StringFormat='Yaw: {0}'}" VerticalAlignment="Top" Width="Auto" Foreground="#939393"/>
+        <TextBlock  Grid.Row="3" Grid.Column="0" HorizontalAlignment="Center" Height="23" TextWrapping="Wrap" Text="{Binding Path=VM_Roll, StringFormat='Roll: {0}'}" VerticalAlignment="Top" Width="Auto" Foreground="#939393"/>
+        <TextBlock  Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" Height="23" TextWrapping="Wrap" Text="{Binding Path=VM_Pitch, StringFormat='Pitch: {0}'}" VerticalAlignment="Top" Width="Auto" Foreground="#939393"/>
+        <TextBlock  Grid.Row="3" Grid.Column="1"  HorizontalAlignment="Center" Height="23" TextWrapping="Wrap" Text="{Binding Path=VM_Altimeter, 
+                 StringFormat='Height: {0}'}" VerticalAlignment="Top" Width="Auto" Foreground="#939393"/>
+        <Grid Grid.Row="2" Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="2" Name="GridAltimeter">
+                <Rectangle Stretch="UniformToFill" Fill="#404040"  Margin="10,10,10,10" />
+                <Rectangle Width="Auto" Height="{Binding VM_Altimeter}" VerticalAlignment="Bottom"  Fill="#CDB495" Margin="10,10,10,10"  />
+            </Grid>
+            
+        </Grid>
+        <lvc1:AngularGauge  Value="{Binding VM_Airspeed}" FromValue="0" ToValue="250" DisableaAnimations="True"
+                          LabelsStep="50" TicksStep="25" Wedge="300"
+                          TicksForeground="White" Foreground="White"
+                          SectionsInnerRadius=".5" Margin="10,10,10,10" FontSize="10">
+            <lvc1:AngularGauge.CacheMode>
+                <BitmapCache EnableClearType="False" 
+                   RenderAtScale="1"
+                   SnapsToDevicePixels="False" />
+            </lvc1:AngularGauge.CacheMode>
+            <lvc1:AngularGauge.Sections>
+                <lvc1:AngularSection FromValue="0" ToValue="250" Fill="#FF424242"/>
+                <lvc1:AngularSection FromValue="150" ToValue="250" Fill="#CDB495"/>
+            </lvc1:AngularGauge.Sections> 
+        </lvc1:AngularGauge>
+        <Grid Grid.Column="1" Name="Compass">
+            <lvc1:AngularGauge  Value="{Binding VM_Direction}" FromValue="0" ToValue="359"
+                          LabelsStep="90" TicksStep="22.5" Wedge="360"
+                          TicksForeground="White" Foreground="Transparent" Margin="20,8,0,12" 
+                          SectionsInnerRadius=".5" FontSize="10" DisableaAnimations="True" RenderTransformOrigin="0.472,0.535">
+                <Image Source="compass.jpeg" Margin="-11,3,11,-3"/>
+                <lvc1:AngularGauge.CacheMode>
+                    <BitmapCache EnableClearType="False" 
+                   RenderAtScale="1"
+                   SnapsToDevicePixels="False" />
+                </lvc1:AngularGauge.CacheMode>
+            </lvc1:AngularGauge>
+
+        </Grid>
+    </Grid>
+</UserControl>

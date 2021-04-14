@@ -65,9 +65,15 @@ namespace Flight_Inspection.Settings
 
         public DataPacket GetSettings()
         {
+            var d = new DataPacket();
+            var e = this.data.Tables[0].Columns;
+            foreach (var col in e)
+            {
+                string name = col.ToString();
+                d.SetArg(name, this.data.Tables[0].Rows[0].Field<String>(name));
+            }
 
-
-            return new DataPacket() { CSV = getContent("CSV"), XML = getContent("XML"), PATH = getContent("PATH") };
+            return d;
         }
 
         public string getContent(string name)
@@ -85,22 +91,52 @@ namespace Flight_Inspection.Settings
 
     public class DataPacket
     {
-        public string CSV { get; set; }
+        public string CSV_Normal { get; set; }
+        public string CSV_Test { get; set; }
         public string XML { get; set; }
-        public string PATH { get; set; }
+        public string Proc_PATH { get; set; }
+        public string DLL_PATH { get; set; }
 
         public string GetArg(string name)
         {
             switch (name)
             {
-                case "CSV":
-                    return CSV;
+                case "CSV_Normal":
+                    return CSV_Normal;
+                case "CSV_Test":
+                    return CSV_Test;
                 case "XML":
                     return XML;
-                case "PATH":
-                    return PATH;
+                case "Proc_PATH":
+                    return Proc_PATH;
+                case "DLL_PATH":
+                    return DLL_PATH;
                 default:
                     return null;
+            }
+        }
+
+        public void SetArg(string name, string value)
+        {
+            switch (name)
+            {
+                case "CSV_Normal":
+                    CSV_Normal = value;
+                    break;
+                case "CSV_Test":
+                    CSV_Test = value;
+                    break;
+                case "XML":
+                    XML = value;
+                    break;
+                case "Proc_PATH":
+                    Proc_PATH = value;
+                    break;
+                case "DLL_PATH":
+                    DLL_PATH = value;
+                    break;
+                default:
+                    return;
             }
         }
     }

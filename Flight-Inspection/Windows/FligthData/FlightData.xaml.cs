@@ -18,6 +18,7 @@ using Flight_Inspection.controls.Video;
 using Flight_Inspection.controls.Joystick;
 using Flight_Inspection.Pages.Settings;
 using System.ComponentModel;
+using Flight_Inspection.controls.DataWindow;
 
 namespace Flight_Inspection
 {
@@ -40,7 +41,9 @@ namespace Flight_Inspection
             {
                 new FlightCharts(),
                 new VideoPanelView(),
-                new JoystickView()
+               new JoystickView(),
+               new DataWindow() 
+               
             };
 
             views.ForEach(v => flight.AddViewModel(v.GetViewModel()));
@@ -56,7 +59,7 @@ namespace Flight_Inspection
 
         public void OnReady(object sender, PropertyChangedEventArgs e)
         {
-            flight.UpdateSettings(new SettingsArgs {Ts = (e as OnReadyEventArgs).TS });
+
             frames.ForEach(f => f.Navigate(views.Find(v => v.Name == f.Name)));
         }
     }

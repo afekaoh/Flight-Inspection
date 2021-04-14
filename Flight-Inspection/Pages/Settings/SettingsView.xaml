@@ -6,24 +6,41 @@
       xmlns:local="clr-namespace:Flight_Inspection"
       xmlns:settings="clr-namespace:Flight_Inspection.Pages.Settings" 
       d:DataContext="{d:DesignInstance Type=settings:SettingsViewModel}"
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="600" d:DesignWidth="1000"
       mc:Ignorable="d" 
+      Background="Transparent"
+       HorizontalAlignment="Right"
       Title="Settings" >
+    <Page.Resources>
+        <settings:ReadyConverter x:Key="ReadyConverter"/>
+    </Page.Resources>
+
     <Grid>
-        <ItemsControl ItemsSource="{Binding SettingItems}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="0*"/>
+        </Grid.ColumnDefinitions>
+        <ItemsControl ItemsSource="{Binding SettingItems}" FontStyle="Italic" FontWeight="ExtraBlack" FontSize="17" RenderTransformOrigin="0.446,0.486" Margin="0,111,0,0">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Grid>
+                    <Grid  HorizontalAlignment="Right">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="auto"/>
-                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto" MinWidth="424"/>
+                            <ColumnDefinition Width="auto" MinWidth="145"/>
                         </Grid.ColumnDefinitions>
-                        <Button Margin="10,10,10,10" Width="100" Content="{Binding Name}" Click="On_Click" />
-                        <CheckBox Content="{Binding Name}" IsChecked="{Binding Checked}" Grid.Column="1" Margin="10" IsEnabled="False"/>
+                        <CheckBox IsChecked="{Binding Checked}" Grid.Column="0" Height="35" Margin="10,10" HorizontalAlignment="Right" IsEnabled="False" RenderTransformOrigin="6.062,7.267" BorderBrush="White" Foreground="White" Background="Black"/>
+                        <Button Margin="0,0,80,25" Grid.Column="1" Width="auto" Height="40" HorizontalAlignment="Right" Content="{Binding Name}" BorderThickness="0" Background="Black" Click="On_Click" BorderBrush="Black" Foreground="White">
+                            <Button.IsEnabled>
+                                <MultiBinding Converter="{StaticResource ReadyConverter}">
+                                    <Binding Path="Name"/>
+                                    <Binding Path="Ready"/>
+                                </MultiBinding>
+                            </Button.IsEnabled>
+                        </Button>
                     </Grid>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
-        <Button x:Name="save" Content="save" HorizontalAlignment="Left" Margin="116,317,0,0" VerticalAlignment="Top" Width="75" Click="Save_Click"/>
+        <Button x:Name="save" Content="save" HorizontalAlignment="Right" Margin="0,507,74,0" VerticalAlignment="Top" Width="77"  Click="Save_Click" Background="Black" Foreground="White" BorderBrush="Black" Height="35" FontSize="20" FontStyle="Italic" FontWeight="ExtraBlack" FontStretch="Condensed"/>
     </Grid>
 </Page>

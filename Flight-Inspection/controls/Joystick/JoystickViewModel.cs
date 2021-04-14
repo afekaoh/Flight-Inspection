@@ -5,15 +5,15 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-
+using System.Windows;
 
 namespace Flight_Inspection.controls.Joystick
 {
     class JoystickViewModel : IControlViewModel
     {
-        List<JoyStickData> datas;
+        List<NormelaizedData> datas;
         private JoystickModel model;
-        public event EventHandler Ready;
+        public event EventHandler Ready; 
 
         private void OnReady()
         {
@@ -25,70 +25,78 @@ namespace Flight_Inspection.controls.Joystick
             {
                 var data = findData("aileron");
                 if (data != null)
-                    return data.Data;
+                    return data.Normalize /2 ;
                 else
                     return 0;
             }
             set
             {
-                findData("aileron").Data = value * 300 + 300;
+                findData("aileron").Data = value ;
                 OnPropertyChanged();
             }
         }
-
-        public float VM_Rudder
+        public Thickness VM_Rudder
         {
             get
             {
-                var data = findData("rudder");
-                if (data != null)
-                    return data.Data;
+                if (rudder != null)
+                {
+                    return rudder;
+                }
                 else
-                    return 0;
+                    return new Thickness(0, 5, 5, 10);
             }
             set
             {
-                findData("rudder").Data = 330 + value * 400;
+                findData("rudder").Data = (float)value.Top;
+                if(!Double.IsNaN((double)findData("rudder").Normalize))
+                    rudder = new Thickness(findData("rudder").Normalize * (-1), 5, 5, 10);
+                else
+                    rudder = new Thickness(0, 5, 5, 10);
                 OnPropertyChanged();
             }
         }
+        private Thickness rudder;
+
         public float VM_Elevator
         {
             get
             {
                 var data = findData("elevator");
                 if (data != null)
-                    return data.Data;
+                    return data.Normalize /2;
                 else
                     return 0;
             }
             set
             {
-                findData("elevator").Data = value * 100 + 150;
+                findData("elevator").Data = value   ;
                 OnPropertyChanged();
             }
         }
-        public float VM_Throttle
+        public Thickness VM_Throttle
         {
             get
             {
-                var data = findData("throttle");
-                if (data != null)
-                    return data.Data;
+                if (thicknessT != null)
+                {
+                    return thicknessT;
+                }
                 else
-                    return 0;
+                    return new Thickness(10, 0, 5, 5);
             }
             set
             {
-                findData("throttle").Data = 230 - value * 100;
+                findData("throttle").Data = (float)value.Top;
+                thicknessT = new Thickness(10, findData("throttle").Normalize * (-1), 5, 5);
                 OnPropertyChanged();
-
             }
         }
+        private Thickness thicknessT;
         public JoystickViewModel()
         {
             model = new JoystickModel();
-            datas = new List<JoyStickData>();
+            datas = new List<NormelaizedData>();
             model.PropertyChanged += TheModlePropertyChanged;
         }
         public override void SetSettings(SettingsArgs settingsArgs)
@@ -97,43 +105,34 @@ namespace Flight_Inspection.controls.Joystick
             this.OnReady();
         }
 
-        public JoyStickData findData(string name) { return (JoyStickData)datas.Find(JoyStickData => JoyStickData.Name == name); }
+        public NormelaizedData findData (string name) { return (NormelaizedData)datas.Find(JoyStickData => JoyStickData.Name == name); }
 
-        public void addData(string name, float CanvasDim)
+        public void addData(string name, int CanvasDim)
         {
-            datas.Add(new JoyStickData(name, CanvasDim, model.maxAbs(name)));
-        }
-
-        public void start()
-        {
-            Thread t = new Thread(model.sendData)
-            {
-                IsBackground = true
-            };
-            t.Start();
+            datas.Add(new NormelaizedData(name, CanvasDim,model.maxVal(name),model.minVal(name)));
         }
 
         public void TheModlePropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             switch (e.PropertyName)
             {
-                case "aileron":
+                case "Aileron":
                     VM_Aileron = model.Aileron;
                     break;
-                case "rudder":
-                    VM_Rudder = model.Rudder;
+                case "Rudder":
+                    VM_Rudder = new Thickness(model.Rudder, 0, 0, 0);
                     break;
-                case "throttle":
-                    VM_Throttle = model.Throttle;
+                case "Throttle":
+                    VM_Throttle = new Thickness(0, model.Throttle,0,0);
                     break;
-                case "elevator":
+                case "Elevator":
                     VM_Elevator = model.Elevator;
                     break;
             }
         }
-
         internal override void setTime(int time)
         {
+            model.CurrentTime = time;
         }
     }
 }

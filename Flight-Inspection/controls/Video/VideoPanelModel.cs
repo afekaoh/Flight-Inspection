@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -16,13 +17,15 @@ namespace Flight_Inspection.controls.Video
         private int maxSlider;
         private Thread t;
 
+
+        //video panel model constructor.
         public VideoPanelModel()
         {
             t = new Thread(play);
             t.IsBackground = true;
             MaxSlider = 10;
         }
-
+        //Time series property.
         public TimeSeries TimeSeries
         {
             get => timeSeries; set
@@ -32,8 +35,9 @@ namespace Flight_Inspection.controls.Video
             }
         }
 
-        private bool stop;
+        private bool stop = true;
 
+        //Stop property.
         public bool Stop
         {
             get { return stop; }
@@ -45,7 +49,7 @@ namespace Flight_Inspection.controls.Video
         }
 
 
-
+        //Max slider property.
         public int MaxSlider
         {
             get
@@ -59,6 +63,7 @@ namespace Flight_Inspection.controls.Video
             }
         }
 
+        //Current time property.
         private int currentTime;
 
         public int CurrentTime
@@ -69,38 +74,69 @@ namespace Flight_Inspection.controls.Video
             }
             set
             {
-                currentTime = value;
+                if (value < maxSlider)
+                {
+                    currentTime = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        //speed property
+        private double speed = 1;
+
+        public double Speed
+        {
+            get
+            {
+                return speed;
+            }
+            set
+            {
+                speed = value;
                 OnPropertyChanged();
             }
         }
 
+
+        //Changing the stop property and starting the video panel.
         internal void StartPlay()
         {
-            t.Start();
-        }
-
-        //todo -> play after stop!!!
-        private void play()
-        {
-            while (true) {
-                if(!stop && currentTime != maxSlider)
+            Stop = false;
+            if (!t.IsAlive)
             {
-                    CurrentTime++;
-                    Thread.Sleep(100);
-                }
+                t.Start();
             }
         }
 
+        //playing the video panel by changing the stop to false.
+        private void play()
+        {
+            var stopwatch = new Stopwatch();
+            while (true)
+            {
+                if (!stop && CurrentTime != MaxSlider)
+                {
+                    CurrentTime++;
+                    int time = (int)(100 / Speed);
+                    Thread.Sleep(time);
+                }
+            }
+
+        }
+         
+        //Pause the video panel by changing the stop property to true.
         internal void Pause()
         {
             stop = true;
         }
 
-
+        //Update that were a property change.
         virtual public void OnPropertyChanged([CallerMemberName] string name = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
+
+
 
 
     }

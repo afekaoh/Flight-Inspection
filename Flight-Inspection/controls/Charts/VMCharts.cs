@@ -1,191 +1,61 @@
 ﻿using LiveCharts;
 using LiveCharts.Defaults;
-using LiveCharts.Wpf;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows.Input;
 
 namespace Flight_Inspection.controls
 {
+    /**
+     * The View Model that handeles the charts.
+     *  In the charts we used the library of LiveCharts - > https://lvcharts.net/
+     */
     class VMCharts : IControlViewModel
     {
+
+        //Property that saves all the anomaly points from the dll
+        ChartValues<ObservablePoint> analomyPoints;
         private ChartsModel charts;
-        public event EventHandler Ready;
+
+        //all the points of the choosen values in function of time
+        ChartValues<ObservablePoint> chartVal;
+
+        //all the points of the most correlated values in function of time
+        ChartValues<ObservablePoint> chartValAttach;
+
+        //all the points of the chosen values in function of most correlated values
+        ChartValues<ObservablePoint> chartValCurrentAndAttach;
         Property current;
 
-        public Func<double, string> LabelFormatter => value => value.ToString("F");
+        private int currentTime = 100;
 
-        private int currentTime;
+        //the last thirty secconds of the points
+        ChartValues<ObservablePoint> lastThirty;
 
-        public int CurrentTime
-        {
-            get => currentTime = 100;
-            set
-            {
-                if (value <= xMax)
-                    currentTime = value;
-                OnPropertyChanged("CurrentTime");
-            }
-        }
+        //the linear reg of the chosen values in function of most correlated values
+        ChartValues<ObservablePoint> linearRegVal;
 
         private double xMax = 1000;
 
-        private double xMaxThird = 1000;
-        public double XMaxThird
-        {
-            get => this.xMaxThird;
-            set
-            {
-                this.xMaxThird = value;
-                OnPropertyChanged("XMaxThird");
-            }
-        }
-
-        private double xMinThird = 0;
-        public double XMinThird
-        {
-            get => this.xMinThird;
-            set
-            {
-                this.xMinThird = value;
-                OnPropertyChanged("XMinThird");
-            }
-        }
-
+        //the max value of the most correlated element
         private double xMaxAttach = 1000;
-        public double XMaxAttach
-        {
-            get => this.xMaxAttach;
-            set
-            {
-                this.xMaxAttach = value;
-                OnPropertyChanged("XMaxAttach");
-            }
-        }
+        //the max value of the Time (x axis)
+        private double xMaxThird = 1000;
 
+        //the min value of the most correlated element
         private double xMinAttach = 0;
-        public double XMinAttach
-        {
-            get => this.xMinAttach;
-            set
-            {
-                this.xMinAttach = value;
-                OnPropertyChanged("XMinAttach");
-            }
-        }
-        private object dataMapper;
-        public object DataMapper
-        {
-            get => this.dataMapper;
-            set
-            {
-                this.dataMapper = value;
-                OnPropertyChanged("DataMapper");
-            }
-        }
 
+        //the max value of the chosen element (x axis in the third graph)
+        private double xMinThird = 0;
 
-
-        ChartValues<ObservablePoint> chartVal;
-        public ChartValues<ObservablePoint> ChartValues
-        {
-            get => chartVal; set
-            {
-                chartVal = value;
-                OnPropertyChanged("ChartValues");
-            }
-        }
-
-        private object dataMapperAttach;
-        public object DataMapperAttach
-        {
-            get => this.dataMapperAttach;
-            set
-            {
-                this.dataMapperAttach = value;
-                OnPropertyChanged("DataMapperAttach");
-            }
-        }
-
-        ChartValues<ObservablePoint> chartValAttach;
-        public ChartValues<ObservablePoint> ChartValuesAttach
-        {
-            get => chartValAttach; set
-            {
-                chartValAttach = value;
-                OnPropertyChanged("ChartValuesAttach");
-            }
-        }
-
-        private object dataMapperCurrentAndAttach;
-        public object DataMapperCurrentAndAttach
-        {
-            get => this.dataMapperCurrentAndAttach;
-            set
-            {
-                this.dataMapperCurrentAndAttach = value;
-                OnPropertyChanged("DataMapperCurrentAndAttach");
-            }
-        }
-
-        ChartValues<ObservablePoint> chartValCurrentAndAttach;
-        public ChartValues<ObservablePoint> ChartValuesCurrentAndAttach
-        {
-            get => chartValCurrentAndAttach; set
-            {
-                chartValCurrentAndAttach = value;
-                OnPropertyChanged("ChartValuesCurrentAndAttach");
-            }
-        }
-
-        ChartValues<ObservablePoint> linearRegVal;
-        public ChartValues<ObservablePoint> LinearRegVal
-        {
-            get => linearRegVal; set
-            {
-                linearRegVal = value;
-                OnPropertyChanged("ChartValuesCurrentAndAttach");
-            }
-        }
-        ChartValues<ObservablePoint> analomyPoints;
-        public ChartValues<ObservablePoint> AnalomyPoints
-        {
-            get => analomyPoints; set
-            {
-                analomyPoints = value;
-                OnPropertyChanged("AnalomyPoints");
-            }
-        }
-        public Property Current
-        {
-            get => current; set
-            {
-                current = value;
-                OnPropertyChanged("Current");
-                updateSeries();
-            }
-        }
-
-        public void OnReady()
-        {
-            Ready?.Invoke(this, EventArgs.Empty);
-        }
-
+        //the constructor of vm.
         public VMCharts()
         {
             charts = new ChartsModel();
-            AnalomyPoints = new ChartValues<ObservablePoint>()
-            {
-                new ObservablePoint(0,1),
-                new ObservablePoint(1,1)
-            };
+            LastThirty = new ChartValues<ObservablePoint>();
             charts.PropertyChanged += delegate (Object sender, PropertyChangedEventArgs e)
             {
+                //update the changed value
                 switch (e.PropertyName)
                 {
                     case "XMax":
@@ -203,14 +73,8 @@ namespace Flight_Inspection.controls
                     case "XMinAttach":
                         XMinAttach = charts.XMinAttach;
                         break;
-                    case "DataMapper":
-                        DataMapper = charts.DataMapper;
-                        break;
                     case "ChartValues":
                         ChartValues = charts.ChartValues;
-                        break;
-                    case "DataMapperAttach":
-                        DataMapperAttach = charts.DataMapperAttach;
                         break;
                     case "ChartValuesAttach":
                         ChartValuesAttach = charts.ChartValuesAttach;
@@ -221,36 +85,191 @@ namespace Flight_Inspection.controls
                     case "ChartValuesCurrentAndAttach":
                         ChartValuesCurrentAndAttach = charts.ChartValuesCurrentAndAttach;
                         break;
-                    case "DataMapperCurrentAndAttach":
-                        DataMapperCurrentAndAttach = charts.DataMapperCurrentAndAttach;
-                        break;
                     case "AnalomyPoints":
                         AnalomyPoints = charts.AnalomyPoints;
                         break;
+                    case "LastThirty":
+                        LastThirty = charts.LastThirty;
+                        break;
                 }
             };
-
         }
 
-        public List<Property> GetNames()
-        {
-            return charts.GetProperties();
-        }
-        public override void SetSettings(SettingsArgs settingsArgs)
-        {
-            charts.TimeSeries = settingsArgs.Ts;
-            OnReady();
-        }
+        public event EventHandler Ready;
 
-        public void updateSeries()
+        private void updateLastThirte(int time)
         {
-            charts.updateSeries(current.Name); 
+            int num = time + 1 < (int)xMax ? time + 1 : (int)xMax;
+            for (int i = Time; i < num; i++)
+            {
+                LastThirty.RemoveAt(0);
+                LastThirty.Add(ChartValuesCurrentAndAttach[i]);
+            }
         }
 
         internal override void setTime(int time)
         {
-             this.CurrentTime = time;
+            updateLastThirte(time);
+            this.Time = time;
         }
-        
+
+        // //returns all the properties
+        public List<Property> GetNames() { return charts.GetProperties(); }
+
+        public void OnReady() { Ready?.Invoke(this, EventArgs.Empty); }
+
+
+        public override void SetSettings(SettingsArgs settingsArgs)
+        {
+            charts.SetSettings(settingsArgs);
+            //charts.TimeSeries = settingsArgs.Ts;
+            OnReady();
+        }
+
+        //updates the series according to the changed curent
+        public void updateSeries()
+        {
+            if (current != null)
+                charts.updateSeries(current.Name, Time);
+        }
+
+        public void updateTimeAccordingToPoint(ChartPoint point) { Time = charts.returnTimeOfPoint(point); }
+
+        public ChartValues<ObservablePoint> AnalomyPoints
+        {
+            get => analomyPoints;
+            set
+            {
+                analomyPoints = value;
+                OnPropertyChanged("AnalomyPoints");
+            }
+        }
+
+        public ChartValues<ObservablePoint> ChartValues
+        {
+            get => chartVal;
+            set
+            {
+                chartVal = value;
+                OnPropertyChanged("ChartValues");
+            }
+        }
+
+        public ChartValues<ObservablePoint> ChartValuesAttach
+        {
+            get => chartValAttach;
+            set
+            {
+                chartValAttach = value;
+                OnPropertyChanged("ChartValuesAttach");
+            }
+        }
+
+        public ChartValues<ObservablePoint> ChartValuesCurrentAndAttach
+        {
+            get => chartValCurrentAndAttach;
+            set
+            {
+                chartValCurrentAndAttach = value;
+                OnPropertyChanged("ChartValuesCurrentAndAttach");
+            }
+        }
+
+        //the now choosen property
+        public Property Current
+        {
+            get => current;
+            set
+            {
+                current = value;
+                OnPropertyChanged("Current");
+                updateSeries();
+            }
+        }
+
+        public Func<double, string> LabelFormatter => value => value.ToString("F");
+
+        // transforms the int to time
+        public Func<double, string> LabelTime => value =>
+        {
+            int max = (int)value;
+            float sec = (float)max / 10.0f;
+            TimeSpan time = TimeSpan.FromSeconds(sec);
+            return time.ToString(@"mm\:ss");
+        };
+
+        public ChartValues<ObservablePoint> LastThirty
+        {
+            get => lastThirty;
+            set
+            {
+                lastThirty = value;
+                OnPropertyChanged("LastThirty");
+            }
+        }
+
+        public ChartValues<ObservablePoint> LinearRegVal
+        {
+            get => linearRegVal;
+            set
+            {
+                linearRegVal = value;
+                OnPropertyChanged("ChartValuesCurrentAndAttach");
+            }
+        }
+
+        //the property that saves the current time of the program.
+        public int Time
+        {
+            get => currentTime;
+            set
+            {
+                if (currentTime != value && value < xMax)
+                {
+                    currentTime = value;
+                    OnPropertyChanged(value);
+                }
+            }
+        }
+
+        public double XMaxAttach
+        {
+            get => this.xMaxAttach;
+            set
+            {
+                this.xMaxAttach = value;
+                OnPropertyChanged("XMaxAttach");
+            }
+        }
+
+        public double XMaxThird
+        {
+            get => this.xMaxThird;
+            set
+            {
+                this.xMaxThird = value;
+                OnPropertyChanged("XMaxThird");
+            }
+        }
+
+        public double XMinAttach
+        {
+            get => this.xMinAttach;
+            set
+            {
+                this.xMinAttach = value;
+                OnPropertyChanged("XMinAttach");
+            }
+        }
+
+        public double XMinThird
+        {
+            get => this.xMinThird;
+            set
+            {
+                this.xMinThird = value;
+                OnPropertyChanged("XMinThird");
+            }
+        }
     }
 }

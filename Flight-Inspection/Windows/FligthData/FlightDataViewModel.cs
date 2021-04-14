@@ -1,5 +1,6 @@
 ﻿using Flight_Inspection.controls;
 using Flight_Inspection.controls.Video;
+using Flight_Inspection.Pages.FlightGear;
 using Flight_Inspection.Pages.Settings;
 using System;
 using System.Collections.Generic;
@@ -11,10 +12,11 @@ using System.Threading.Tasks;
 
 namespace Flight_Inspection.Windows.FligthData
 {
-    public class FlightDataViewModel : INotifyPropertyChanged
+    public class FlightDataViewModel : IViewModel
     {
         public event PropertyChangedEventHandler PropertyChanged;
         public event EventHandler<SetTimeEventArgs> SetTimeEvent;
+        public event EventHandler<SetStopEventArgs> SetStopEvent;
         private readonly List<IControlViewModel> viewModels;
         private TimeSeries ts;
 
@@ -39,6 +41,16 @@ namespace Flight_Inspection.Windows.FligthData
             {
                 var ea = e as SetTimeEventArgs;
                 viewModels.ForEach(vm => vm.setTime(ea.Time));
+                SetTimeEvent?.Invoke(this, ea);
+            }
+        }
+
+        public void SetStop(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName is "Stop")
+            {
+                var ea = e as SetStopEventArgs;
+                SetStopEvent?.Invoke(this, ea);
             }
         }
 
@@ -53,14 +65,20 @@ namespace Flight_Inspection.Windows.FligthData
             PropertyChanged?.Invoke(this, e);
         }
 
-        internal void UpdateSettings(SettingsArgs settingsArgs)
-        {
-            viewModels.ForEach(vm => vm.SetSettings(settingsArgs));
-        }
-
         public void addEvent()
         {
-            viewModels.ForEach(vm => vm.PropertyChanged += SetTime);
+            viewModels.ForEach(vm =>
+            {
+                vm.PropertyChanged += SetTime;
+                vm.PropertyChanged += SetStop;
+
+            });
+        }
+
+        public void SetSettings(SettingsArgs settingsArgs)
+        {
+            viewModels.ForEach(vm => vm.SetSettings(settingsArgs));
+            this.Ts = settingsArgs.Ts;
         }
     }
 }

@@ -173,10 +173,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="controls\Charts\MyCommand.cs" />
+    <Compile Include="controls\DataWindow\DataWindow.xaml.cs">
+      <DependentUpon>DataWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="controls\DataWindow\DataWindowModel.cs" />
+    <Compile Include="controls\DataWindow\DataWindowVM.cs" />
+    <Compile Include="controls\Joystick\NormelaizedData.cs" />
+    <Compile Include="controls\Charts\AnalomyDetector.cs" />
     <Compile Include="controls\DllWraper\AnalomyDetectorClass.cs" />
     <Compile Include="controls\DllWraper\AnalomyReportWraper.cs" />
-    <Compile Include="controls\Joystick\JoyStickData.cs" />
     <Compile Include="controls\Joystick\JoystickModel.cs" />
     <Compile Include="controls\IControlView.cs" />
     <Compile Include="controls\IControlViewModel.cs" />
@@ -184,7 +189,9 @@
       <DependentUpon>JoystickView.xaml</DependentUpon>
     </Compile>
     <Compile Include="controls\Joystick\JoystickViewModel.cs" />
+    <Compile Include="controls\Video\TimeConverterToString.cs" />
     <Compile Include="IViewModel.cs" />
+    <Compile Include="Pages\FlightGear\SetStopEventArgs.cs" />
     <Compile Include="Pages\IPagesViewModel.cs" />
     <Compile Include="controls\SettingsArgs.cs" />
     <Compile Include="controls\Video\VideoPanelModel.cs" />
@@ -193,6 +200,7 @@
     </Compile>
     <Compile Include="controls\Video\VideoPanelViewModel.cs" />
     <Compile Include="Pages\Settings\OnReadyEventArgs.cs" />
+    <Compile Include="Pages\Settings\ReadyConverter.cs" />
     <Compile Include="Windows\FligthData\FlightData.xaml.cs">
       <DependentUpon>FlightData.xaml</DependentUpon>
     </Compile>
@@ -203,9 +211,21 @@
     <Compile Include="Pages\IViewPages.cs" />
     <Compile Include="Windows\FligthData\SetTimeEventArgs.cs" />
     <Compile Include="Windows\MainWindow\MainWindowViewModel.cs" />
+    <Page Include="controls\DataWindow\DataWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="controls\Joystick\JoystickView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="controls\Joystick\ResorceDictionary.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="controls\Video\ResorceDictionary.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Pages\FlightGear\FlightGearView.xaml">
       <SubType>Designer</SubType>
@@ -216,6 +236,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="controls\Video\VideoPanelView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ResorceDictionary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -240,7 +264,7 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="controls\Charts\ChartsModel.cs" />
-    <Compile Include="controls\Charts\IChartsModel.cs" />
+    <Compile Include="controls\Charts\Property.cs" />
     <Compile Include="controls\Charts\FlightCharts.xaml.cs">
       <DependentUpon>FlightCharts.xaml</DependentUpon>
     </Compile>
@@ -274,6 +298,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="Pages\Settings\FG_Data\anomaly_flight.csv" />
     <None Include="Pages\Settings\FG_Data\reg_flight.csv" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -285,10 +310,29 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="plugins\anomaly_detection_util.dll" />
+    <Resource Include="Windows\FligthData\dark background.PNG" />
+    <Resource Include="Windows\FligthData\back.jpeg" />
+    <Resource Include="Windows\MainWindow\back.jpeg" />
+    <Resource Include="Photos\back.jpeg" />
+    <Resource Include="Photos\back2.jpeg" />
+    <Resource Include="Photos\back3.jpg" />
+    <Resource Include="Photos\back4.jpg" />
+    <Resource Include="Photos\play.jpg" />
+    <Resource Include="controls\Video\play.jpg" />
+    <Resource Include="Photos\play-button-png-12808.png" />
+    <Resource Include="controls\Video\play-button-png-12808.png" />
+    <Resource Include="Photos\pause.png" />
+    <Resource Include="controls\Video\pause.png" />
+    <Resource Include="Photos\compass.jpg" />
+    <Resource Include="controls\DataWindow\compass.jpg" />
+    <Resource Include="controls\DataWindow\Compass UI new 2.jpg" />
+    <Resource Include="controls\DataWindow\Compass Rose Tattoo - Semi-Permanent Tattoos by inkbox™.png" />
+    <Resource Include="controls\DataWindow\Compass UI new 3.jpg" />
+    <Resource Include="controls\DataWindow\compass.jpeg" />
+    <Content Include="plugins\anomaly_detec_circle.dll" />
     <Content Include="plugins\anomaly_detec_linear_reg.dll" />
-    <Content Include="plugins\anom_detec_conv.dll" />
     <Resource Include="Pages\Settings\FG_Data\playback_small.xml" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

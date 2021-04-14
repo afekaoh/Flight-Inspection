@@ -14,6 +14,7 @@ namespace Flight_Inspection.Pages.FlightGear
         private bool ready;
 
         FlightDataViewModel dataViewModel;
+        SettingsArgs settings;
         public FlightDataViewModel DataViewModel
         {
             get => dataViewModel;
@@ -42,7 +43,10 @@ namespace Flight_Inspection.Pages.FlightGear
             this.PropertyChanged += delegate (object sender, PropertyChangedEventArgs e)
             {
                 if (e.PropertyName == "DataViewModel")
+                {
                     DataViewModel.SetTimeEvent += SetTime;
+                    DataViewModel.SetStopEvent += SetStop;
+                }
             };
         }
 
@@ -64,7 +68,8 @@ namespace Flight_Inspection.Pages.FlightGear
 
         public override void SetSettings(SettingsArgs settingsArgs)
         {
-            flightGearModel.setSettings(settingsArgs.Ts, settingsArgs.ProcPath);
+            flightGearModel.SetSettings(settingsArgs.Ts, settingsArgs.ProcPath);
+            this.settings = settingsArgs;
             this.Ts = settingsArgs.Ts;
             this.ready = true;
         }
@@ -72,12 +77,17 @@ namespace Flight_Inspection.Pages.FlightGear
         public override void UpdateSettings()
         {
             if (!(dataViewModel is null))
-                dataViewModel.Ts = ts;
+                dataViewModel.SetSettings(settings);
         }
 
         void SetTime(object sender, SetTimeEventArgs e)
         {
-            flightGearModel.Time = e.Time;
+            flightGearModel.CurrentTime = e.Time;
+        }
+
+        void SetStop(object sender, SetStopEventArgs e)
+        {
+            flightGearModel.Play = !e.Stop;
         }
     }
 }
