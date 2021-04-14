@@ -51,13 +51,11 @@ namespace Flight_Inspection.controls.Video
             }
             set
             {
-                Console.WriteLine(value);
                 if (speed != value)
                 {
                     //Get the speed valuew from the model.
                     speed = value;
                     model.Speed = value;
-                    Console.WriteLine("in"+value);
                     OnPropertyChanged();
                 }
             }
