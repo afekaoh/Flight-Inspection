@@ -7,6 +7,7 @@ namespace Flight_Inspection.controls
 {
     /// <summary>
     /// Interaction logic for Graphs.xaml
+    ///  In the charts we used the library of LiveCharts - > https://lvcharts.net/
     /// </summary>
     public partial class FlightCharts : UserControl, IControlView
     {
