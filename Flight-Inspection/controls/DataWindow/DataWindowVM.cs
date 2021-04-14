@@ -88,6 +88,7 @@ namespace Flight_Inspection.controls.DataWindow
             get { return datas["altimeter"]; }
             set
             {
+                //Console.WriteLine("yay");
                 datas["altimeter"] =  value;
                 OnPropertyChanged();
             }
@@ -112,10 +113,6 @@ namespace Flight_Inspection.controls.DataWindow
             dataList.Add(new NormelaizedData(name, CanvasDim, model.maxVal(name), model.minVal(name)));
         }
 
-        string[] lables = { "yaw", "roll", "pitch" };
-        public string[] Labels { get => lables; set => lables = value; }
-        public Func<double, string> Formatter { get => value => value + ""; }
-
         public void TheModlePropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == "yaw")
@@ -132,6 +129,7 @@ namespace Flight_Inspection.controls.DataWindow
             }
             else if (e.PropertyName == "altimeter")
             {
+                Console.WriteLine(model.Altimeter);
                 VM_Altimeter = model.Altimeter;
             }
             else if (e.PropertyName == "airSpeed")

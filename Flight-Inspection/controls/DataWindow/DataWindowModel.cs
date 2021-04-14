@@ -83,7 +83,7 @@ namespace Flight_Inspection.controls.DataWindow
             get => altimeter;
             private set
             {
-                airspeed = value;
+                altimeter = value;
                 OnPropertyChanged("altimeter");
             }
 

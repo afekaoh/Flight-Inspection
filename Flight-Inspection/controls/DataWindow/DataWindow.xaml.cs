@@ -43,6 +43,7 @@ namespace Flight_Inspection.controls.DataWindow
             Vm.addData("pitch-deg", (int)GridPitch.ActualHeight);
             Vm.addData("roll-deg", (int)GridPitch.ActualHeight);
             Vm.addData("side-slip-deg", (int)GridPitch.ActualHeight);
+            Vm.addData("altitude-ft", (int)GridPitch.ActualHeight);
         }
-   }
+    }
 }
