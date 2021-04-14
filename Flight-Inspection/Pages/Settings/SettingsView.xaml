@@ -12,21 +12,25 @@
       
       Title="Settings" >
     <Grid>
-        <ItemsControl ItemsSource="{Binding SettingItems}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="0*"/>
+        </Grid.ColumnDefinitions>
+        <ItemsControl ItemsSource="{Binding SettingItems}" Margin="184,113,0,0" FontStyle="Italic" FontWeight="ExtraBlack" FontSize="17">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="auto"/>
-                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto" MinWidth="424"/>
+                            <ColumnDefinition Width="auto" MinWidth="145"/>
                         </Grid.ColumnDefinitions>
-                        <CheckBox IsChecked="{Binding Checked}" Grid.Column="0" Margin="10" IsEnabled="False"/>
-                        <Button Margin="10,10,10,10" Grid.Column="1" Width="100" Content="{Binding Name}" BorderThickness="0" Background="#44555c" Click="On_Click" />
-                        
+                        <CheckBox IsChecked="{Binding Checked}" Grid.Column="0 " Margin="408,30,10,29" IsEnabled="False" RenderTransformOrigin="6.062,7.267"/>
+                        <Button Margin="11,10,10,10" Grid.Column="1" Width="Auto" Content="{Binding Name}" BorderThickness="0" Background="Black" Click="On_Click" BorderBrush="Black" Foreground="White" />
+
                     </Grid>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
-        <Button x:Name="save" Content="save" HorizontalAlignment="Left" Margin="116,317,0,0" VerticalAlignment="Top" Width="75" Click="Save_Click"/>
+        <Button x:Name="save" Content="save" HorizontalAlignment="Left" Margin="652,343,0,0" VerticalAlignment="Top" Width="77" Click="Save_Click" Background="Black" Foreground="White" BorderBrush="Black" Height="35" FontSize="15" FontStyle="Italic" FontWeight="ExtraBlack" FontStretch="Condensed"/>
     </Grid>
 </Page>

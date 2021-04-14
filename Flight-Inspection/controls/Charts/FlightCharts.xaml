@@ -28,6 +28,7 @@
         <lvc1:CartesianChart Grid.Column="2" Name="Series" Margin="4"  DataTooltip="{x:Null}"  Hoverable="False" DisableAnimations="True" >
             <lvc1:CartesianChart.Series>
                 <lvc1:LineSeries
+                    Stroke="Black"
                      PointGeometry="{x:Null}"
                       Title="First Property"
                       Fill="Transparent"

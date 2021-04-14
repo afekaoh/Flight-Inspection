@@ -310,6 +310,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Windows\FligthData\dark background.PNG" />
     <Resource Include="Windows\FligthData\back.jpeg" />
     <Resource Include="Windows\MainWindow\back.jpeg" />
     <Resource Include="Photos\back.jpeg" />
