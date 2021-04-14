@@ -84,11 +84,9 @@ namespace Flight_Inspection.controls.DllWraper
             {
                     IntPtr intPtr = getAnomalyReport();
                 AnomalyReportArray wraper = (AnomalyReportArray)Marshal.PtrToStructure(intPtr, typeof(AnomalyReportArray));
-                //AnomalyReportArray arr = getAnomalyReport();
                 for (int i = 0; i < wraper.size; i++)
                 {
                     AnomalyReports anomalyReports = wraper.anomalyReports[i];
-                    // AnomalyReports anomalyReports = (AnomalyReports)Marshal.PtrToStructure(wraper.anomalyReports[i], typeof(AnomalyReports));
                     AnomalyReportSafe a = new AnomalyReportSafe();
                     a.first = ts.GetFeatureNames()[anomalyReports.first];
                     a.second = ts.GetFeatureNames()[anomalyReports.second];
