@@ -7,9 +7,13 @@ using static Flight_Inspection.controls.DllWraper.AnalomyReportWraper;
 
 namespace Flight_Inspection.controls.Charts
 {
+    /**
+     * AnomalyDetector class to help with the points on the graph
+     */
     class AnalomyDetector
     {
         private string pathDll = "C:\\Users\\avri2\\source\\repos\\Flight-Inspection_\\Flight-Inspection\\plugins\\anomaly_detec_linear_reg.dll";
+        //property of the path to the client's dll
         public string PathDll
         {
             get => pathDll;
@@ -19,6 +23,7 @@ namespace Flight_Inspection.controls.Charts
             }
         }
         
+        //property to the path of the new timeSeries
         private string pathCsv = "C:\\Users\\avri2\\source\\repos\\Flight-Inspection_\\Flight-Inspection\\Pages\\Settings\\FG_Data\\reg_flight.csv";
 
         public string PathCsv
@@ -30,11 +35,7 @@ namespace Flight_Inspection.controls.Charts
             }
         }
 
-        public AnalomyDetector()
-        {
-
-        }
-
+        //get all the points that are unnormal.
         public List<AnomalyReportSafe> GetAnomalyReport(List<string> properties)
         {
             var a = LoadDll(pathDll);

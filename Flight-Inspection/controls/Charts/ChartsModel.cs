@@ -12,13 +12,16 @@ using System.Windows.Media;
 
 namespace Flight_Inspection.controls
 {
-
-    class ChartsModel : IChartsModel
+    /**
+     * The Model that handeles the charts.
+     */
+    class ChartsModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
         private TimeSeries timeSeries;
         private List<Property> properties = new List<Property>();
 
+        //Property that saves all the anomaly points from the dll
         ChartValues<ObservablePoint> analomyPoints;
         public ChartValues<ObservablePoint> AnalomyPoints
         {
@@ -29,6 +32,7 @@ namespace Flight_Inspection.controls
             }
         }
 
+        //the max value of the Time (x axis)
         private double xMax;
         public double XMax
         {
@@ -40,6 +44,7 @@ namespace Flight_Inspection.controls
             }
         }
 
+        //the max value of the chosen element (x axis in the third graph)
         private double xMaxThird;
         public double XMaxThird
         {
@@ -51,6 +56,7 @@ namespace Flight_Inspection.controls
             }
         }
 
+        //the min value of the chosen element (x axis in the third graph)
         private double xMinThird;
         public double XMinThird
         {
@@ -61,6 +67,8 @@ namespace Flight_Inspection.controls
                 INotifyPropertyChanged("XMinThird");
             }
         }
+
+        //the max value of the most correlated element
         private double xMaxAttach = 1000;
         public double XMaxAttach
         {
@@ -72,6 +80,7 @@ namespace Flight_Inspection.controls
             }
         }
 
+        //the min value of the most correlated element
         private double xMinAttach = 0;
         public double XMinAttach
         {
@@ -83,6 +92,7 @@ namespace Flight_Inspection.controls
             }
         }
 
+        //the last thirty secconds of the points
         ChartValues<ObservablePoint> lastThirty;
         public ChartValues<ObservablePoint> LastThirty
         {
@@ -92,6 +102,8 @@ namespace Flight_Inspection.controls
                 INotifyPropertyChanged("LastThirty");
             }
         }
+        
+        //all the points of the choosen values in function of time
         ChartValues<ObservablePoint> chartVal;
         public ChartValues<ObservablePoint> ChartValues { get => chartVal; set
             {
@@ -99,14 +111,14 @@ namespace Flight_Inspection.controls
                 chartVal= value;
             }
         }
-
+        //all the points of the most correlated values in function of time
         ChartValues<ObservablePoint> chartValAttch;
         public ChartValues<ObservablePoint> ChartValuesAttach { get => chartValAttch; set {
                 INotifyPropertyChanged("ChartValuesAttach");
                 chartValAttch = value; 
             }
         }
-
+        //all the points of the chosen values in function of most correlated values
         ChartValues<ObservablePoint> chartValCurrentAndAttach;
         public ChartValues<ObservablePoint> ChartValuesCurrentAndAttach
         {
@@ -117,6 +129,7 @@ namespace Flight_Inspection.controls
             }
         }
 
+        //the linear reg of the chosen values in function of most correlated values
         ChartValues<ObservablePoint> linearRegVal;
         public ChartValues<ObservablePoint> LinearRegVal
         {
@@ -127,7 +140,7 @@ namespace Flight_Inspection.controls
             }
         }
 
-       
+       //comtains all the information
         public TimeSeries TimeSeries
         {
             get => timeSeries; set
@@ -137,21 +150,7 @@ namespace Flight_Inspection.controls
              }
         }
 
-        private int currentTime = 100;
-
-        public int Time
-        {
-            get => currentTime;
-            set
-            {
-                if (currentTime != value && value < xMax)
-                {
-                    currentTime = value;
-                    INotifyPropertyChanged("Time");
-                }
-            }
-        }
-
+        //notifies all the observers about the change (mvvm)
         private void INotifyPropertyChanged(string v)
         {
             if (PropertyChanged != null)
@@ -165,6 +164,7 @@ namespace Flight_Inspection.controls
             PropertyChanged += updateProperties;
         }
 
+        //update all the needed data for the charts.
         private void updateProperties(object sender, PropertyChangedEventArgs e)
         {
          
@@ -176,43 +176,46 @@ namespace Flight_Inspection.controls
             AnalomyPoints = new ChartValues<ObservablePoint>();
             LastThirty = new ChartValues<ObservablePoint>();
             LinearRegVal = new ChartValues<ObservablePoint>();
-                ChartValues = new ChartValues<ObservablePoint>();
-                ChartValuesAttach = new ChartValues<ObservablePoint>();
-                ChartValuesCurrentAndAttach = new ChartValues<ObservablePoint>();
-                int sizeTable = TimeSeries.GetFeatureData(ls[0]).Count;
-                for (int i = 0; i < ls.Count; i++)
+            ChartValues = new ChartValues<ObservablePoint>();
+            ChartValuesAttach = new ChartValues<ObservablePoint>();
+            ChartValuesCurrentAndAttach = new ChartValues<ObservablePoint>();
+            //calaulates all the correlated data and saves them in properties.
+            int sizeTable = TimeSeries.GetFeatureData(ls[0]).Count;
+            for (int i = 0; i < ls.Count; i++)
+            {
+                float maxVal = 0;
+                string maxCor = "";
+                float[] data = TimeSeries.GetFeatureData(ls[i]).ToArray();
+                for (int j = 0; j < ls.Count; j++)
                 {
-                    float maxVal = 0;
-                    string maxCor = "";
-                    float[] data = TimeSeries.GetFeatureData(ls[i]).ToArray();
-                    for (int j = 0; j < ls.Count; j++)
+                    if (i == j)
+                        continue;
+                    float[] data2 = TimeSeries.GetFeatureData(ls[j]).ToArray();
+                    float val = pearson(data, data2, sizeTable, sizeTable);
+                    val = Math.Abs(val);
+                    if (maxVal <= val)
                     {
-                        if (i == j)
-                            continue;
-                        float[] data2 = TimeSeries.GetFeatureData(ls[j]).ToArray();
-                        float val = pearson(data, data2, sizeTable, sizeTable);
-                        val = Math.Abs(val);
-                        if (maxVal <= val)
-                        {
-                            maxVal = val;
-                            maxCor = ls[j];
-                        }
+                        maxVal = val;
+                        maxCor = ls[j];
                     }
-                    properties.Add(new Property() { Name = ls[i], Attach = maxCor, Data = data.ToList(), LinearReg = getLinearReg(data.ToList(), TimeSeries.GetFeatureData(maxCor)) });
                 }
-            AnalomyPoints.Add(new ObservablePoint() { X = 0.5,Y=0.5 });
-            INotifyPropertyChanged("AnalomyPoints");
+                properties.Add(new Property() { Name = ls[i], Attach = maxCor, Data = data.ToList(), LinearReg = getLinearReg(data.ToList(), TimeSeries.GetFeatureData(maxCor)) });
+            }
         }
 
+        //return the property according to the name
         public Property getData(string property)
         {
             return (Property)properties.Find(prop => prop.Name == property);
         }
 
+        //returns all the properties
         public List<Property> GetProperties()
         {
             return properties;
         }
+
+        //updates the series according to the new choosen value
         public void updateSeries(string content, int time)
         {
             if (content == "")
@@ -220,6 +223,7 @@ namespace Flight_Inspection.controls
             Property property = getData(content);
             List<float> vs = property.Data;
             List<float> attach = getData(property.Attach).Data;
+            //create an array of the new wanted points.
             ObservablePoint[] points = new ObservablePoint[vs.Count];
             ObservablePoint[] points2 = new ObservablePoint[vs.Count];
             ObservablePoint[] points3 = new ObservablePoint[vs.Count];
@@ -230,6 +234,7 @@ namespace Flight_Inspection.controls
                 points3[i] = new ObservablePoint(vs[i], attach[i]);
                 
             }
+            //update the new data
             XMax = vs.Count;
             XMaxAttach = attach.Max();
             XMinAttach = attach.Min();
@@ -249,10 +254,16 @@ namespace Flight_Inspection.controls
             ChartValuesCurrentAndAttach.Clear();
             ChartValuesCurrentAndAttach.AddRange(points3);
             INotifyPropertyChanged("ChartValuesCurrentAndAttach");
-            LastThirty.Clear();
-            for (int i = time - 200 < 0 ? 0 : time - 200; i < (time < xMax ? time : xMax); i++)
+            try
             {
-                LastThirty.Add(ChartValuesCurrentAndAttach[i]);
+                LastThirty.Clear();
+                for (int i = time - 200 < 0 ? 0 : time - 200; i < (time < xMax ? time : xMax); i++)
+                {
+                    LastThirty.Add(ChartValuesCurrentAndAttach[i]);
+                }
+            } catch (Exception)
+            {
+                Console.WriteLine("Error! Try To Choose an Option One More Time");
             }
             LineSafe line = getLinearReg(vs, attach);
             LinearRegVal.Clear();
@@ -260,9 +271,6 @@ namespace Flight_Inspection.controls
             float x2 = vs.Max(), y2 = line.b + x2 * line.a;
             LinearRegVal.Add(new ObservablePoint(x1, y1));
             LinearRegVal.Add(new ObservablePoint(x2, y2));
-            AnalomyPoints.Clear();
-            AnalomyPoints.Add(new ObservablePoint() { X = 0.5, Y = 0.5 });
-            INotifyPropertyChanged("AnalomyPoints");
         }
     }
 
