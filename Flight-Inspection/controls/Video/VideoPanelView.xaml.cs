@@ -67,5 +67,15 @@ namespace Flight_Inspection.controls.Video
         {
             videoPanelViewModel.Pause();
         }
+
+        private void speed_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void speed_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }

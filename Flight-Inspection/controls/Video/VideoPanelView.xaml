@@ -33,16 +33,16 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Rectangle Margin="1,1,1,1" Grid.RowSpan="3" Grid.ColumnSpan="6" Height="Auto" Stroke="Black" Width="Auto" Fill="#FF5B5B5D"/>
+        <Rectangle Margin="1,1,1,1" Grid.RowSpan="3" Grid.ColumnSpan="6" Height="Auto" Stroke="Black" Width="Auto" Fill="#FF1F1F21"/>
 
-        <Button Name ="Play" Background="Transparent" Style="{StaticResource buttonStyle}" Grid.Row="1"  Grid.Column="2" Margin="2,2,2,2" HorizontalAlignment="Center" Height="50" VerticalAlignment="Center" Width="50" Click="Button_Play">
+        <Button Name ="Play" Background="#FFDADADA" Style="{StaticResource buttonStyle}" Grid.Row="1"  Grid.Column="2" Margin="48,2,50,0" HorizontalAlignment="Center" Height="51" VerticalAlignment="Center" Width="52" Click="Button_Play" BorderBrush="Black" Foreground="Black" OpacityMask="Black">
             <DynamicResource ResourceKey="Play"/>
 
         </Button>
-        <Button Content="Stop" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" Margin="2,2,2,2" Height="29" VerticalAlignment="Center" Width="75"  Click="Button_Stop" RenderTransformOrigin="0.893,0.609"/>
-        <Slider Name ="Time" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" Width="auto" Height="Auto" Margin="10,0,0,0" Value="{Binding Path=Time, Mode=TwoWay}" Maximum="{Binding MaxSlider}"/>
-        <TextBlock Text="{Binding Time, Converter={StaticResource TimeConverterString}}" Grid.Row="0" Grid.Column="5" HorizontalAlignment="Center" Height="28" TextWrapping="Wrap" VerticalAlignment="Center" Width="69"/>
-        <ComboBox Name="speed" Margin="35,12,40,12" Width="75" Height="29" Grid.Row="1" Grid.Column="3" SelectedItem="{Binding Speed}">
+        <Button Content="Stop" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" Margin="2,2,2,2" Height="29" VerticalAlignment="Center" Width="75"  Click="Button_Stop" RenderTransformOrigin="0.893,0.609" FontSize="15" FontStyle="Italic" FontWeight="ExtraBlack" FontStretch="Condensed" Background="#FFDAD7D7" BorderBrush="#FFDADADA"/>
+        <Slider Name ="Time" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5" Width="auto" Height="Auto" Margin="60,0,100,0" Value="{Binding Path=Time, Mode=TwoWay}" Maximum="{Binding MaxSlider}" Foreground="White" BorderBrush="White" Background="#FF1D1D1D"/>
+        <TextBlock Text="{Binding Time, Converter={StaticResource TimeConverterString}}" Grid.Column="4" HorizontalAlignment="Center" Height="18" TextWrapping="Wrap" VerticalAlignment="Center" Width="72" Margin="73,0,5,0" Foreground="White"/>
+        <ComboBox Name="speed" Margin="41,12,40,12" Height="29" Grid.Row="1" Grid.Column="3" SelectedItem="{Binding Speed}" Foreground="Black" Background="#FFAAAAAA" BorderBrush="#FFA2A2A2" FontSize="15" FontStyle="Italic" FontWeight="ExtraBlack" FontStretch="Condensed" SelectedIndex="2" SelectionChanged="speed_SelectionChanged_1">
             <ComboBoxItem>x0.5</ComboBoxItem>
             <ComboBoxItem>x0.75</ComboBoxItem>
             <ComboBoxItem IsSelected="True">x1</ComboBoxItem>

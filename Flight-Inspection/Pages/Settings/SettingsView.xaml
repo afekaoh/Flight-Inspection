@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:Flight_Inspection"
       xmlns:settings="clr-namespace:Flight_Inspection.Pages.Settings" 
       d:DataContext="{d:DesignInstance Type=settings:SettingsViewModel}"
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="600" d:DesignWidth="1000"
       mc:Ignorable="d" 
       Background="Transparent"
       
@@ -16,7 +16,7 @@
             <ColumnDefinition/>
             <ColumnDefinition Width="0*"/>
         </Grid.ColumnDefinitions>
-        <ItemsControl ItemsSource="{Binding SettingItems}" Margin="184,113,0,0" FontStyle="Italic" FontWeight="ExtraBlack" FontSize="17">
+        <ItemsControl ItemsSource="{Binding SettingItems}" Margin="386,112,-4,50" FontStyle="Italic" FontWeight="ExtraBlack" FontSize="17" Grid.ColumnSpan="2">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <Grid>
@@ -31,6 +31,6 @@
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
-        <Button x:Name="save" Content="save" HorizontalAlignment="Left" Margin="652,343,0,0" VerticalAlignment="Top" Width="77" Click="Save_Click" Background="Black" Foreground="White" BorderBrush="Black" Height="35" FontSize="15" FontStyle="Italic" FontWeight="ExtraBlack" FontStretch="Condensed"/>
+        <Button x:Name="save" Content="save" HorizontalAlignment="Left" Margin="854,350,0,0" VerticalAlignment="Top" Width="77" Click="Save_Click" Background="Black" Foreground="White" BorderBrush="Black" Height="35" FontSize="15" FontStyle="Italic" FontWeight="ExtraBlack" FontStretch="Condensed"/>
     </Grid>
 </Page>
