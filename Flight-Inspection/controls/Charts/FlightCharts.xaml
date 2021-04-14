@@ -17,7 +17,7 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <ListBox Name="lbTodoList" HorizontalContentAlignment="Stretch" MouseDoubleClick="choosenOption" KeyUp="lbTodoList_KeyDown" Width="Auto" Grid.RowSpan="2"  Margin="5,5,5,5">
+        <ListBox Name="lbTodoList" Background="#CDB495" TextBlock.FontSize="15" HorizontalContentAlignment="Stretch" MouseDoubleClick="choosenOption" KeyUp="lbTodoList_KeyDown" Width="Auto" Grid.RowSpan="2"  Margin="5,5,5,5">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <ContentControl Content="{Binding Name}"  />
@@ -28,6 +28,7 @@
         <lvc1:CartesianChart Grid.Column="2" Name="Series" Margin="4"  DataTooltip="{x:Null}"  Hoverable="False" DisableAnimations="True" >
             <lvc1:CartesianChart.Series>
                 <lvc1:LineSeries
+                   Stroke="#b29285"
                      PointGeometry="{x:Null}"
                       Title="First Property"
                       Fill="Transparent"
@@ -64,6 +65,7 @@
         <lvc1:CartesianChart Name="Series2" Margin="4" Grid.Column="2" Grid.Row="1" DataTooltip="{x:Null}" Hoverable="False" DisableAnimations="True" >
             <lvc1:CartesianChart.Series>
                 <lvc1:LineSeries
+                     Stroke="#b29285"
                      PointGeometry="{x:Null}"
                       Title="Attach Property"
                       Values="{Binding ChartValuesAttach}"
@@ -99,24 +101,25 @@
         </lvc1:CartesianChart>
 
 
-        <lvc1:CartesianChart Name="Series3" Margin="4" Grid.Column="1" Grid.RowSpan="2" Hoverable="False" DataTooltip="{x:Null}" DisableAnimations="True"  
-                            >
+        <lvc1:CartesianChart Name="Series3" Margin="4" Grid.Column="1" Grid.RowSpan="2" Hoverable="False" DataTooltip="{x:Null}" DisableAnimations="True" >
             <lvc1:CartesianChart.Series>
                 <lvc1:ScatterSeries
                       MaxPointShapeDiameter="3"
                       MinPointShapeDiameter="3"
                       Title="Attach Property"
+                      Fill="#CDB495"
                       Values="{Binding ChartValuesCurrentAndAttach}"
+                    
                    />
 
                 <lvc1:ScatterSeries
                       MaxPointShapeDiameter="3"
                       MinPointShapeDiameter="3"
-                      Title="Attach Property"
                       Values="{Binding LastThirty}"
                    />
 
                 <lvc1:LineSeries
+                      Stroke="#b29285"
                       Fill="Transparent"
                       PointGeometry="{x:Null}"
                       Title="Attach Property"

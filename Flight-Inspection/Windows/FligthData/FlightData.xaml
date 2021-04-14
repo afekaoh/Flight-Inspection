@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Flight_Inspection" 
         mc:Ignorable="d"
-        Title="FlightData" Height="450" Width="800">
+        Title="FlightData" Height="600" Width="1000">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -17,7 +17,7 @@
             <ColumnDefinition Width="*"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <Image Grid.RowSpan="3" Grid.ColumnSpan="2" Stretch="Fill" Source="back.jpeg" VerticalAlignment="Center" HorizontalAlignment="Center" />
+        <Image Grid.RowSpan="3" Grid.ColumnSpan="2" Stretch="Fill" Source="dark background.PNG" VerticalAlignment="Center" HorizontalAlignment="Center" />
         <Frame x:Name="Charts" Grid.Row="0" Grid.ColumnSpan="2"></Frame>
         <Frame x:Name="VideoPanel" Grid.Row="2" Grid.ColumnSpan="2"></Frame>
         <Frame x:Name="Joystick" Grid.Row="1" Grid.Column="1"></Frame>

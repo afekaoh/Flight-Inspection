@@ -180,7 +180,6 @@
     <Compile Include="controls\DataWindow\DataWindowVM.cs" />
     <Compile Include="controls\Joystick\NormelaizedData.cs" />
     <Compile Include="controls\Charts\AnalomyDetector.cs" />
-    <Compile Include="controls\Charts\MyCommand.cs" />
     <Compile Include="controls\DllWraper\AnalomyDetectorClass.cs" />
     <Compile Include="controls\DllWraper\AnalomyReportWraper.cs" />
     <Compile Include="controls\Joystick\JoystickModel.cs" />
@@ -218,6 +217,10 @@
     <Page Include="controls\Joystick\JoystickView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="controls\Joystick\ResorceDictionary.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="controls\Video\ResorceDictionary.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -260,7 +263,7 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="controls\Charts\ChartsModel.cs" />
-    <Compile Include="controls\Charts\IChartsModel.cs" />
+    <Compile Include="controls\Charts\Property.cs" />
     <Compile Include="controls\Charts\FlightCharts.xaml.cs">
       <DependentUpon>FlightCharts.xaml</DependentUpon>
     </Compile>
@@ -306,6 +309,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Windows\FligthData\dark background.PNG" />
     <Resource Include="Windows\FligthData\back.jpeg" />
     <Resource Include="Windows\MainWindow\back.jpeg" />
     <Resource Include="Photos\back.jpeg" />
@@ -318,6 +322,12 @@
     <Resource Include="controls\Video\play-button-png-12808.png" />
     <Resource Include="Photos\pause.png" />
     <Resource Include="controls\Video\pause.png" />
+    <Resource Include="Photos\compass.jpg" />
+    <Resource Include="controls\DataWindow\compass.jpg" />
+    <Resource Include="controls\DataWindow\Compass UI new 2.jpg" />
+    <Resource Include="controls\DataWindow\Compass Rose Tattoo - Semi-Permanent Tattoos by inkbox™.png" />
+    <Resource Include="controls\DataWindow\Compass UI new 3.jpg" />
+    <Resource Include="controls\DataWindow\compass.jpeg" />
     <Content Include="plugins\anomaly_detection_util.dll" />
     <Content Include="plugins\anomaly_detec_circle.dll" />
     <Content Include="plugins\anomaly_detec_linear_reg.dll" />

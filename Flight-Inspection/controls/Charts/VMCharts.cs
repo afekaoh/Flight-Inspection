@@ -1,12 +1,18 @@
 ﻿using LiveCharts;
+using LiveCharts.Configurations;
 using LiveCharts.Defaults;
 using LiveCharts.Wpf;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Windows.Media;
 
 namespace Flight_Inspection.controls
 {
+    /**
+     * The View Model that handeles the charts.
+     *  In the charts we used the library of LiveCharts - > https://lvcharts.net/
+     */
     class VMCharts : IControlViewModel
     {
         private ChartsModel charts;
@@ -14,7 +20,7 @@ namespace Flight_Inspection.controls
         Property current;
 
         public Func<double, string> LabelFormatter => value => value.ToString("F");
-
+        // transforms the int to time
         public Func<double,string> LabelTime => value => {
                 int max = (int)value;
                 float sec = (float)max / 10.0f;
@@ -23,7 +29,7 @@ namespace Flight_Inspection.controls
             };
 
         private int currentTime = 100;
-
+        //the property that saves the current time of the program.
         public int Time
         {
             get => currentTime;
@@ -38,7 +44,7 @@ namespace Flight_Inspection.controls
         }
 
         private double xMax = 1000;
-
+        //the max value of the Time (x axis)
         private double xMaxThird = 1000;
         public double XMaxThird
         {
@@ -50,6 +56,7 @@ namespace Flight_Inspection.controls
             }
         }
 
+        //the max value of the chosen element (x axis in the third graph)
         private double xMinThird = 0;
         public double XMinThird
         {
@@ -61,6 +68,7 @@ namespace Flight_Inspection.controls
             }
         }
 
+        //the max value of the most correlated element
         private double xMaxAttach = 1000;
         public double XMaxAttach
         {
@@ -71,7 +79,7 @@ namespace Flight_Inspection.controls
                 OnPropertyChanged("XMaxAttach");
             }
         }
-
+        //the min value of the most correlated element
         private double xMinAttach = 0;
         public double XMinAttach
         {
@@ -82,8 +90,8 @@ namespace Flight_Inspection.controls
                 OnPropertyChanged("XMinAttach");
             }
         }
-        
 
+        //the last thirty secconds of the points
         ChartValues<ObservablePoint> lastThirty;
         public ChartValues<ObservablePoint> LastThirty
         {
@@ -94,7 +102,7 @@ namespace Flight_Inspection.controls
             }
         }
 
-
+        //all the points of the choosen values in function of time
         ChartValues<ObservablePoint> chartVal;
         public ChartValues<ObservablePoint> ChartValues
         {
@@ -104,7 +112,7 @@ namespace Flight_Inspection.controls
                 OnPropertyChanged("ChartValues");
             }
         }
-
+        //all the points of the most correlated values in function of time
         ChartValues<ObservablePoint> chartValAttach;
         public ChartValues<ObservablePoint> ChartValuesAttach
         {
@@ -114,7 +122,7 @@ namespace Flight_Inspection.controls
                 OnPropertyChanged("ChartValuesAttach");
             }
         }
-
+        //all the points of the chosen values in function of most correlated values
         ChartValues<ObservablePoint> chartValCurrentAndAttach;
         public ChartValues<ObservablePoint> ChartValuesCurrentAndAttach
         {
@@ -124,7 +132,7 @@ namespace Flight_Inspection.controls
                 OnPropertyChanged("ChartValuesCurrentAndAttach");
             }
         }
-
+        //the linear reg of the chosen values in function of most correlated values
         ChartValues<ObservablePoint> linearRegVal;
         public ChartValues<ObservablePoint> LinearRegVal
         {
@@ -134,6 +142,7 @@ namespace Flight_Inspection.controls
                 OnPropertyChanged("ChartValuesCurrentAndAttach");
             }
         }
+        //Property that saves all the anomaly points from the dll
         ChartValues<ObservablePoint> analomyPoints;
         public ChartValues<ObservablePoint> AnalomyPoints
         {
@@ -143,6 +152,7 @@ namespace Flight_Inspection.controls
                 OnPropertyChanged("AnalomyPoints");
             }
         }
+        //the now choosen property
         public Property Current
         {
             get => current; set
@@ -158,11 +168,14 @@ namespace Flight_Inspection.controls
             Ready?.Invoke(this, EventArgs.Empty);
         }
 
+        //the constructor of vm.
         public VMCharts()
         {
             charts = new ChartsModel();
+            LastThirty = new ChartValues<ObservablePoint>();
             charts.PropertyChanged += delegate (Object sender, PropertyChangedEventArgs e)
             {
+                //update the changed value
                 switch (e.PropertyName)
                 {
                     case "XMax":
@@ -189,40 +202,49 @@ namespace Flight_Inspection.controls
                     case "LinearRegVal":
                         LinearRegVal = charts.LinearRegVal;
                         break;
-                    case "LastThirty":
-                        lastThirty = charts.LastThirty;
-                        break;
                     case "ChartValuesCurrentAndAttach":
                         ChartValuesCurrentAndAttach = charts.ChartValuesCurrentAndAttach;
                         break;
                     case "AnalomyPoints":
                         AnalomyPoints = charts.AnalomyPoints;
                         break;
+                    case "LastThirty":
+                        LastThirty = charts.LastThirty;
+                        break;
+
                 }
             };
 
         }
 
+        // //returns all the properties
         public List<Property> GetNames()
         {
             return charts.GetProperties();
         }
+
+
         public override void SetSettings(SettingsArgs settingsArgs)
         {
             charts.TimeSeries = settingsArgs.Ts;
             OnReady();
         }
-
+        //updates the series according to the changed curent
         public void updateSeries()
         {
             if (current != null)
-                charts.updateSeries(current.Name);
+                charts.updateSeries(current.Name, Time);
         }
 
         internal override void setTime(int time)
         {
-             this.Time = time;
-            charts.setLastThirty(Time);
+            int num = time + 1 < (int)xMax ? time + 1 : (int)xMax;
+            for (int i = Time; i < num; i++)
+            {
+                LastThirty.RemoveAt(0);
+                LastThirty.Add(ChartValuesCurrentAndAttach[i]);
+            }
+            this.Time = time;
         }
     }
 }

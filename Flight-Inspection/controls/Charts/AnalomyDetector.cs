@@ -7,9 +7,13 @@ using static Flight_Inspection.controls.DllWraper.AnalomyReportWraper;
 
 namespace Flight_Inspection.controls.Charts
 {
+    /**
+     * AnomalyDetector class to help with the points on the graph
+     */
     class AnalomyDetector
     {
-        private string pathDll = "C:\\Users\\afeka\\OneDrive - Bar-Ilan University\\Code projects\\Advance-Programming-2\\Flight-Inspection\\Flight-Inspection\\plugins\\anomaly_detec_linear_reg.dll";
+        //property of the path to the client's dll
+        private string pathDll;
         public string PathDll
         {
             get => pathDll;
@@ -18,8 +22,8 @@ namespace Flight_Inspection.controls.Charts
                 pathDll = value;
             }
         }
-
-        private string pathCsv = "C:\\Users\\afeka\\OneDrive - Bar-Ilan University\\Code projects\\Advance-Programming-2\\Flight-Inspection\\Flight-Inspection\\Pages\\Settings\\FG_Data\\reg_flight.csv";
+        
+        private string pathCsv";
 
         public string PathCsv
         {

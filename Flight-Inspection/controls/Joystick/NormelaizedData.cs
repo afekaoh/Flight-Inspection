@@ -9,17 +9,30 @@ namespace Flight_Inspection.controls.Joystick
     class NormelaizedData
     {
         private string name;
-        private float normalize;
+        private int canvasDim;
+        private float max;
+        private float min;
         private float data;
         public event EventHandler Ready;
 
-        public NormelaizedData(string name, float CanvasDim, float maxVal)
+        public NormelaizedData(string name, int CanvasDim, float max, float min)
         {
             this.name = name;
-            this.normalize = CanvasDim/maxVal;
+            this.canvasDim = CanvasDim;
+            this.max = max;
+            this.min = min;
+
         }
         public string Name { get => name; set => name = value; }
-        public float Normalize { get => normalize; set => normalize = value; }
+        public float Normalize { get { 
+                return (data - min) * CanvasDim / (max - min); }
+        }
         public float Data { get => data; set => data = value; }
+        public int CanvasDim { get => canvasDim; }
+        public void setCanvasDim(int val)
+        {
+            canvasDim = val;
+            Console.WriteLine(canvasDim + "lala");
+        }
     }
 }
