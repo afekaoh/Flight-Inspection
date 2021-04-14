@@ -49,7 +49,10 @@ namespace Flight_Inspection.controls.DataWindow
             get { return datas["yaw"]; }
             set
             {
-                datas["yaw"] = value;
+                var data = findData("side-slip-deg");
+                if (data != null)
+                    data.Data = value;
+                datas["yaw"] = data.Normalize;
                 OnPropertyChanged();
             }
         }
@@ -59,7 +62,10 @@ namespace Flight_Inspection.controls.DataWindow
             get { return datas["pitch"]; }
             set
             {
-                datas["pitch"] =  value;
+                var data = findData("pitch-deg");
+                if (data != null)
+                    data.Data = value;
+                datas["pitch"] = data.Normalize;
                 OnPropertyChanged();
             }
         }
@@ -68,7 +74,10 @@ namespace Flight_Inspection.controls.DataWindow
             get { return datas["roll"]; }
             set
             {
-                datas["roll"] = value;
+                var data = findData("roll-deg");
+                if (data != null)
+                    data.Data = value;
+                datas["roll"] = data.Normalize;
                 OnPropertyChanged();
             }
         }
@@ -88,8 +97,10 @@ namespace Flight_Inspection.controls.DataWindow
             get { return datas["altimeter"]; }
             set
             {
-                //Console.WriteLine("yay");
-                datas["altimeter"] =  value;
+                var data = findData("altitude-ft");
+                if (data != null)
+                    data.Data = value;
+                datas["altimeter"] = data.Normalize;
                 OnPropertyChanged();
             }
         }
@@ -130,7 +141,7 @@ namespace Flight_Inspection.controls.DataWindow
             else if (e.PropertyName == "altimeter")
             {
                 Console.WriteLine(model.Altimeter);
-                VM_Altimeter = model.Altimeter;
+                VM_Altimeter = model.Altimeter - model.minVal("altitude-ft");
             }
             else if (e.PropertyName == "airSpeed")
             {
