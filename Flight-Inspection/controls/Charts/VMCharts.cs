@@ -217,6 +217,10 @@ namespace Flight_Inspection.controls
 
         }
 
+        public void updateTimeAccordingToPoint(ObservablePoint point)
+        {
+
+        }
         // //returns all the properties
         public List<Property> GetNames()
         {
@@ -238,13 +242,17 @@ namespace Flight_Inspection.controls
 
         internal override void setTime(int time)
         {
+            updateLastThirte(time);
+            this.Time = time;
+        }
+        private void updateLastThirte(int time)
+        {
             int num = time + 1 < (int)xMax ? time + 1 : (int)xMax;
-            for (int i = Time; i < num; i++)
+            for (int i = Time; i<num; i++)
             {
                 LastThirty.RemoveAt(0);
                 LastThirty.Add(ChartValuesCurrentAndAttach[i]);
             }
-            this.Time = time;
-        }
+}
     }
 }

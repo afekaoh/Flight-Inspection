@@ -21,6 +21,7 @@ namespace Flight_Inspection.controls
         public event PropertyChangedEventHandler PropertyChanged;
         private TimeSeries timeSeries;
         private List<Property> properties = new List<Property>();
+        private List<AnomalyReportSafe> lsReports;
 
         //Property that saves all the anomaly points from the dll
         ChartValues<ObservablePoint> analomyPoints;
@@ -173,9 +174,7 @@ namespace Flight_Inspection.controls
                 return;
             List<string> ls = timeSeries.GetFeatureNames();
             AnalomyDetector analomyDetector = new AnalomyDetector();
-            List<AnomalyReportSafe> lsReports = analomyDetector.GetAnomalyReport(ls, TimeSeries);
-            //if (lsReports == null)
-            //{
+            lsReports = analomyDetector.GetAnomalyReport(ls, TimeSeries);
             AnalomyPoints = new ChartValues<ObservablePoint>();
             LastThirty = new ChartValues<ObservablePoint>();
             LinearRegVal = new ChartValues<ObservablePoint>();
@@ -237,6 +236,13 @@ namespace Flight_Inspection.controls
                 points3[i] = new ObservablePoint(vs[i], attach[i]);
                 
             }
+            AnalomyPoints.Clear();
+            foreach(AnomalyReportSafe reportSafe in lsReports)
+            {
+                if (reportSafe.first == content)
+                    AnalomyPoints.Add(points3[reportSafe.time]);
+            }
+            INotifyPropertyChanged("AnalomyPoints");
             //update the new data
             XMax = vs.Count;
             XMaxAttach = attach.Max();
