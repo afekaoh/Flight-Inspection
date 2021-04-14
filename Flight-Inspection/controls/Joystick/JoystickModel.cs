@@ -82,25 +82,19 @@ namespace Flight_Inspection.controls.Joystick
         }
         public void sendData()
         {
-                Aileron = ts.GetFeatureData("aileron").ElementAt(CurrentTime);
-                Rudder = ts.GetFeatureData("rudder").ElementAt(CurrentTime);
-                Elevator = ts.GetFeatureData("elevator").ElementAt(CurrentTime);
-                Throttle = ts.GetFeatureData("throttle").ElementAt(CurrentTime);
+            Aileron = ts.GetFeatureData("aileron").ElementAt(CurrentTime);
+            Rudder = ts.GetFeatureData("rudder").ElementAt(CurrentTime);
+            Elevator = ts.GetFeatureData("elevator").ElementAt(CurrentTime);
+            Throttle = ts.GetFeatureData("throttle").ElementAt(CurrentTime);
         }
-        
-        public float maxAbs (String feature){
 
-            float minVal = (float) Math.Abs(ts.GetFeatureData(feature).Min());
-            float maxVal = Math.Abs(ts.GetFeatureData(feature).Max());
-            if(minVal >= maxVal)
-            {
-                return minVal;
-            }
-            if (minVal < maxVal)
-            {
-                return maxVal;
-            }
-            return 0;
-        } 
+        public float maxVal(String feature)
+        {
+            return (float)ts.GetFeatureData(feature).Max();
+        }
+        public float minVal(String feature)
+        {
+            return (float)ts.GetFeatureData(feature).Min();
+        }
     }
 }

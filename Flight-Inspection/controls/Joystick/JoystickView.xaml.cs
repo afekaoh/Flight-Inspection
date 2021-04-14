@@ -20,20 +20,26 @@ namespace Flight_Inspection.controls.Joystick
 
         private void addFeatures(object sender, EventArgs e)
         {
-            JoystickViewModel.addData("aileron", (float)InnerCanvas.ActualWidth);
-            JoystickViewModel.addData("elevator", (float)InnerCanvas.ActualWidth);
-            Console.WriteLine(InnerCanvas.ActualWidth);
-            ThrotteleCanvas.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
-            ThrotteleCanvas.Arrange(new Rect(0, 0, ThrotteleCanvas.DesiredSize.Width, ThrotteleCanvas.DesiredSize.Height));
-            JoystickViewModel.addData("throttle", 200);
-            JoystickViewModel.addData("rudder", 200);
-            Console.WriteLine($"Hello {JoyStickCanvas.Width}");
+            JoystickViewModel.addData("aileron", (int)InnerCanvas.Width);
+            JoystickViewModel.addData("elevator", (int)InnerCanvas.Width);
+            GridT.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
+            GridT.Arrange(new Rect(0, 0, GridT.DesiredSize.Width, GridT.DesiredSize.Height));
+            RudderCanvas.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
+            RudderCanvas.Arrange(new Rect(0, 0, GridT.DesiredSize.Width, GridT.DesiredSize.Height));
+            JoystickViewModel.addData("throttle", (int)GridT.ActualHeight - 40);
+            JoystickViewModel.addData("rudder", (int)RudderCanvas.ActualWidth - 40);
+            Console.WriteLine($"Hello {RudderCanvas.ActualWidth}");
             Console.WriteLine($"Hello {GridT.ActualHeight}");
         }
 
         public IControlViewModel GetViewModel()
         {
             return this.JoystickViewModel;
+        }
+
+        private void GridT_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            JoystickViewModel.findData("throttle").setCanvasDim((int)GridT.ActualHeight - 40);
         }
     }
 }

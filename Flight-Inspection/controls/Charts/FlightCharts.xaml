@@ -106,7 +106,7 @@
                       MinPointShapeDiameter="3"
                       Title="Attach Property"
                       Values="{Binding ChartValuesCurrentAndAttach}"
-                    Configuration="{Binding DataMapper}"
+                    
                    />
 
                 <lvc1:ScatterSeries
