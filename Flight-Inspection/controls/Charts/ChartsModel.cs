@@ -21,6 +21,8 @@ namespace Flight_Inspection.controls
         public event PropertyChangedEventHandler PropertyChanged;
         private TimeSeries timeSeries;
         private List<Property> properties = new List<Property>();
+        private List<AnomalyReportSafe> lsReports;
+        private Dictionary<ObservablePoint, int> mapper;
 
         //Property that saves all the anomaly points from the dll
         ChartValues<ObservablePoint> analomyPoints;
@@ -173,9 +175,7 @@ namespace Flight_Inspection.controls
                 return;
             List<string> ls = timeSeries.GetFeatureNames();
             AnalomyDetector analomyDetector = new AnalomyDetector();
-            List<AnomalyReportSafe> lsReports = analomyDetector.GetAnomalyReport(ls, TimeSeries);
-            //if (lsReports == null)
-            //{
+            lsReports = analomyDetector.GetAnomalyReport(ls, TimeSeries);
             AnalomyPoints = new ChartValues<ObservablePoint>();
             LastThirty = new ChartValues<ObservablePoint>();
             LinearRegVal = new ChartValues<ObservablePoint>();
@@ -237,6 +237,16 @@ namespace Flight_Inspection.controls
                 points3[i] = new ObservablePoint(vs[i], attach[i]);
                 
             }
+            AnalomyPoints.Clear();
+            foreach(AnomalyReportSafe reportSafe in lsReports)
+            {
+                if (reportSafe.first == content)
+                {
+                    AnalomyPoints.Add(points3[reportSafe.time]);
+                    mapper.Add(points3[reportSafe.time], time);
+                }
+            }
+            INotifyPropertyChanged("AnalomyPoints");
             //update the new data
             XMax = vs.Count;
             XMaxAttach = attach.Max();
@@ -274,6 +284,16 @@ namespace Flight_Inspection.controls
             float x2 = vs.Max(), y2 = line.b + x2 * line.a;
             LinearRegVal.Add(new ObservablePoint(x1, y1));
             LinearRegVal.Add(new ObservablePoint(x2, y2));
+        }
+
+        public int returnTimeOfPoint(ChartPoint point)
+        {
+            foreach(var p in mapper)
+            {
+                if (p.Key.X == point.X && p.Key.Y == point.Y)
+                    return p.Value;
+            }
+            return -1;
         }
     }
 

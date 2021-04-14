@@ -52,7 +52,7 @@ namespace Flight_Inspection.controls
         //go to the wanted time according to the point
         private void onChoosePoint(object sender, ChartPoint chartPoint)
         {
-            vm.Time = (int)chartPoint.X;
+            vm.updateTimeAccordingToPoint(chartPoint) ;
         }
     }
 }
