@@ -322,6 +322,8 @@
     <Resource Include="controls\Video\play-button-png-12808.png" />
     <Resource Include="Photos\pause.png" />
     <Resource Include="controls\Video\pause.png" />
+    <Resource Include="Photos\compass.jpg" />
+    <Resource Include="controls\DataWindow\compass.jpg" />
     <Content Include="plugins\anomaly_detection_util.dll" />
     <Content Include="plugins\anomaly_detec_linear_reg.dll" />
     <Resource Include="Pages\Settings\FG_Data\playback_small.xml" />

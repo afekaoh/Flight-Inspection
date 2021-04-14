@@ -28,8 +28,6 @@ namespace Flight_Inspection.controls.Joystick
             RudderCanvas.Arrange(new Rect(0, 0, GridT.DesiredSize.Width, GridT.DesiredSize.Height));
             JoystickViewModel.addData("throttle", (int)GridT.ActualHeight - 40);
             JoystickViewModel.addData("rudder", (int)RudderCanvas.ActualWidth - 40);
-            Console.WriteLine($"Hello {RudderCanvas.ActualWidth}");
-            Console.WriteLine($"Hello {GridT.ActualHeight}");
         }
 
         public IControlViewModel GetViewModel()
