@@ -42,7 +42,7 @@
         <Button Content="Stop" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" Margin="2,2,2,2" Height="29" VerticalAlignment="Center" Width="75"  Click="Button_Stop" RenderTransformOrigin="0.893,0.609"/>
         <Slider Name ="Time" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" Width="auto" Height="Auto" Margin="10,0,0,0" Value="{Binding Path=Time, Mode=TwoWay}" Maximum="{Binding MaxSlider}"/>
         <TextBlock Text="{Binding Time, Converter={StaticResource TimeConverterString}}" Grid.Row="0" Grid.Column="5" HorizontalAlignment="Center" Height="28" TextWrapping="Wrap" VerticalAlignment="Center" Width="69"/>
-        <ComboBox Name="speed" Margin="2,2,2,2" Width="75" Height="29" Grid.Row="1" Grid.Column="4" ContextMenuClosing="onSpeedChange" SelectedItem="{Binding Speed}">
+        <ComboBox Name="speed" Margin="2,2,2,2" Width="75" Height="29" Grid.Row="1" Grid.Column="4" SelectedItem="{Binding Speed}">
             <ComboBoxItem>x0.5</ComboBoxItem>
             <ComboBoxItem>x0.75</ComboBoxItem>
             <ComboBoxItem IsSelected="True">x1</ComboBoxItem>

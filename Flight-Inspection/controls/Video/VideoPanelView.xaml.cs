@@ -23,6 +23,9 @@ namespace Flight_Inspection.controls.Video
     {
         private bool isPlaying;
         VideoPanelViewModel videoPanelViewModel;
+
+
+        //video panel view constructor
         public VideoPanelView()
         {
             InitializeComponent();
@@ -36,8 +39,10 @@ namespace Flight_Inspection.controls.Video
             return videoPanelViewModel;
         }
 
+        //start the flight inspection with the play button 
         private void Button_Play(object sender, RoutedEventArgs e)
         {
+            //check if the button isn't pressed / if the video isn't working 
             if (!isPlaying)
             {
                 Play.Content = FindResource("Stop");
@@ -51,20 +56,16 @@ namespace Flight_Inspection.controls.Video
                 isPlaying = false;
             }
         }
-
+        //pause the flight inspection with the pause button 
         private void Button_Pause(object sender, RoutedEventArgs e)
         {
             videoPanelViewModel.Pause();
         }
 
+        //stop the flight inspection with the stop button 
         private void Button_Stop(object sender, RoutedEventArgs e)
         {
             videoPanelViewModel.Pause();
-        }
-
-        private void onSpeedChange(object sender, ContextMenuEventArgs e)
-        {
-            
         }
     }
 }
