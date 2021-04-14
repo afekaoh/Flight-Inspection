@@ -200,6 +200,7 @@
     </Compile>
     <Compile Include="controls\Video\VideoPanelViewModel.cs" />
     <Compile Include="Pages\Settings\OnReadyEventArgs.cs" />
+    <Compile Include="Pages\Settings\ReadyConverter.cs" />
     <Compile Include="Windows\FligthData\FlightData.xaml.cs">
       <DependentUpon>FlightData.xaml</DependentUpon>
     </Compile>

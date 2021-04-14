@@ -28,6 +28,8 @@ namespace Flight_Inspection.Settings
             get { return content; }
             set
             {
+                if (value == content)
+                    return;
                 if (!(value is null) && value.EndsWith(checkVar))
                 {
                     content = value;
@@ -48,7 +50,16 @@ namespace Flight_Inspection.Settings
         }
 
         public string Name { get => name; set => name = value; }
-        public bool Ready { get => ready; set => ready = value; }
+        public bool Ready
+        {
+            get => ready;
+            set
+            {
+                ready = value;
+                OnPropertyChanged();
+
+            }
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
 

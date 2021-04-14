@@ -11,6 +11,10 @@
       Background="Transparent"
        HorizontalAlignment="Right"
       Title="Settings" >
+    <Page.Resources>
+        <settings:ReadyConverter x:Key="ReadyConverter"/>
+    </Page.Resources>
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -25,8 +29,14 @@
                             <ColumnDefinition Width="auto" MinWidth="145"/>
                         </Grid.ColumnDefinitions>
                         <CheckBox IsChecked="{Binding Checked}" Grid.Column="0" Height="35" Margin="10,10" HorizontalAlignment="Right" IsEnabled="False" RenderTransformOrigin="6.062,7.267" BorderBrush="White" Foreground="White" Background="Black"/>
-                        <Button Margin="0,0,80,25" Grid.Column="1" Width="auto" Height="40" HorizontalAlignment="Right" Content="{Binding Name}" BorderThickness="0" Background="Black" Click="On_Click" BorderBrush="Black" Foreground="White" />
-
+                        <Button Margin="0,0,80,25" Grid.Column="1" Width="auto" Height="40" HorizontalAlignment="Right" Content="{Binding Name}" BorderThickness="0" Background="Black" Click="On_Click" BorderBrush="Black" Foreground="White">
+                            <Button.IsEnabled>
+                                <MultiBinding Converter="{StaticResource ReadyConverter}">
+                                    <Binding Path="Name"/>
+                                    <Binding Path="Ready"/>
+                                </MultiBinding>
+                            </Button.IsEnabled>
+                        </Button>
                     </Grid>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>

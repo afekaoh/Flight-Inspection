@@ -12,42 +12,22 @@ namespace Flight_Inspection.Pages.Settings
 {
     public class SettingsViewModel : IPagesViewModel
     {
-        private List<SettingItem> settingItems;
         private bool ready;
-        public bool Ready
-        {
-            get
-            {
-                return ready;
-            }
-            private set
-            {
-                ready = value;
-                OnPropertyChanged();
-            }
-        }
         private Save save;
-
-
-        public List<SettingItem> SettingItems { get => settingItems; set => settingItems = value; }
+        private List<SettingItem> settingItems;
 
         public SettingsViewModel()
         {
             SettingItems = new List<SettingItem>
             {
                 {new SettingItem("CSV_Normal", ".csv")},
-                {new SettingItem("CSV_Test", ".csv") { Ready = true }},
+                {new SettingItem("CSV_Test", ".csv")},
                 {new SettingItem("XML", ".xml")},
-                {new SettingItem("DLL_PATH", ".dll") {Ready = true}},
+                {new SettingItem("DLL_PATH", ".dll")},
                 {new SettingItem("Proc_PATH", "") }
             };
             SettingItems.ForEach(t => t.PropertyChanged += SavedEvent);
             save = new Save();
-        }
-
-        public SettingItem getSettingItem(string name)
-        {
-            return SettingItems.Find(t => t.Name == name);
         }
 
         void SavedEvent(object sender, PropertyChangedEventArgs e)
@@ -64,22 +44,22 @@ namespace Flight_Inspection.Pages.Settings
                 switch (si.Name)
                 {
                     case "CSV_Normal":
+                        settingItems.Find(s => s.Name == "CSV_Test").Ready = true;
+                        si.Ready = true;
+                        break;
                     case "XML":
                     case "Proc_PATH":
                         si.Ready = true;
                         break;
+                    case "CSV_Test":
+                        settingItems.Find(s => s.Name == "DLL_Path").Ready = true;
+                        UpdateSettings();
+                        break;
+                    case "DLL_Path":
+                        UpdateSettings();
+                        break;
                 }
             }
-        }
-
-        public void AddData(string name, string data)
-        {
-            save.AddData(name, data);
-        }
-
-        public void SaveData()
-        {
-            save.SaveData();
         }
 
         internal OnReadyEventArgs GetSettings(string name)
@@ -88,10 +68,14 @@ namespace Flight_Inspection.Pages.Settings
             return new OnReadyEventArgs(name, Ready, settings);
         }
 
-        public override void UpdateSettings()
+        public void AddData(string name, string data)
         {
-            var s = save.GetSettings();
-            settingItems.ForEach(t => t.Content = s.GetArg(t.Name));
+            save.AddData(name, data);
+        }
+
+        public SettingItem getSettingItem(string name)
+        {
+            return SettingItems.Find(t => t.Name == name);
         }
 
         public override void OnPropertyChanged([CallerMemberName] string name = null, PropertyChangedEventArgs ea = null)
@@ -100,8 +84,35 @@ namespace Flight_Inspection.Pages.Settings
             base.OnPropertyChanged(name, e);
         }
 
+        public void SaveData()
+        {
+            save.SaveData();
+        }
+
         public override void SetSettings(SettingsArgs settingsArgs)
         {
         }
+
+        public override void UpdateSettings()
+        {
+            var s = save.GetSettings();
+            settingItems.ForEach(t => t.Content = s.GetArg(t.Name));
+        }
+
+        public bool Ready
+        {
+            get
+            {
+                return ready;
+            }
+            private set
+            {
+                ready = value;
+                OnPropertyChanged();
+            }
+        }
+
+
+        public List<SettingItem> SettingItems { get => settingItems; set => settingItems = value; }
     }
 }
