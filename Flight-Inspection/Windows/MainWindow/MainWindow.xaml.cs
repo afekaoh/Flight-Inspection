@@ -59,7 +59,7 @@ namespace Flight_Inspection
 
         private void Settings_OnReady(object sender, OnReadyEventArgs e)
         {
-            var csv = e.GetSetting("CSV_Test").Checked ? e.GetSetting("CSV_Test").Content : e.GetSetting("CSV_Normal").Content;
+            var csv = e.GetSetting("CSV_Test") != null ? e.GetSetting("CSV_Test").Content : e.GetSetting("CSV_Normal").Content;
             var xml = e.GetSetting("XML").Content;
             var Ts = new TimeSeries(csv, xml);
             var ProcPath = e.GetSetting("Proc_PATH").Content;

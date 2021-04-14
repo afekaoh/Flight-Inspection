@@ -31,7 +31,7 @@ namespace Flight_Inspection.Windows.MainWindow
 
         public void SetSettings(SettingsArgs settingsArgs)
         {
-            PagesViewModels.ForEach(vm => vm.SetSettings(settings));
+            PagesViewModels.ForEach(vm => vm.SetSettings(settingsArgs));
         }
 
         private SettingsArgs settings;

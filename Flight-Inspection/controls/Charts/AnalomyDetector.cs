@@ -23,7 +23,7 @@ namespace Flight_Inspection.controls.Charts
             }
         }
         
-        private string pathCsv";
+        private string pathCsv;
 
         public string PathCsv
         {
