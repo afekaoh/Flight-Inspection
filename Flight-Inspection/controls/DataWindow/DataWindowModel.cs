@@ -17,7 +17,7 @@ namespace Flight_Inspection.controls.DataWindow
         private float airspeed;
         private float altimeter;
         private float direction;
-        private int currentTime;
+        private int currentTime = 0;
         private float yaw;
         private float pitch;
         private float roll;

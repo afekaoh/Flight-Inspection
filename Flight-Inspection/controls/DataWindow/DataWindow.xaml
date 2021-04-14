@@ -12,13 +12,17 @@
     <Grid RenderTransformOrigin="0.5,0.5">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="20"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="20"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Grid Grid.Row="1">
+        <TextBlock  HorizontalAlignment="Center" Grid.Row="1" Grid.Column="1" Height="23" TextWrapping="Wrap" Text="{Binding Path=VM_Direction, StringFormat='Direction: {0}'}" VerticalAlignment="Top" Width="Auto" Foreground="White"/>
+        <TextBlock HorizontalAlignment="Center" Grid.Row="1" Grid.Column="0" Height="23" TextWrapping="Wrap" Text="{Binding Path=VM_Airspeed, StringFormat='Speed: {0}'}" VerticalAlignment="Top" Width="Auto" Foreground="White"/>
+        <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
@@ -26,10 +30,6 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="20"/>
-            </Grid.RowDefinitions>
             <Grid Grid.Column="1" Name="GridPitch" >
                 <Rectangle Stretch="UniformToFill" Fill="#272B2A"  Margin="10,10,10,10"/>
                 <Rectangle Width="Auto"  Height="{Binding VM_Yaw}" VerticalAlignment="Bottom"  Fill="#CDB495" Margin="10,10,10,10"  />
@@ -42,13 +42,17 @@
                 <Rectangle Stretch="UniformToFill" Fill="#272B2A"  Margin="10,10,10,10"/>
                 <Rectangle Width="Auto" Height="{Binding VM_Pitch}" VerticalAlignment="Bottom" Fill="#CDB495" Margin="10,10,10,10"  />
             </Grid>
-        </Grid>
+            </Grid>
         <!--<TextBox HorizontalAlignment="Left" Grid.Row="1" Height="23" Margin="20,20,0,0" TextWrapping="Wrap" Text="{Binding VM_Yaw}" VerticalAlignment="Top" Width="120"/>
         <TextBox HorizontalAlignment="Left" Grid.Row="1" Height="23" Margin="20,60,0,0" TextWrapping="Wrap" Text="{Binding VM_Pitch}" VerticalAlignment="Top" Width="120"/>
         <TextBox HorizontalAlignment="Left" Grid.Row="1" Height="23" Margin="20,100,0,0" TextWrapping="Wrap" Text="{Binding VM_Roll}" VerticalAlignment="Top" Width="120"/>
         //-->
-        <TextBox HorizontalAlignment="Left" Grid.Row="1" Grid.Column="1" Height="23" Margin="20,20,0,0" TextWrapping="Wrap" Text="{Binding VM_Altimeter}" VerticalAlignment="Top" Width="120"/>
-        <Grid Grid.Row="1" Grid.Column="1">
+        <TextBlock  Grid.Row="3" Grid.Column="0" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="{Binding Path=VM_Yaw, StringFormat='Yaw: {0}'}" VerticalAlignment="Top" Width="Auto" Foreground="White"/>
+        <TextBlock  Grid.Row="3" Grid.Column="0" HorizontalAlignment="Center" Height="23" TextWrapping="Wrap" Text="{Binding Path=VM_Roll, StringFormat='Roll: {0}'}" VerticalAlignment="Top" Width="Auto" Foreground="White"/>
+        <TextBlock  Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" Height="23" TextWrapping="Wrap" Text="{Binding Path=VM_Pitch, StringFormat='Pitch: {0}'}" VerticalAlignment="Top" Width="Auto" Foreground="White"/>
+        <TextBlock  Grid.Row="3" Grid.Column="1"  HorizontalAlignment="Center" Height="23" TextWrapping="Wrap" Text="{Binding Path=VM_Altimeter, 
+                 StringFormat='Height: {0}'}" VerticalAlignment="Top" Width="Auto" Foreground="White"/>
+        <Grid Grid.Row="2" Grid.Column="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
@@ -56,15 +60,12 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="20"/>
-            </Grid.RowDefinitions>
 
             <Grid Grid.Column="2" Name="GridAltimeter" >
                 <Rectangle Stretch="UniformToFill" Fill="#272B2A"  Margin="10,10,10,10"/>
                 <Rectangle Width="Auto" Height="{Binding VM_Altimeter}" VerticalAlignment="Bottom"  Fill="#CDB495" Margin="10,10,10,10"  />
             </Grid>
+            
         </Grid>
         <lvc1:AngularGauge  Value="{Binding VM_Airspeed}" FromValue="0" ToValue="250" DisableaAnimations="True"
                           LabelsStep="50" TicksStep="25" Wedge="300"
