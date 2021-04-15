@@ -1,6 +1,6 @@
 # Flight-Inspection
 
-## about the project
+## About the project
 the project can be divided into 5 different sections
 
 ### Charts
