@@ -1,4 +1,5 @@
-﻿using System;
+﻿// oz rigler 316291897 15/04/2021
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -6,19 +7,23 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-
+// a view- model class
+// prossesing the raw data of the model with caculations and adaptation in order to view at the desired way for spesipic view.
 namespace Flight_Inspection.controls.Joystick
 {
     class JoystickViewModel : IControlViewModel
     {
+        // a stl that holds the data
         List<NormelaizedData> datas;
         private JoystickModel model;
+        // an event thats notify the view class that the VM is ready for use will happend after setting the datas
         public event EventHandler Ready; 
-
+        // notify that the VM is ready
         private void OnReady()
         {
             Ready?.Invoke(this, EventArgs.Empty);
         }
+        // when a propertiy change ,its activated OnPropertyChanged event thats notify the binded item in the view to change accordingly
         public float VM_Aileron
         {
             get
@@ -93,10 +98,12 @@ namespace Flight_Inspection.controls.Joystick
             }
         }
         private Thickness thicknessT;
+
         public JoystickViewModel()
         {
             model = new JoystickModel();
             datas = new List<NormelaizedData>();
+            // adding a function to the model event, that will change vm properties whenever model properties are changed.
             model.PropertyChanged += TheModlePropertyChanged;
         }
         public override void SetSettings(SettingsArgs settingsArgs)
@@ -104,14 +111,14 @@ namespace Flight_Inspection.controls.Joystick
             model.SetSettings(settingsArgs);
             this.OnReady();
         }
-
-        public NormelaizedData findData (string name) { return (NormelaizedData)datas.Find(JoyStickData => JoyStickData.Name == name); }
-
+        // required for searching in the list field datas.
+        public NormelaizedData findData (string name) { return (NormelaizedData)datas.Find(JoyStickData => JoyStickData.Name == name); } 
         public void addData(string name, int CanvasDim)
         {
             datas.Add(new NormelaizedData(name, CanvasDim,model.maxVal(name),model.minVal(name)));
         }
-
+        // when the model properties getting a new value this function will be activated
+        // its get the property name that has changed and changing the appropriate VM property
         public void TheModlePropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             switch (e.PropertyName)

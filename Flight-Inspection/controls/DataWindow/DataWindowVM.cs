@@ -1,4 +1,5 @@
-﻿using Flight_Inspection.controls.Joystick;
+﻿// oz rigler 316291897 15/04/2021
+using Flight_Inspection.controls.Joystick;
 using LiveCharts;
 using LiveCharts.Wpf;
 using System;
@@ -7,14 +8,19 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+/// <summary>
+/// prossesing the raw data of the model with caculations and adaptation in order to view at the desired way for spesipic view.
+/// </summary>
 namespace Flight_Inspection.controls.DataWindow
 {
     class DataWindowVM : IControlViewModel
     {
+        // an event thats notify the view class that the VM is ready for use will happend after setting the datas
         DataWindowModel model;
         Dictionary<string, float> datas;
+        // notify that the VM is ready
         public event EventHandler Ready;
+        // a stl that holds the data
         List<NormelaizedData> dataList;
 
         public DataWindowVM()
@@ -40,6 +46,7 @@ namespace Flight_Inspection.controls.DataWindow
         {
             model.CurrentTime = time;
         }
+        // notify the view that the setting are done and the VM is ready
         private void OnReady()
         {
             Ready?.Invoke(this, EventArgs.Empty);
@@ -116,14 +123,15 @@ namespace Flight_Inspection.controls.DataWindow
                 OnPropertyChanged();
             }
         }
-
+        // when a propertiy change ,its activated OnPropertyChanged event thats notify the binded item in the view to change accordingly
         public NormelaizedData findData(string name) { return (NormelaizedData)dataList.Find(JoyStickData => JoyStickData.Name == name); }
-
+        // required for searching in the list field datas.
         public void addData(string name, int CanvasDim)
         {
             dataList.Add(new NormelaizedData(name, CanvasDim, model.maxVal(name), model.minVal(name)));
         }
-
+        // when the model properties getting a new value this function will be activated
+        // its get the property name that has changed and changing the appropriate VM property
         public void TheModlePropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == "yaw")

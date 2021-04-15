@@ -1,4 +1,5 @@
-﻿using System;
+﻿// oz rigler 316291897 15/04/2021
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -8,10 +9,12 @@ using System.Threading;
 using System.Threading.Tasks;
 
 namespace Flight_Inspection.controls.Joystick
+    // a model class
+    // that is responsible for holding all the relevant data for the datas for the currnt control 
 {
-
     class JoystickModel : INotifyPropertyChanged
     {
+        // event that will be activated when a property gets a new value
         public event PropertyChangedEventHandler PropertyChanged;
         private TimeSeries ts;
         private float aileron;
@@ -19,7 +22,7 @@ namespace Flight_Inspection.controls.Joystick
         private float elevator;
         private float throttle;
         private int currentTime;
-
+        // recive a time from the controlView that sets the properties to the currect line in the timeSeries 
         public int CurrentTime
         {
             get => currentTime;
@@ -75,11 +78,13 @@ namespace Flight_Inspection.controls.Joystick
             }
 
         }
-
+        // activate the PropertyChanged event when a property get a new value
+        // sending the name of the property
         virtual public void OnPropertyChanged([CallerMemberName] string name = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
+        // a method thats responsible for updating the properties according the currect time
         public void sendData()
         {
             Aileron = ts.GetFeatureData("aileron").ElementAt(CurrentTime);
@@ -87,7 +92,7 @@ namespace Flight_Inspection.controls.Joystick
             Elevator = ts.GetFeatureData("elevator").ElementAt(CurrentTime);
             Throttle = ts.GetFeatureData("throttle").ElementAt(CurrentTime);
         }
-
+        // needed for nomalization of the view so the max value will be possitioned at the maxium view range
         public float maxVal(String feature)
         {
             return (float)ts.GetFeatureData(feature).Max();
