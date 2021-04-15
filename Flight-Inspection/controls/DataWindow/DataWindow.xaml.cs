@@ -1,4 +1,5 @@
-﻿using System;
+﻿// oz rigler 316291897 15/04/2021
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,6 +18,8 @@ namespace Flight_Inspection.controls.DataWindow
 {
     /// <summary>
     /// Interaction logic for DataWindow.xaml
+    /// responsible for showing the datas at the GUI
+    /// holding a viewModel field that is represendet as data context
     /// </summary>
     public partial class DataWindow : UserControl, IControlView
     {
@@ -48,7 +51,7 @@ namespace Flight_Inspection.controls.DataWindow
             Vm.addData("side-slip-deg", (int)GridPitch.ActualHeight);
             Vm.addData("altitude-ft", (int)GridAltimeter.ActualHeight);
         }
-
+        // 
         private void AngularGauge_SourceUpdated(object sender, DataTransferEventArgs e)
         {
 
