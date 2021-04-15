@@ -82,11 +82,14 @@
             </lvc1:AngularGauge.Sections> 
         </lvc1:AngularGauge>
         <Grid Grid.Column="1" Name="Compass">
+            <Grid.Background>
+                <ImageBrush  ImageSource="compass.jpeg" Stretch="Uniform" />
+            </Grid.Background>
             <lvc1:AngularGauge  Value="{Binding VM_Direction}" FromValue="0" ToValue="359"
                           LabelsStep="90" TicksStep="22.5" Wedge="360"
-                          TicksForeground="White" Foreground="Transparent" Margin="20,8,0,12" 
+                          TicksForeground="Transparent" Foreground="Transparent" Margin="0,8,0,12" 
                           SectionsInnerRadius=".5" FontSize="10" DisableaAnimations="True" RenderTransformOrigin="0.472,0.535">
-                <Image Source="compass.jpeg" Margin="-11,3,11,-3"/>
+                
                 <lvc1:AngularGauge.CacheMode>
                     <BitmapCache EnableClearType="False" 
                    RenderAtScale="1"

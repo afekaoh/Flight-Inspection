@@ -1,4 +1,5 @@
-﻿using System;
+﻿// oz rigler 316291897 15/04/2021
+using System;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -6,6 +7,8 @@ namespace Flight_Inspection.controls.Joystick
 {
     /// <summary>
     /// Interaction logic for JoystickView.xaml
+    /// responsible for showing the datas at the GUI
+    /// holding a viewModel field that is represendet as data context
     /// </summary>
     public partial class JoystickView : UserControl, IControlView
     {
@@ -15,6 +18,7 @@ namespace Flight_Inspection.controls.Joystick
             InitializeComponent();
             this.DataContext = new JoystickViewModel();
             this.JoystickViewModel = this.DataContext as JoystickViewModel;
+            // when the viewModel is ready , it will create the features datas at the view modle class
             JoystickViewModel.Ready += addFeatures;
         }
 
@@ -34,7 +38,7 @@ namespace Flight_Inspection.controls.Joystick
         {
             return this.JoystickViewModel;
         }
-
+        // activate when the grid is changed and will set a new grid size in viewmodel fields
         private void GridT_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             JoystickViewModel.findData("throttle").setCanvasDim((int)GridT.ActualHeight - 40);
